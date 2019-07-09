@@ -66,7 +66,7 @@ class Denom extends Component {
   expansionForDisplay(data) {
     let { nonRepeat, repeat } = data;
     let repeatStr = '';
-    let times = 10;
+    let times = 100;
     for (let i = 0; i < times; i++) {
       repeatStr += repeat;
     }
@@ -96,24 +96,27 @@ class Denom extends Component {
       <div className="content">
         <Link to="/">Home</Link>
         <h1>Denom page</h1>
-        <h2>{denom}ths</h2>
-        <p>{info.groupCount} for fractions having a denominator of {denom}:</p>
-        <ul>
-          {info.groups.map(g => (<li key={g.expansion}>{g.expansion}</li>) )}
-        </ul>
-        <p>The numerators for these are:</p>
-        {info.groups.map(g => (
-          <div key={g.expansion}>
-          <h3>{g.expansion}</h3>
-          {this.formatNumeratorList(g.numerators)}
+        <div className="flex-container">
+          <div className="left-side">
+            <h2>{denom}ths</h2>
+            <p>{info.groupCount} for fractions having a denominator of {denom}:</p>
+            <p>The numerators for these are:</p>
+            {info.groups.map(g => (
+              <div key={g.expansion}>
+              <h3>{g.expansion}</h3>
+              {this.formatNumeratorList(g.numerators)}
+              </div>
+            ) )}
           </div>
-        ) )}
-        <h2>The Big Show</h2>
-        <div>
-        {this.state.fraction}
-        </div>
-        <div>
-        {this.state.forDisplay}
+          <div className="right-side">
+            <h2>The Big Show</h2>
+            <div>
+            {this.state.fraction}
+            </div>
+            <div>
+            {this.state.forDisplay}
+            </div>
+          </div>
         </div>
       </div>
     )

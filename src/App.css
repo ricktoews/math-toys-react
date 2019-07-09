@@ -17,7 +17,7 @@
 }
 
 .content {
-  width:80%;
+  width:90%;
   background-color: white;
   margin: auto;
 }
@@ -50,4 +50,21 @@
 }
 .to-infinity {
   color: #ccc;
+}
+.flex-container {
+  display: flex;
+}
+
+.left-side {
+  width: 50%;
+  padding: 20px;
+  overflow-wrap: break-word;
+  height: 500px;
+  overflow-y: scroll;
+}
+.right-side {
+  width: 50%;
+  padding: 20px;
+  height: 500px;
+  overflow-wrap: break-word;
 }
