@@ -38,6 +38,11 @@ class Expansion extends Component {
     super(props);
     this.setNumerator = this.setNumerator.bind(this);
     this.handleClick = this.handleClick.bind(this);
+          console.log('Expansion constructor');
+  }
+
+  componentDidUpdate() {
+          console.log('Expansion componentDidUpdate');
   }
 
   formatNumeratorList(numerators) {
@@ -74,25 +79,21 @@ class Expansion extends Component {
   setNumerator(expansionData) {
     let fraction = <span className="fraction"><span className="numerator">{expansionData.numerator}</span> / <span className="denominator">{this.props.denom}</span></span>;
     let forDisplay = this.expansionForDisplay(expansionData);
-    this.props.updateDisplay({ fraction, forDisplay });
+    this.props.displayNumerator({ fraction, forDisplay });
   }
 
   handleClick(e) {
-    let thisEl = e.target;
-    let numeratorsEl = thisEl.nextSibling;
-    let els = Array.from(document.getElementsByClassName('numerators'));
-    els.forEach(el => { el.classList.remove('show-numerators'); el.classList.add('hide-numerators'); });
-    numeratorsEl.classList.remove('hide-numerators');
-    numeratorsEl.classList.add('show-numerators');
-    console.log('click', this, e.target.nextSibling);
+    this.props.numeratorState(this.props.item);
+    this.render();
   }
 
   render() {
     const g = this.props.item;
+    const numClass = this.props.showNumerators ? 'show-numerators' : 'hide-numerators';
     return (
       <div key={g.expansion}>
       <h3 onClick={this.handleClick}>{g.expansion}</h3>
-        <div className="numerators hide-numerators">
+        <div className={numClass}>
         {this.formatNumeratorList(g.numerators)}
         </div>
       </div>
@@ -105,7 +106,9 @@ class Denom extends Component {
     super(props);
     this.denom = props.match.params.denom;
     this.state = { denom: null, info: {}, expansions: {}, forDisplay: null };
-    this.updateDisplay = this.updateDisplay.bind(this);
+    this.displayNumerator = this.displayNumerator.bind(this);
+    this.numeratorState = this.numeratorState.bind(this);
+    this.showNumeratorState = {};
   }
 
   componentDidMount() {
@@ -114,12 +117,28 @@ class Denom extends Component {
       res.expansions.sort((a, b) => a.numerator - b.numerator);
       let expansions = res.expansions;
       expansions.unshift({});
+      res.groups.forEach(g => { this.showNumeratorState[g.expansion] = false; });
       this.setState({ denom: denom, info: res, expansions });
     });
   }
 
-  updateDisplay(stateVars) {
+  componentDidUpdate() {
+          console.log('Denom componentDidUpdate');
+  }
+
+  displayNumerator(stateVars) {
     this.setState({ ...stateVars });
+  }
+
+  numeratorState(item) {
+    let allExpansions = Object.keys(this.showNumeratorState);
+    allExpansions.forEach(exp => {
+      if (exp !== item.expansion) {
+        this.showNumeratorState[exp] = false;
+      }
+    });
+    this.showNumeratorState[item.expansion] = !this.showNumeratorState[item.expansion];
+    this.setState({ dummy: true });
   }
 
 
@@ -135,9 +154,13 @@ class Denom extends Component {
             <h2>{denom}ths</h2>
             <p>{info.groupCount} for fractions having a denominator of {denom}:</p>
             <p>The numerators for these are:</p>
-            {info.groups.map(g => (
-              <Expansion key={g.expansion} updateDisplay={this.updateDisplay} item={g} expansions={expansions} denom={denom} />
-            ) )}
+            {info.groups.map(g => {
+              let showNumerators = !!this.showNumeratorState[g.expansion];
+              return (
+                <Expansion key={g.expansion} showNumerators={showNumerators} numeratorState={this.numeratorState} displayNumerator={this.displayNumerator} item={g} expansions={expansions} denom={denom} />
+                )
+              } )
+            }
           </div>
           <div className="right-side">
             <h2>The Big Show</h2>
