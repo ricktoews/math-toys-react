@@ -1,16 +1,13 @@
-import primes from './data/primes';
-
 function dressDenom(denom) {
-  let dressed = '';
   let lastDigit = denom % 10;
   let lastDigits = denom % 100;
   let outfit = 'ths';
   if (lastDigits !== 11 && lastDigit === 1) {
-    dressed = 'sts';
+    outfit = 'sts';
   } else if (lastDigits !== 12 && lastDigit === 2) {
-    dressed = 'nds';
+    outfit = 'nds';
   } else if (lastDigits !== 13 && lastDigit === 3) {
-    dressed = 'rds';
+    outfit = 'rds';
   }
   return denom + outfit;
 }

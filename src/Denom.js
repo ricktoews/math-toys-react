@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import Expansion from './Expansion';
 import prep from './denom-helper';
 import './Denom.css';
 
@@ -14,122 +15,58 @@ function fetchDenom(denom) {
     })
 }
 
-class Numerator extends Component {
-  constructor(props) {
-    super(props);
-    this.numerator = props.numerator;
-    this.expansion = props.expansion;
-    this.action = props.action;
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleClick(e) {
-    this.action(this.expansion);
-
-  }
-
-  render() {
-    return <span onClick={this.handleClick}>{this.numerator}</span>
-  }
-}
-
-class Expansion extends Component {
-  constructor(props) {
-    super(props);
-    this.setNumerator = this.setNumerator.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-          console.log('Expansion constructor');
-  }
-
-  componentDidUpdate() {
-          console.log('Expansion componentDidUpdate');
-  }
-
-  formatNumeratorList(numerators) {
-    let expansions = this.props.expansions;
-    let formatted = (
-      <div className="numerator">
-      {numerators.map(numerator => (
-        <Numerator key={numerator} expansion={expansions[numerator]} action={this.setNumerator} numerator={numerator}/>
-       )
-	  )}
-      </div>
-    );
-    return formatted
-  }
-
-  expansionForDisplay(data) {
-    let { nonRepeat, repeat } = data;
-    let repeatStr = '';
-    let times = 100;
-    for (let i = 0; i < times; i++) {
-      repeatStr += repeat;
-    }
-    let forDisplay;
-    if (repeat.length % 2 === 0) {
-      let repeata = repeat.substr(0, repeat.length / 2);
-      let repeatb = repeat.substr(repeat.length / 2);
-      forDisplay = <span><span className="non-repeat">{nonRepeat}</span><span className="repeat-a">{repeata}</span><span className="repeat-b">{repeatb}</span><span className="to-infinity">{repeatStr}</span></span>
-    } else {
-      forDisplay = <span><span className="non-repeat">{nonRepeat}</span><span className="repeat">{repeat}</span><span className="to-infinity">{repeatStr}</span></span>
-    }
-    return forDisplay;
-  }
-
-  setNumerator(expansionData) {
-    let fraction = <span className="fraction"><span className="numerator">{expansionData.numerator}</span> / <span className="denominator">{this.props.denom}</span></span>;
-    let forDisplay = this.expansionForDisplay(expansionData);
-    this.props.displayNumerator({ fraction, forDisplay });
-  }
-
-  handleClick(e) {
-    this.props.numeratorState(this.props.item);
-    this.render();
-  }
-
-  render() {
-    const g = this.props.item;
-    const numClass = this.props.showNumerators ? 'show-numerators' : 'hide-numerators';
-    return (
-      <div key={g.expansion}>
-      <h3 onClick={this.handleClick}>{g.expansion}</h3>
-        <div className={numClass}>
-        {this.formatNumeratorList(g.numerators)}
-        </div>
-      </div>
-    );
-  }
-}
-
 class Denom extends Component {
   constructor(props) {
     super(props);
     this.denom = props.match.params.denom;
-    this.state = { denom: null, info: {}, expansions: {}, forDisplay: null };
+    this.state = { denom: null, groups: [], groupCount: '', expansions: {}, forDisplay: null };
     this.displayNumerator = this.displayNumerator.bind(this);
     this.numeratorState = this.numeratorState.bind(this);
+    this.setDenom = this.setDenom.bind(this);
+    this.selectDenom = this.selectDenom.bind(this);
     this.showNumeratorState = {};
   }
 
   componentDidMount() {
+    this.getDenomData();
+  }
+
+  /*
+   * Perform the REST call that gets the denominator data, and set the component's state.
+   * Sort expansions by numerator,
+   * Sort groups by expansion,
+   * Initialize showNumerator states,
+   * Update component state for denom, groups, expansions.
+   */
+  getDenomData() {
     let denom = this.denom;
-    fetchDenom(denom).then(res => {
+    return fetchDenom(denom).then(res => {
+      // Sort decimal expansions by numerator.
       res.expansions.sort((a, b) => a.numerator - b.numerator);
-      let expansions = res.expansions;
-      expansions.unshift({});
+      // Sort expansion groups numerically. The sort compares the strings, since all are the same length.
+      res.groups.sort((a, b) => a.expansion < b.expansion ? -1 : 1);
+      // Initialize the display numerators flags to false.
       res.groups.forEach(g => { this.showNumeratorState[g.expansion] = false; });
-      this.setState({ denom: denom, info: res, expansions });
+      // Just to sync numerator with index. Otherwise, index 0 would be 1/x.
+      res.expansions.unshift({});
+      this.setState({ denom: denom, dressed: res.dressed, groupCount: res.groupCount, groups: res.groups, expansions: res.expansions });
     });
   }
 
-  componentDidUpdate() {
-          console.log('Denom componentDidUpdate');
-  }
-
+  /*
+   * Set forDisplay.
+   */
   displayNumerator(stateVars) {
+          console.log('set forDisplay', stateVars);
     this.setState({ ...stateVars });
   }
 
+  /*
+   * Maintain the list of expansion toggle states. The state determines whether the numerators for
+   * the expansion should be displayed or not.
+   * The default is false for all expansions. When an expansion is clicked, the display of its numerators
+   * is toggled. The numerator display can be open for only one expansion at a time.
+   */
   numeratorState(item) {
     let allExpansions = Object.keys(this.showNumeratorState);
     allExpansions.forEach(exp => {
@@ -141,20 +78,39 @@ class Denom extends Component {
     this.setState({ dummy: true });
   }
 
+  /*
+   * Handle selection of denominator, once it has been entered.
+   */
+  selectDenom() {
+    console.log('selectDenom', this.denomField, this.props);
+    let route = '/denom/' + this.denomField;
+    this.denom = this.denomField;
+    this.getDenomData().then(res => {
+      this.props.history.push(route);
+    });
+  }
+
+  /*
+   * As the value in the denominator input field changes, keep track of it in the component,
+   * so when the user has entered his selection, the event handler can get the value from the component.
+   */
+  setDenom(e) {
+    this.denomField = e.target.value;
+  }
 
   render() {
-    const { denom, info, expansions } = this.state;
+    const { denom, dressed, groups, groupCount, expansions } = this.state;
     if (!denom) {
       return <div className="content"><h1>Denom page</h1></div>
-	} else {
+    } else {
       return (
       <div className="content">
         <div className="flex-container">
           <div className="left-side">
-            <h2>{denom}ths</h2>
-            <p>{info.groupCount} for fractions having a denominator of {denom}:</p>
-            <p>The numerators for these are:</p>
-            {info.groups.map(g => {
+            <input type="text" id="input-denom" onChange={this.setDenom} /> <button id="select-button" onClick={this.selectDenom}>Go</button>
+            <h2>The {dressed}</h2>
+            <p>{groupCount} for fractions having a denominator of {denom}:</p>
+            {groups.map(g => {
               let showNumerators = !!this.showNumeratorState[g.expansion];
               return (
                 <Expansion key={g.expansion} showNumerators={showNumerators} numeratorState={this.numeratorState} displayNumerator={this.displayNumerator} item={g} expansions={expansions} denom={denom} />
@@ -162,11 +118,9 @@ class Denom extends Component {
               } )
             }
           </div>
+
           <div className="right-side">
-            <h2>The Big Show</h2>
-            <div>
-            {this.state.fraction}
-            </div>
+            <h2>{this.state.fraction}</h2>
             <div>
             {this.state.forDisplay}
             </div>

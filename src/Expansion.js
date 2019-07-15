@@ -1,0 +1,81 @@
+import React, { Component } from 'react';
+import Numerator from './Numerator';
+
+class Expansion extends Component {
+  constructor(props) {
+    super(props);
+    this.setNumerator = this.setNumerator.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+          console.log('Expansion constructor');
+  }
+
+  componentDidUpdate() {
+          console.log('Expansion componentDidUpdate');
+  }
+
+  formatNumeratorList(numerators) {
+    let expansions = this.props.expansions;
+    let formatted = (
+      <div className="numerator">
+      {numerators.map(numerator => (
+        <Numerator key={numerator} expansion={expansions[numerator]} action={this.setNumerator} numerator={numerator}/>
+       )
+	  )}
+      </div>
+    );
+    return formatted
+  }
+
+  expansionForDisplay(data) {
+    let { nonRepeat, repeat } = data;
+    let repeatStr = '';
+    let maxLength = 1000;
+    // Create a bunch of periods, followed by '...'.
+    // Suggestion: make it truncate if the maxlength is exceeded by more than some amount.
+    while (repeatStr.length < maxLength) {
+      repeatStr += repeat;
+    }
+    repeatStr = repeatStr.substr(0, maxLength) + '...';
+   
+    let forDisplay;
+    if (repeat.length % 2 === 0) {
+      let repeata = repeat.substr(0, repeat.length / 2);
+      let repeatb = repeat.substr(repeat.length / 2);
+      // Ad hoc test for a complementary period. We should clean this up.
+      if ((1*repeata + 1*repeatb + 1) % 10 === 0) {
+        forDisplay = <span><span className="non-repeat">{nonRepeat}</span><span className="repeat-a">{repeata}</span><span className="repeat-b">{repeatb}</span><span className="to-infinity">{repeatStr}</span></span>
+      } else {
+        forDisplay = <span><span className="non-repeat">{nonRepeat}</span><span className="repeat">{repeat}</span><span className="to-infinity">{repeatStr}</span></span>
+      }
+    } else {
+      forDisplay = <span><span className="non-repeat">{nonRepeat}</span><span className="repeat">{repeat}</span><span className="to-infinity">{repeatStr}</span></span>
+    }
+    return forDisplay;
+  }
+
+  setNumerator(expansionData) {
+    let fraction = <span className="fraction"><span className="numerator">{expansionData.numerator}</span> / <span className="denominator">{this.props.denom}</span></span>;
+    let forDisplay = this.expansionForDisplay(expansionData);
+    this.props.displayNumerator({ fraction, forDisplay });
+  }
+
+  handleClick(e) {
+    this.props.numeratorState(this.props.item);
+    this.render();
+  }
+
+  render() {
+    const g = this.props.item;
+    const numClass = this.props.showNumerators ? 'show-numerators' : 'hide-numerators';
+    return (
+      <div key={g.expansion}>
+      <h3 onClick={this.handleClick}>{g.expansion}</h3>
+        <div className={numClass}>
+        {this.formatNumeratorList(g.numerators)}
+        </div>
+      </div>
+    );
+  }
+}
+
+export default Expansion;
