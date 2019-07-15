@@ -21,6 +21,7 @@ class Router extends Component {
           <Switch>
             <Route exact path='/' component={Home}/>
             <Route path='/denom' component={Denom}/>
+            <Route path='/denom/:denom' component={Denom}/>
           </Switch>
         </MediaQuery>
       </div>
