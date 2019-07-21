@@ -1,3 +1,22 @@
+import primes from './data/primes';
+
+function factor(denom) {
+  let fuse = 0, circuit_breaker = 1000;
+  let factors = {};
+  let primeNdx = 0;
+  for (let primeNdx = 0, maxNdx = primes.length; primeNdx < maxNdx; primeNdx++) {
+    let prime = primes[primeNdx];
+    if (denom === 1 || fuse > circuit_breaker) break;
+    while (denom % prime === 0) {
+      if (factors[prime] === undefined) factors[prime] = 0;
+      factors[prime]++;
+      denom /= prime;
+      fuse++;
+    }
+  }
+  return factors;
+}
+
 function dressDenom(denom) {
   let lastDigit = denom % 10;
   let lastDigits = denom % 100;
@@ -93,6 +112,8 @@ function prepDenomInfo(denom, expansionData) {
   info.groups = groupExpansions(expansionData);
   info.groupCount = getGroupCount(info.groups);
   info.expansions = buildExpansions(expansionData);
+  info.factors = factor(denom);
+        console.log('prepDenomInfo factors', info.factors);
   return info;
 }
 

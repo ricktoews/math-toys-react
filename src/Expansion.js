@@ -6,7 +6,6 @@ class Expansion extends Component {
     super(props);
     this.setNumerator = this.setNumerator.bind(this);
     this.handleClick = this.handleClick.bind(this);
-          console.log('Expansion constructor');
   }
 
   componentDidUpdate() {
@@ -32,8 +31,10 @@ class Expansion extends Component {
     let maxLength = 1000;
     // Create a bunch of periods, followed by '...'.
     // Suggestion: make it truncate if the maxlength is exceeded by more than some amount.
-    while (repeatStr.length < maxLength) {
-      repeatStr += repeat;
+    if (repeat.length > 0) {
+      while (repeatStr.length < maxLength) {
+        repeatStr += repeat;
+      }
     }
     repeatStr = repeatStr.substr(0, maxLength) + '...';
    

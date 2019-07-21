@@ -1,19 +1,12 @@
 import React from 'react';
 import './App.css';
 import Router from './Router';
-
-function header() {
-  return (
-      <header className="App-header">
-          Arithmophile
-      </header>
-  );
-}
+import Masthead from './Masthead';
 
 function App() {
   return (
     <div className="App">
-      {header()}
+      <Masthead />
       <Router />
     </div>
   );

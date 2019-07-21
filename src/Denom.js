@@ -19,7 +19,7 @@ class Denom extends Component {
   constructor(props) {
     super(props);
     this.denom = props.match.params.denom;
-    this.state = { denom: null, groups: [], groupCount: '', expansions: {}, forDisplay: null };
+    this.state = { denom: null, groups: [], groupCount: '', expansions: {}, forDisplay: null, factors: {} };
     this.displayNumerator = this.displayNumerator.bind(this);
     this.numeratorState = this.numeratorState.bind(this);
     this.setDenom = this.setDenom.bind(this);
@@ -49,7 +49,7 @@ class Denom extends Component {
       res.groups.forEach(g => { this.showNumeratorState[g.expansion] = false; });
       // Just to sync numerator with index. Otherwise, index 0 would be 1/x.
       res.expansions.unshift({});
-      this.setState({ denom: denom, dressed: res.dressed, groupCount: res.groupCount, groups: res.groups, expansions: res.expansions });
+      this.setState({ denom: denom, dressed: res.dressed, groupCount: res.groupCount, groups: res.groups, expansions: res.expansions, factors: res.factors });
     });
   }
 
@@ -57,7 +57,6 @@ class Denom extends Component {
    * Set forDisplay.
    */
   displayNumerator(stateVars) {
-          console.log('set forDisplay', stateVars);
     this.setState({ ...stateVars });
   }
 
@@ -82,7 +81,6 @@ class Denom extends Component {
    * Handle selection of denominator, once it has been entered.
    */
   selectDenom() {
-    console.log('selectDenom', this.denomField, this.props);
     let route = '/denom/' + this.denomField;
     this.denom = this.denomField;
     this.getDenomData().then(res => {
@@ -98,17 +96,61 @@ class Denom extends Component {
     this.denomField = e.target.value;
   }
 
+  /*
+   * Format list of factors for this denominator.
+   */
+  formatFactors(factors) {
+    let f = Object.keys(factors).sort((a, b) => a-b);
+    let factorEls = (
+      <div>
+      {f.map(factor => {
+        return <span key={factor}>{factor}<sup>{factors[factor]}</sup></span>;
+      })}
+      </div>
+    );
+
+    return factorEls;
+  }
+
   render() {
-    const { denom, dressed, groups, groupCount, expansions } = this.state;
+    const { denom, dressed, groups, groupCount, expansions, factors } = this.state;
+          console.log('factor', this.formatFactors(factors));
     if (!denom) {
-      return <div className="content"><h1>Denom page</h1></div>
-    } else {
       return (
       <div className="content">
         <div className="flex-container">
           <div className="left-side">
             <input type="text" id="input-denom" onChange={this.setDenom} /> <button id="select-button" onClick={this.selectDenom}>Go</button>
-            <h2>The {dressed}</h2>
+          </div>
+
+          <div className="right-side">
+          </div>
+        </div>
+      </div>
+    )
+    } else {
+      return (
+      <div className="content">
+        <div className="flex-container">
+          <div className="left-side">
+            <table>
+              <thead>
+              <tr>
+                <th>Denominator</th>
+                <th>Factors</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>
+                  <input type="text" id="input-denom" onChange={this.setDenom} /> <button id="select-button" onClick={this.selectDenom}>&nbsp;</button>
+                </td>
+                <td>
+                  {this.formatFactors(factors)}
+                </td>
+              </tr>
+              </tbody>
+            </table>
             <p>{groupCount} for fractions having a denominator of {denom}:</p>
             {groups.map(g => {
               let showNumerators = !!this.showNumeratorState[g.expansion];

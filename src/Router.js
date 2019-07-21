@@ -20,7 +20,7 @@ class Router extends Component {
         <MediaQuery query="(max-width:480px)">
           <Switch>
             <Route exact path='/' component={Home}/>
-            <Route path='/denom' component={Denom}/>
+            <Route exact path='/denom' component={Denom}/>
             <Route path='/denom/:denom' component={Denom}/>
           </Switch>
         </MediaQuery>
