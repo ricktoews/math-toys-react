@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { Container, Row, Col } from 'react-bootstrap';
+import Table from 'react-bootstrap/Table';
+import { InputGroup, FormControl, Button } from 'react-bootstrap';
 import Expansion from './Expansion';
 import prep from './denom-helper';
 import './Denom.css';
@@ -117,23 +120,28 @@ class Denom extends Component {
           console.log('factor', this.formatFactors(factors));
     if (!denom) {
       return (
-      <div className="content">
-        <div className="flex-container">
-          <div className="left-side">
-            <input type="text" id="input-denom" onChange={this.setDenom} /> <button id="select-button" onClick={this.selectDenom}>Go</button>
-          </div>
+      <Container>
+        <Row>
+          <Col>
+            <InputGroup>
+              <FormControl placeholder="denominator" id="input-denom" onChange={this.setDenom}/>
+              <InputGroup.Append>
+                <Button variant="outline-secondary" onClick={this.selectDenom}>Calculate</Button>
+              </InputGroup.Append>
+            </InputGroup>
+          </Col>
 
-          <div className="right-side">
-          </div>
-        </div>
-      </div>
+          <Col>
+          </Col>
+        </Row>
+      </Container>
     )
     } else {
       return (
-      <div className="content">
-        <div className="flex-container">
-          <div className="left-side">
-            <table>
+      <Container>
+        <Row>
+          <Col>
+            <Table>
               <thead>
               <tr>
                 <th>Denominator</th>
@@ -143,32 +151,46 @@ class Denom extends Component {
               <tbody>
               <tr>
                 <td>
-                  <input type="text" id="input-denom" onChange={this.setDenom} /> <button id="select-button" onClick={this.selectDenom}>&nbsp;</button>
+                  <InputGroup>
+                    <FormControl placeholder="denominator" id="input-denom" onChange={this.setDenom}/>
+                    <InputGroup.Append>
+                      <Button variant="outline-secondary" onClick={this.selectDenom}>Calculate</Button>
+                    </InputGroup.Append>
+                  </InputGroup>
                 </td>
                 <td>
                   {this.formatFactors(factors)}
                 </td>
               </tr>
+              <tr>
+                <td colSpan="2">
+                  {groupCount} for fractions having a denominator of {denom}:
+                </td>
+              </tr>
+                  {groups.map(g => {
+                    let showNumerators = !!this.showNumeratorState[g.expansion];
+                    return (
+              <tr>
+                <td colSpan="2">
+                      <Expansion key={g.expansion} showNumerators={showNumerators} numeratorState={this.numeratorState} displayNumerator={this.displayNumerator} item={g} expansions={expansions} denom={denom} />
+                </td>
+              </tr>
+                      )
+                    } )
+                  }
+              
               </tbody>
-            </table>
-            <p>{groupCount} for fractions having a denominator of {denom}:</p>
-            {groups.map(g => {
-              let showNumerators = !!this.showNumeratorState[g.expansion];
-              return (
-                <Expansion key={g.expansion} showNumerators={showNumerators} numeratorState={this.numeratorState} displayNumerator={this.displayNumerator} item={g} expansions={expansions} denom={denom} />
-                )
-              } )
-            }
-          </div>
+            </Table>
+          </Col>
 
-          <div className="right-side">
+          <Col style={{minWidth: "50%"}}>
             <h2>{this.state.fraction}</h2>
-            <div>
+            <div className="expansion">
             {this.state.forDisplay}
             </div>
-          </div>
-        </div>
-      </div>
+          </Col>
+        </Row>
+      </Container>
     )
 	}
 

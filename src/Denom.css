@@ -19,11 +19,11 @@
 
 .numerator span {
   display: inline-block;
-  width: 25px;
-  height: 25px;
-  line-height:25px;
+  width: 15px;
+  height: 15px;
+  line-height:15px;
   text-align: center;
-  font-size: .75rem;
+  font-size: .50rem;
   cursor: pointer;
   margin: 2px;
   background-color:gray;
@@ -46,36 +46,11 @@
 .to-infinity {
   color: #ccc;
 }
-h3 {
+.expansion {
   display: block;
-  background-color: #0099ff;
-  color: white;
-  line-height: 28px;
-  padding-left: 8px;
-  border-radius: 10px;
   cursor: pointer;
+  overflow-wrap: break-word;
 }
-#input-denom {
-  font-weight: bold;
-  font-size: 1rem;
-  padding: 0 5px;
-  color: white;
-  background-color: #6cf;
-  border: none;
-  border-radius: 5px;
-  width: 50px;
-  height: 20px;
-  line-height: 20px;
-}
-button {
-  width: 20px;
-  height: 20px;
-  line-height: 20px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
 .numerators {
 }
 .show-numerators {

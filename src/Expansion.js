@@ -70,7 +70,7 @@ class Expansion extends Component {
     const numClass = this.props.showNumerators ? 'show-numerators' : 'hide-numerators';
     return (
       <div key={g.expansion}>
-      <h3 onClick={this.handleClick}>{g.expansion}</h3>
+      <span className="expansion" onClick={this.handleClick}>{g.expansion}</span>
         <div className={numClass}>
         {this.formatNumeratorList(g.numerators)}
         </div>
