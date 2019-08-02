@@ -50,6 +50,7 @@
   display: block;
   cursor: pointer;
   overflow-wrap: break-word;
+  word-break: break-all;
 }
 .numerators {
 }

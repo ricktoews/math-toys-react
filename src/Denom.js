@@ -126,7 +126,7 @@ class Denom extends Component {
             <InputGroup>
               <FormControl placeholder="denominator" id="input-denom" onChange={this.setDenom}/>
               <InputGroup.Append>
-                <Button variant="outline-secondary" onClick={this.selectDenom}>Calculate</Button>
+                <Button variant="primary" onClick={this.selectDenom}>Calculate</Button>
               </InputGroup.Append>
             </InputGroup>
           </Col>
@@ -140,7 +140,7 @@ class Denom extends Component {
       return (
       <Container>
         <Row>
-          <Col>
+          <Col style={{minWidth: "50%"}}>
             <Table>
               <thead>
               <tr>
@@ -154,7 +154,7 @@ class Denom extends Component {
                   <InputGroup>
                     <FormControl placeholder="denominator" id="input-denom" onChange={this.setDenom}/>
                     <InputGroup.Append>
-                      <Button variant="outline-secondary" onClick={this.selectDenom}>Calculate</Button>
+                      <Button variant="info" onClick={this.selectDenom}>Calculate</Button>
                     </InputGroup.Append>
                   </InputGroup>
                 </td>
