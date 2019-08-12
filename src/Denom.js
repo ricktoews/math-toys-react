@@ -8,7 +8,7 @@ import prep from './denom-helper';
 import './Denom.css';
 
 function fetchDenom(denom) {
-  var url = 'http://localhost:8080/denom_byexpansion/' + denom;
+  var url = 'http://localhost:8081/denom_byexpansion/' + denom;
   return fetch(url)
     .then(res => {
       return res.json();
