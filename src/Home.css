@@ -1,0 +1,26 @@
+.fancy-radio {
+  position: relative;
+}
+.fancy-radio input[type="radio"] {
+  display:none;
+}
+.fancy-radio label {
+  position: relative;
+  display: block;
+  padding-left: 20px;
+}
+.fancy-radio label:hover .mine {
+  border-color: red;
+  transition: border-color 0.25s linear;
+}
+
+.fancy-radio .mine {
+  position: absolute;
+  top: 5px;
+  left: 0;
+  width:15px;
+  height:15px;
+  border-radius: 100%;
+  border:3px solid #ccc;
+  transition: border-color 0.25s linear;
+}

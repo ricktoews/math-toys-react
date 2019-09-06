@@ -19,11 +19,11 @@
 
 .numerator span {
   display: inline-block;
-  width: 15px;
-  height: 15px;
-  line-height:15px;
+  width: 20px;
+  height: 20px;
+  line-height:20px;
   text-align: center;
-  font-size: .50rem;
+  font-size: .55rem;
   cursor: pointer;
   margin: 2px;
   background-color:gray;

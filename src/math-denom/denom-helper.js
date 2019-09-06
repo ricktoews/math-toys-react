@@ -113,7 +113,6 @@ function prepDenomInfo(denom, expansionData) {
   info.groupCount = getGroupCount(info.groups);
   info.expansions = buildExpansions(expansionData);
   info.factors = factor(denom);
-        console.log('prepDenomInfo factors', info.factors);
   return info;
 }
 

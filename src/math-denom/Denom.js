@@ -117,7 +117,6 @@ class Denom extends Component {
 
   render() {
     const { denom, dressed, groups, groupCount, expansions, factors } = this.state;
-          console.log('factor', this.formatFactors(factors));
     if (!denom) {
       return (
       <Container>

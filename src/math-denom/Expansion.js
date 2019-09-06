@@ -1,6 +1,21 @@
 import React, { Component } from 'react';
 import Numerator from './Numerator';
 
+function test9sComp(str) {
+  let halfway = str.length / 2,
+      [ part1, part2 ] = [ str.substr(0, halfway), str.substr(halfway) ],
+      result = true;
+
+  for (let i = 0; i < halfway; i++) {
+    let sum = 1*part1[i] + 1*part2[i];
+    if (sum !== 9) {
+      result = false;
+    }
+  }
+  return result;
+}
+
+
 class Expansion extends Component {
   constructor(props) {
     super(props);
@@ -9,7 +24,7 @@ class Expansion extends Component {
   }
 
   componentDidUpdate() {
-          console.log('Expansion componentDidUpdate');
+//          console.log('Expansion componentDidUpdate');
   }
 
   formatNumeratorList(numerators) {
@@ -43,7 +58,7 @@ class Expansion extends Component {
       let repeata = repeat.substr(0, repeat.length / 2);
       let repeatb = repeat.substr(repeat.length / 2);
       // Ad hoc test for a complementary period. We should clean this up.
-      if ((1*repeata + 1*repeatb + 1) % 10 === 0) {
+      if (test9sComp(repeat)) {
         forDisplay = <span><span className="non-repeat">{nonRepeat}</span><span className="repeat-a">{repeata}</span><span className="repeat-b">{repeatb}</span><span className="to-infinity">{repeatStr}</span></span>
       } else {
         forDisplay = <span><span className="non-repeat">{nonRepeat}</span><span className="repeat">{repeat}</span><span className="to-infinity">{repeatStr}</span></span>

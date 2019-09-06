@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import MediaQuery from 'react-responsive';
 import { Switch, Route } from 'react-router-dom';
 import Home from './Home';
-import Denom from './Denom';
+import Denom from './math-denom/Denom';
 import Phi from './Phi';
 
 class Router extends Component {
