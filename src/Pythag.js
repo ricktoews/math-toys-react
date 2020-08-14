@@ -60,6 +60,7 @@ function moveSquare(id, triple, squareMoved) {
   var aSides = getASides(triple);
   var dest = { top: aSides[squareMoved].row * SQUARE_WIDTH, left: aSides[squareMoved].col * SQUARE_WIDTH };
   var el = document.querySelector('#' + id);
+	console.log('moveSquare', '#'+id);
   el.style.transition = '1s';
   el.style.transform = 'rotate(360deg)';
   el.style.top = dest.top + 'px';
@@ -101,7 +102,7 @@ function Pythag(props) {
     var el = e.target;
     getPythagData(el.value).then(res => {
       let triple = res[0];
-      setTriple({ a: triple[0], b: triple[1], c: triple[2] });
+      setTriple({ a: triple.a, b: triple.b, c: triple.c });
       setTriples(res);
     });
   }
@@ -109,9 +110,9 @@ function Pythag(props) {
   function clickHandler(e) {
     e.preventDefault();
     var el = e.target;
-    console.log(el.dataset);
+    console.log('dataset',el.dataset);
     var triple = el.dataset.triple.split(',');
-    console.log(triple, triple.length);
+    console.log('triple',triple, triple.length);
     setTriple({ a: triple[0], b: triple[1], c: triple[2] });
   }
 
@@ -133,7 +134,7 @@ function Pythag(props) {
               <FormControl placeholder="" aria-label="" aria-describedby="a-input" onBlur={handleBlur}/>
             </InputGroup>
 
-            {triples.map((t, key)  => <Button key={key} onClick={clickHandler} data-triple={t} variant="primary">{t.join(', ')}</Button>)}
+            {triples.map((t, key)  => <Button key={key} onClick={clickHandler} data-triple={`${t.a},${t.b},${t.c}`} variant="primary">{t.a}, {t.b}, {t.c}</Button>)}
           </Col>
           <Col>
       { triple.a && (
