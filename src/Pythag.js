@@ -135,6 +135,13 @@ function Pythag(props) {
     setTriple({ a: triple[0], b: triple[1], c: triple[2] });
   }
 
+  // Mainly added to see that it works. It does!
+  function playHandler(e) {
+	  e.preventDefault();
+	  var el = e.target;
+      moveASquares(triple);
+  }
+
   var cSide = triple.c * SQUARE_WIDTH + 1;
   var squares = makeSquares(triple, 'c');
   var aSquares = makeSquares(triple, 'a', 'a-square');
@@ -178,6 +185,7 @@ function Pythag(props) {
 		      <div className="b-label" style={{}}><Square type="b" value={triple.b} /></div>
 		      <div className="a-label" style={{}}><Square type="a" value={triple.a} /></div>
             </div> ) }
+            <Button onClick={playHandler} variant="success">Play</Button>
           </Col>
         </Row>
       </Container>
