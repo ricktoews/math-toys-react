@@ -49,6 +49,8 @@ function moveSquare(id, triple, squareMoved) {
   var aSides = getASides(triple);
   var dest = { top: aSides[squareMoved].row * SQUARE_WIDTH, left: aSides[squareMoved].col * SQUARE_WIDTH };
   var el = document.querySelector('#' + id);
+  el.style.transition = '1s';
+  el.style.transform = 'rotate(360deg)';
   el.style.top = dest.top + 'px';
   el.style.left = dest.left + 'px';
 }
@@ -61,7 +63,9 @@ function moveASquares(triple) {
   for (let i = 0; i < totalSquares; i++) {
     let r = Math.ceil((i + 1) / triple.a), c = (i % triple.a) + 1;
     if (r > aThickness & c > aThickness) {
-      setTimeout((squareMoved => { moveSquare('a-' + i, triple, squareMoved) })(squareMoved), 500);
+      setTimeout( (squareMoved => { 
+        return () => { moveSquare('a-' + i, triple, squareMoved) }; 
+	  } )(squareMoved), 500 * squareMoved);
       squareMoved++;
     }
     
@@ -69,7 +73,7 @@ function moveASquares(triple) {
 }
 
 function Pythag(props) {
-  const triple = { a: 6, b: 8, c: 10 };
+  const triple = { a: 8, b: 15, c: 17 };
   var cSide = triple.c * SQUARE_WIDTH + 1;
   var squares = makeSquares(triple, 'c');
   var aSquares = makeSquares(triple, 'a', 'a-square');
