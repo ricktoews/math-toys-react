@@ -15,3 +15,33 @@
   position: relative;
   background-color:#666;
 }
+.c-label {
+  position: absolute;
+  font-size: 13px;
+  bottom: -20px;
+}
+.c-label span {
+  vertical-align: super;
+}
+.b-label {
+  position: absolute;
+  font-size: 13px;
+  bottom: 10px;
+  right: -28px;
+  color: black;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+.b-label span {
+  vertical-align: super;
+}
+.a-label {
+  position: absolute;
+  font-size: 13px;
+  top: -20px;
+  left: 0px;
+  color: black;
+}
+.a-label span {
+  vertical-align: super;
+}

@@ -9,6 +9,24 @@ const STARTING = 20;
 var SQUARE_WIDTH = 21;
 var MOVE_DELAY = 500;
 
+function Square(props) {
+  var className = 'square';
+  if (props.type === 'a') { className += ' a-square'; }
+  else if (props.type === 'b') { className += ' b-square'; }
+  return (
+    <div style={{ position: 'relative' }}>
+      <div className={ className } style={{
+      display: 'none',
+      width: (SQUARE_WIDTH - 1) + 'px',
+      height: (SQUARE_WIDTH - 1) + 'px',
+      border: '1px solid black'
+    }}></div>
+      <div>{props.type}<span>2</span> = {props.value} x {props.value} ({props.value*props.value})</div>
+    </div>
+  );
+}
+
+
 /*
  * function Pythag, which uses state.
  */
@@ -93,9 +111,10 @@ function Pythag(props) {
   var [triple, setTriple] = useState({ });
   var [triples, setTriples] = useState([]);
 
-  SQUARE_WIDTH = STARTING - (5*parseInt(triple.c/10,10)) + 1;
+  SQUARE_WIDTH = Math.max(STARTING - (5*parseInt(triple.c/10,10)) + 1, 5);
+  
   MOVE_DELAY = 500 - (150*parseInt(triple.c/10,10));
-  console.log('move delay', MOVE_DELAY);
+  console.log('square width', SQUARE_WIDTH);
 
   function handleBlur(e) {
     e.preventDefault();
@@ -120,7 +139,8 @@ function Pythag(props) {
   var squares = makeSquares(triple, 'c');
   var aSquares = makeSquares(triple, 'a', 'a-square');
   var bSquares = makeSquares(triple, 'b', 'b-square');
-  setTimeout(() => { moveASquares(triple) }, 1000);
+//  setTimeout(() => { moveASquares(triple) }, 5000);
+  var bPositions = [];
   return (
     <div className="Pythagorean-Toy" style={{ backgroundColor: '#ddd' }}>
       <Container>
@@ -138,16 +158,25 @@ function Pythag(props) {
           </Col>
           <Col>
       { triple.a && (
-            <div className="c-squared" style={{ height: cSide + 'px', width: cSide + 'px' }}>
+            <div className="c-squared" style={{ margin: '40px 0', height: cSide + 'px', width: cSide + 'px' }}>
               { squares.map((square, ndx) => {
                   return square;
                 }) }
               { bSquares.map((square, ndx) => {
+                  let pos = parseInt(square.props.style.top) + '-' + parseInt(square.props.style.left);
+                  bPositions.push(pos);
                   return square;
                 }) }
               { aSquares.map((square, ndx) => {
+                  let pos = parseInt(square.props.style.top) + '-' + parseInt(square.props.style.left);
+                  if (bPositions.indexOf(pos) !== -1) {
+                      square.props.style.opacity = '.8';
+				  }
                   return square;
                 }) }
+		      <div className="c-label" style={{}}><Square type="c" value={triple.c} /></div>
+		      <div className="b-label" style={{}}><Square type="b" value={triple.b} /></div>
+		      <div className="a-label" style={{}}><Square type="a" value={triple.a} /></div>
             </div> ) }
           </Col>
         </Row>
