@@ -125,7 +125,7 @@ class Denom extends Component {
             <InputGroup>
               <FormControl placeholder="denominator" id="input-denom" onChange={this.setDenom}/>
               <InputGroup.Append>
-                <Button variant="primary" onClick={this.selectDenom}>Calculate</Button>
+                <Button variant="info" onClick={this.selectDenom}>Calculate</Button>
               </InputGroup.Append>
             </InputGroup>
           </Col>

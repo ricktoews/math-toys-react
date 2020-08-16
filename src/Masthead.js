@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { Nav } from 'react-bootstrap';
 
 class Masthead extends Component {
   constructor(props) {
@@ -22,7 +23,18 @@ class Masthead extends Component {
   render() {
     return (
       <header className="App-header">
-          Arithmophile {this.title}
+        <div>The Avocational Arithmophile</div>
+		<Nav>
+          <Nav.Item>
+            <Nav.Link href="/">Home</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link href="/pythag">Pythagorean Triples</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link href="/denom">Denominators</Nav.Link>
+          </Nav.Item>
+        </Nav>
       </header>
     );
   }
