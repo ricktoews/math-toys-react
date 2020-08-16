@@ -3,12 +3,18 @@ import { withRouter } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
+import DenomDescription from './DenomDescription';
 import Expansion from './Expansion';
 import prep from './denom-helper';
+import getDenomDesc from './denom-description';
 import './Denom.css';
 
+function fetchDenomDesc(denom) {
+	return getDenomDesc(denom);
+}
+
 function fetchDenom(denom) {
-  var url = 'http://localhost:8081/denom_byexpansion/' + denom;
+  var url = 'http://arithmo.toewsweb.net:3000/denom_byexpansion/' + denom;
   return fetch(url)
     .then(res => {
       return res.json();
@@ -22,7 +28,7 @@ class Denom extends Component {
   constructor(props) {
     super(props);
     this.denom = props.match.params.denom;
-    this.state = { denom: null, groups: [], groupCount: '', expansions: {}, forDisplay: null, factors: {} };
+    this.state = { denom: null, groups: [], groupCount: '', expansions: {}, forDisplay: null, factors: {}, flags: {}, denomData: {} };
     this.displayNumerator = this.displayNumerator.bind(this);
     this.numeratorState = this.numeratorState.bind(this);
     this.setDenom = this.setDenom.bind(this);
@@ -32,6 +38,24 @@ class Denom extends Component {
 
   componentDidMount() {
     this.getDenomData();
+  }
+
+  getDenomDesc() {
+	  let denom = this.denom;
+	  return fetchDenomDesc(denom).then(res => {
+		var data = res && res[0];
+		var metaData = data && data.metaData || {};
+		var flags = {
+			isFullReptend: metaData.fullReptend,
+			internalComplement: metaData.complementType === 'internal',
+			externalComplement: metaData.complementType === 'external',
+			hybrid: metaData.hybrid,
+			resolves: metaData.complementType === 'none',
+			isPrime: data && data.factors.length === 0
+		};
+		  console.log('flags', flags);
+		  this.setState({ flags: flags, denomData: data });
+	  });
   }
 
   /*
@@ -86,6 +110,7 @@ class Denom extends Component {
   selectDenom() {
     let route = '/denom/' + this.denomField;
     this.denom = this.denomField;
+    this.getDenomDesc();
     this.getDenomData().then(res => {
       this.props.history.push(route);
     });
@@ -140,7 +165,7 @@ class Denom extends Component {
       <Container>
         <Row>
           <Col style={{minWidth: "50%"}}>
-            <Table>
+            <Table variant="math">
               <thead>
               <tr>
                 <th>Denominator</th>
@@ -166,10 +191,10 @@ class Denom extends Component {
                   {groupCount} for fractions having a denominator of {denom}:
                 </td>
               </tr>
-                  {groups.map(g => {
+                  {groups.map((g, key) => {
                     let showNumerators = !!this.showNumeratorState[g.expansion];
                     return (
-              <tr>
+              <tr key={key}>
                 <td colSpan="2">
                       <Expansion key={g.expansion} showNumerators={showNumerators} numeratorState={this.numeratorState} displayNumerator={this.displayNumerator} item={g} expansions={expansions} denom={denom} />
                 </td>
@@ -183,6 +208,7 @@ class Denom extends Component {
           </Col>
 
           <Col style={{minWidth: "50%"}}>
+            <DenomDescription flags={this.state.flags} denomData={this.state.denomData} />
             <h2>{this.state.fraction}</h2>
             <div className="expansion">
             {this.state.forDisplay}
