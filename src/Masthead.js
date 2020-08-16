@@ -23,7 +23,7 @@ class Masthead extends Component {
   render() {
     return (
       <header className="App-header">
-        <div>The Avocational Arithmophile</div>
+        <div className="masthead">The Avocational Arithmophile</div>
 		<Nav>
           <Nav.Item>
             <Nav.Link href="/">Home</Nav.Link>
@@ -33,6 +33,9 @@ class Masthead extends Component {
           </Nav.Item>
           <Nav.Item>
             <Nav.Link href="/denom">Denominators</Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link href="/phi">Phi</Nav.Link>
           </Nav.Item>
         </Nav>
       </header>

@@ -5,6 +5,7 @@ import Home from './Home';
 import Denom from './math-denom/Denom';
 import Phi from './Phi';
 import Pythag from './Pythag';
+import Mastermind from './mastermind/Mastermind';
 
 class Router extends Component {
 
@@ -16,8 +17,9 @@ class Router extends Component {
             <Route exact path='/' component={Home}/>
             <Route exact path='/denom' component={Denom}/>
             <Route path='/denom/:denom' component={Denom}/>
-            <Route path='/phi/:power' component={Phi}/>
+            <Route path='/phi' component={Phi}/>
             <Route path='/pythag' component={Pythag}/>
+            <Route path='/mastermind' component={Mastermind}/>
           </Switch>
         </MediaQuery>
 
@@ -26,7 +28,7 @@ class Router extends Component {
             <Route exact path='/' component={Home}/>
             <Route exact path='/denom' component={Denom}/>
             <Route path='/denom/:denom' component={Denom}/>
-            <Route path='/pythag' component={Pythag}/>
+            <Route path='/mastermind' component={Mastermind}/>
           </Switch>
         </MediaQuery>
       </div>
