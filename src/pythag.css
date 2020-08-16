@@ -3,17 +3,17 @@
   width: 20px;
   height: 20px;
   margin: 1px 0 0 1px;
-  background-color: #ccc;
+  background-color: #C5CCD2;
 }
 .a-square {
-  background-color:#f90;
+  background-color: #8AAF9C;
 }
 .b-square {
-  background-color:#09f;
+  background-color:#66866A;
 }
 .c-squared {
   position: relative;
-  background-color:#666;
+  background-color: #dfdfdf;
 }
 .c-label {
   position: absolute;
@@ -26,22 +26,27 @@
 .b-label {
   position: absolute;
   font-size: 13px;
-  bottom: 10px;
+  bottom: 0px;
   right: -28px;
-  color: black;
+  color: #66866a;
   writing-mode: vertical-rl;
   text-orientation: mixed;
 }
 .b-label span {
   vertical-align: super;
+  color: #66866a;
 }
 .a-label {
   position: absolute;
   font-size: 13px;
-  top: -20px;
+  top: -23px;
   left: 0px;
-  color: black;
+  color: #66866a;
 }
 .a-label span {
   vertical-align: super;
+}
+
+tr {
+	cursor: pointer;
 }

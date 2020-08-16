@@ -5,6 +5,8 @@ import './index.css';
 import App from './App';
 import Masthead from './Masthead';
 import * as serviceWorker from './serviceWorker';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 ReactDOM.render(<BrowserRouter><Masthead /><App /></BrowserRouter>, document.getElementById('root'));
 

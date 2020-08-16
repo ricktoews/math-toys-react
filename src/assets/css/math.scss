@@ -1,0 +1,42 @@
+/* Table coloring for math. */
+.table-math th {
+	background-color: #dff0d8;
+	color: #3c763d;
+}
+.table-math tr:nth-of-type(odd) {
+	background-color: rgba(223, 240, 216, .2);
+	color: #666;
+}
+.table-math tr:nth-of-type(even) {
+	background-color: white;
+	color: #666;
+}
+
+.math-primary {
+	color: #337ab7;
+}
+
+
+/*
+This stuff isn't getting processed, for whatever reason--and not because, "Well, duh! It's commented out!"
+$table-header-bg: #dff0d8;
+$table-header-text: #3c763d;
+$table-row-bg: rgba(223, 240, 216, .2);
+$table-row-text: #666;
+$table-alt-row-bg: white;
+$table-alt-row-text: #666;
+
+.table-math th {
+	background-color: $table-header-bg;
+	color: $table-header-text;
+}
+.table-math tr:nth-of-type(odd) {
+	background-color: $table-row-bg;
+	color: $table-row-text;
+}
+.table-math tr:nth-of-type(even) {
+	background-color: $table-alt-row-bg;
+	color: $table-alt-row-text;
+}
+*/
+

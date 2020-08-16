@@ -2,11 +2,10 @@ import React from 'react';
 import './App.css';
 import Router from './Router';
 import { Container, Row, Col } from 'react-bootstrap';
-//import 'bootstrap/dist/css/bootstrap.css';
 
 function App() {
   return (
-    <Container>
+    <Container style={{ marginTop: '10px' }}>
       <Row>
         <Col>
           <Router />

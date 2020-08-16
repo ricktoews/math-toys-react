@@ -1,3 +1,5 @@
+@import 'assets/css/math.scss';
+
 html, body {
   margin: 0;
   padding: 0;
@@ -23,4 +25,3 @@ html, body {
   background-color: white;
   margin: auto;
 }
-
