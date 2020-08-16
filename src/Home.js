@@ -1,5 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Table } from 'react-bootstrap';
+import MathJax from 'react-mathjax-preview'
+import './Home.css';
 
 export default () => {
   return (
@@ -24,6 +27,7 @@ export default () => {
         <p>Familiar: phi, the Golden Ratio, in its fractional form is <math><mfrac><mrow><mn>1</mn><mo>+</mo><msqrt><mn>5</mn></msqrt></mrow><mrow><mn>2</mn></mrow></mfrac></math>.</p>
 
         <p>The powers of phi have interested me in their fractional form, with 2 as the constant denominator (even when it's possible to reduce): <math><mfrac><mrow><mi>a</mi><mo>+</mo><mi>b</mi><msqrt><mn>5</mn></msqrt></mrow><mrow><mn>2</mn></mrow></mfrac></math>, since each <math><mi>a</mi></math> and <math><mi>b</mi></math> is the sum of the previous two, so that each <math><mi>a</mi></math> is a Lucas number and each <math><mi>b</mi></math> is a Fibonacci number&mdash; so: 
+	  <MathJax math={`
 <math>
   <mfrac>
     <mrow><mn>1</mn><mo>+</mo><mn>1</mn><msqrt><mn>5</mn></msqrt></mrow>
@@ -47,42 +51,42 @@ export default () => {
     <mrow><mn>7</mn><mo>+</mo><mn>3</mn><msqrt><mn>5</mn></msqrt></mrow>
     <mrow><mn>2</mn></mrow>
   </mfrac>
-</math>.
+</math>`} />.
 </p>
 
         <p>The interesting thing is that as that as these powers increase, the ratio of <math><mfrac><mi>a</mi><mi>b</mi></mfrac></math> approaches <math><msqrt><mn>5</mn></msqrt></math>, 2.236067977499...:</p>
-<table class="table table-bordered" ng-hide="isEmpty">
+<Table variant="math" bordered>
   <tr class="success text-success">
     <th>Power</th>
     <th>Fractional Form</th>
-    <th><math><mfrac><mtext>a (Lucas number)</mtext><mtext>b (Fibonacci number)</mtext></mfrac></math></th>
-    <th>Approximation to <math><msqrt><mn>5</mn></msqrt></math></th>
+    <th><MathJax math={`<math><mfrac><mtext>a (Lucas number)</mtext><mtext>b (Fibonacci number)</mtext></mfrac></math>`} /></th>
+    <th><MathJax math={`<math><mtext>Approximation to </mtext><msqrt><mn>5</mn></msqrt></math>`} /></th>
   </tr>
   <tr>
     <td>phi<sup>4</sup></td>
-    <td><math><mfrac><mrow><mn>7</mn><mo>+</mo><mn>3</mn><msqrt><mn>5</mn></msqrt></mrow><mrow><mn>2</mn></mrow></mfrac></math></td>
-    <td><math><mfrac><mn>7</mn><mn>3</mn></mfrac></math></td>
+    <td><MathJax math={`<math><mfrac><mrow><mn>7</mn><mo>+</mo><mn>3</mn><msqrt><mn>5</mn></msqrt></mrow><mrow><mn>2</mn></mrow></mfrac></math>`} /></td>
+    <td><MathJax math={`<math><mfrac><mn>7</mn><mn>3</mn></mfrac></math>`} /></td>
     <td>2.3333...</td>
   </tr>
   <tr>
     <td>phi<sup>7</sup></td>
-    <td><math><mfrac><mrow><mn>29</mn><mo>+</mo><mn>13</mn><msqrt><mn>5</mn></msqrt></mrow><mrow><mn>2</mn></mrow></mfrac></math></td>
-    <td><math><mfrac><mn>29</mn><mn>13</mn></mfrac></math></td>
+    <td><MathJax math={`<math><mfrac><mrow><mn>29</mn><mo>+</mo><mn>13</mn><msqrt><mn>5</mn></msqrt></mrow><mrow><mn>2</mn></mrow></mfrac></math>`} /></td>
+    <td><MathJax math={`<math><mfrac><mn>29</mn><mn>13</mn></mfrac></math>`} /></td>
     <td>2.23076923...</td>
   </tr>
   <tr>
     <td>phi<sup>19</sup></td>
-    <td><math><mfrac><mrow><mn>9349</mn><mo>+</mo><mn>4181</mn><msqrt><mn>5</mn></msqrt></mrow><mrow><mn>2</mn></mrow></mfrac></math></td>
-    <td><math><mfrac><mn>9349</mn><mn>4181</mn></mfrac></math></td>
+    <td><MathJax math={`<math><mfrac><mrow><mn>9349</mn><mo>+</mo><mn>4181</mn><msqrt><mn>5</mn></msqrt></mrow><mrow><mn>2</mn></mrow></mfrac></math>`} /></td>
+    <td><MathJax math={`<math><mfrac><mn>9349</mn><mn>4181</mn></mfrac></math>`} /></td>
     <td>2.236067926333413...</td>
   </tr>
   <tr>
     <td>phi<sup>39</sup></td>
-    <td><math><mfrac><mrow><mn>141422324</mn><mo>+</mo><mn>63245986</mn><msqrt><mn>5</mn></msqrt></mrow><mrow><mn>2</mn></mrow></mfrac></math></td>
-    <td><math><mfrac><mn>141422324</mn><mn>63245986</mn></mfrac></math></td>
+    <td><MathJax math={`<math><mfrac><mrow><mn>141422324</mn><mo>+</mo><mn>63245986</mn><msqrt><mn>5</mn></msqrt></mrow><mrow><mn>2</mn></mrow></mfrac></math>`} /></td>
+    <td><MathJax math={`<math><mfrac><mn>141422324</mn><mn>63245986</mn></mfrac></math>`} /></td>
     <td>2.2.2360679774997894...</td>
   </tr>
-</table>
+</Table>
 
         <p>Playing with other sequences in which each element is the sum of the previous two, I see that the ratios appear to approach some irrational (I assume) real number, but it's not evident to me that it's a number that can be expressed tidily. 2.23067977499... is irrational but what the decimal form approximates is precisely the square root of 5.</p>
 
