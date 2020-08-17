@@ -5,16 +5,19 @@ article {
   font-family: Roboto, futura, sans-serif;
   line-height: 2;
   text-align: justify;
-  margin-bottom: 50px;
+  margin-bottom: 25px;
+  border-bottom: 1px dotted #66866A;
 }
 
 .article-title {
-    font-size: 16px;
+    font-size: 14px;
 	font-weight: bold;
-    color: #9ab;
+    color: #7D9392;
 }
 
-h4 {
-  color:#565;
+article h4 {
+  font-size:14px;
+  color: #7D9392;
+  float: right;
 }
 

@@ -8,9 +8,32 @@ export default () => {
   return (
     <div>
       <article>
+        <h4>August 16, 2020</h4>
+
+        <p className="article-title">Pythagorean Triples - Primitives</p>
+
+	    <p>I took some interest in Pythagorean triples--specifically, those that don't have a common factor greater than 1. Examples include the familiar (3, 4, 5), (5, 12, 13), (7, 24, 25). In each of these cases, the difference between b and c is 1.</p>
+
+	    <p>Another triple is (6, 8, 10), since 36 + 64 = 100. However, this isn't a primitive, as a, b, and c are all divisible by 2.</p>
+
+	    <p>My approach to generating a Pythagorean triple is to start with c - b and then calculating values for a^2. I envison b^2 positioned within c^2, so that the two share the lower right corner. Then, a^2 wraps around b^2, with the corner of a^2 being the square of (c - b).</p>
+
+	    <p>Let n = (c - b). Then the area of a^2 is n^2 + 2(nb). Since this must be square, I rearrange the terms: n(n + 2b). If n is square, then (n + 2b) must also be square. If n isn't square, then (n + 2b) must be a square, multiplied by some number that, if mulplied by n would yield a square. (For example, if n is 12, (n + 2b) would have to be a square multiplied by 3--or 3 times some square.)</p>
+
+	    <p>Since I'm interested in primitives, I want to find triples that don't have common factors. This is true for all triples where n = 1. What about for n = 2? Since 2 isn't a square, (n + 2b) must be a square multiplied by 2. With (c - b) of 2, a^2 will be even, and a will therefore be even. Therefore, b must be odd if we want a primitive triple. So with n = 2, we are looking for square products of 2(2+2b) such that b is an odd number. Algebra: 2(2+2b) = 4+4b = 4(1 + b). Since 4 is square, 1 + b must be square, and b must be one less than an even square. So: 3, 15, 35, 63, &c. Let's look at these.</p>
+
+	    <p>Start with b = 3. Then c = 5, and we have our familiar (3, 4, 5) triple, just rearranged to (a = 4, b = 3, c = 5). With b = 15, c = 17, and a^2 = 4(1 +15) = 64, yielding a = 8, so (a = 8, b = 15, c = 17). With b = 35, the triple is (a = 12, b = 35, c = 37). And so on.</p>
+
+	    <p>What about with different values of c - b? How about 3? Using n = 3, we get 3 x (3 + 2b). Since 3 isn't square, (3 + 2b) must be a square multiplied by 3. For (3 + 2b) to be a multiple of 3, 2b must be a multiple of 3, and so b itself must be a multiple of 3. This precludes a primitive triple.</p>
+
+	    <p>In general, primitives are possible only with values of n that are either odd squares or doubled squares. This is because for n as an odd square (n + 2b) can be a square without n and b having any common factors. Likewise, with n being double a square, (n + 2b).</p>
+
+      </article>
+ 
+      <article>
         <h4>July 27, 2020</h4>
 
-        <p class="article-title">Prime Powers of 2 and Mersenne Primes</p>
+        <p className="article-title">Prime Powers of 2 and Mersenne Primes</p>
 
         <p>So a Mersenne prime is a prime number of the form 2^n - 1. All known perfect numbers are based on Mersenne primes. I was toying one night with why the power of 2 for a Mersenne prime must itself be prime. I'm sure an algebraic proof would show that 2^n - 1 is factorable (and therefore not prime) if n is composite. But it was a different approach that occurred to me as I was lying there.</p>
 
@@ -20,7 +43,7 @@ export default () => {
       <article>
         <h4>July 24, 2020</h4>
 
-        <p class="article-title">Golden Ratio Fiddlings</p>
+        <p className="article-title">Golden Ratio Fiddlings</p>
 
         <p>So I've not explored this much yet, but it's looking curious to me.</p>
 
@@ -56,7 +79,7 @@ export default () => {
 
         <p>The interesting thing is that as that as these powers increase, the ratio of <math><mfrac><mi>a</mi><mi>b</mi></mfrac></math> approaches <math><msqrt><mn>5</mn></msqrt></math>, 2.236067977499...:</p>
 <Table variant="math" bordered>
-  <tr class="success text-success">
+  <tr className="success text-success">
     <th>Power</th>
     <th>Fractional Form</th>
     <th><MathJax math={`<math><mfrac><mtext>a (Lucas number)</mtext><mtext>b (Fibonacci number)</mtext></mfrac></math>`} /></th>
@@ -97,7 +120,7 @@ export default () => {
       <article>
         <h4>July 16, 2020</h4>
 
-        <p class="article-title">Fibonacci Numbers as Sums of Products of Fibonacci Numbers</p>
+        <p className="article-title">Fibonacci Numbers as Sums of Products of Fibonacci Numbers</p>
 
         <p>Let (a, b) be two consecutive fibonacci numbers, and let (c, d) be two consecutive Fibonacci numbers. (a, b) can overlap (c, d). The number ac + bd is a Fibonacci number. Examples: (a=3, b=5), (c=8, d=13). Then ac = 24, bd = 65, ac + bd = 89.</p>
 
@@ -108,7 +131,7 @@ export default () => {
       <article>
         <h4>July 15, 2020</h4>
 
-        <p class="article-title">Reciprocals of Composite Denominators</p>
+        <p className="article-title">Reciprocals of Composite Denominators</p>
 
         <p>I've long known that when a denominator is prime (other than 2, 5), the period length of the reciprocal is the smallest 9s reptend that the number divides. For 7, that's 6; for 31, it's 15; for 41, it's 5; and so on. I don't believe there can be a pattern: it just depends on which value 10^n - 1 that prime number happens to divide. Of course, this number will be either one less than the prime number (as with 7), or a factor of that (as with 31 and 41). If the number is even, the period is internally complementary--that is, the sum of its two halves is a 9s reptend. For 1/7, the period is 142857, and 142 + 857 = 999.</p>
 
@@ -123,7 +146,7 @@ export default () => {
       <article>
         <h4>June 29, 2020</h4>
 
-        <p class="article-title">Description of Periodic Decimals of Reciprocals of Prime Numbers</p>
+        <p className="article-title">Description of Periodic Decimals of Reciprocals of Prime Numbers</p>
 
         <p>Let p be the denominator, a prime number that is not a factor of the base. So in base 10, p is not 2 or 5.</p>
 
