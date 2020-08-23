@@ -13,7 +13,6 @@ function buildDescription({flags, denomData}) {
 		}
 
 		if (!flags.isFullReptend && flags.isPrime && flags.internalComplement) {
-			console.log('should be adding to description for full reptend, prime, internal complement');
 			descCode.push((<div>
 <p>This denominator is not a full-reptend prime: the length of the period ({denomData.repeating}) is less than the denominator - 1. However, it is still internally complemented: the period can be split into two groups of an equal number of digits, and the sum of these two groups is a number consisting entirely of 9s.</p>
 
@@ -52,7 +51,7 @@ function buildDescription({flags, denomData}) {
 
 		</div>));
 	}
-	console.log('descCode', descCode);
+
 	return descCode;
 }
 
