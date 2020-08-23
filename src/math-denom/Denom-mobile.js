@@ -4,10 +4,32 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import { InputGroup, FormControl, Button } from 'react-bootstrap';
 import DenomDescription from './DenomDescription';
-import Expansion from './Expansion';
+import Expansion from './Expansion-mobile';
 import prep from './denom-helper';
 import getDenomDesc from './denom-description';
+import styled from 'styled-components';
 import './Denom.css';
+
+const Overlay = styled.div`
+	position: absolute;
+	z-index: 100;
+	border: #c448c4;
+	margin: 20px;
+	padding: 20px;
+	background-color: #ffe0ff;
+	color: black;
+	top: 150px;
+
+	.close-overlay {
+		position: absolute;
+		top: 8px;
+		right: 8px;
+		width: 30px;
+		height: 30px;
+		color: purple;
+		cursor: pointer;
+	}
+`;
 
 function fetchDenomDesc(denom) {
 	return getDenomDesc(denom);
@@ -28,7 +50,7 @@ class Denom extends Component {
   constructor(props) {
     super(props);
     this.denom = props.match.params.denom;
-    this.state = { denom: null, groups: [], groupCount: '', expansions: {}, forDisplay: null, factors: {}, flags: {}, denomData: {} };
+    this.state = { denom: null, groups: [], groupCount: '', expansions: {}, overlay: false, forDisplay: null, factors: {}, flags: {}, denomData: {} };
     this.displayNumerator = this.displayNumerator.bind(this);
     this.numeratorState = this.numeratorState.bind(this);
     this.setDenom = this.setDenom.bind(this);
@@ -38,7 +60,6 @@ class Denom extends Component {
 
   componentDidMount() {
     this.getDenomData();
-    this.getDenomDesc();
   }
 
   getDenomDesc() {
@@ -55,7 +76,6 @@ class Denom extends Component {
 			isPrime: data && data.factors.length === 0
 		};
 		  console.log('flags', flags);
-		  console.log('denomData', data);
 		  this.setState({ flags: flags, denomData: data });
 	  });
   }
@@ -86,7 +106,8 @@ class Denom extends Component {
    * Set forDisplay.
    */
   displayNumerator(stateVars) {
-    this.setState({ ...stateVars });
+	  console.log('display numerator', stateVars);
+    this.setState({ ...stateVars, overlay: true });
   }
 
   /*
@@ -123,6 +144,8 @@ class Denom extends Component {
    * so when the user has entered his selection, the event handler can get the value from the component.
    */
   setDenom(e) {
+	// added preventDefault to keep it from opening the menu. Why does it otherwise open the menu??
+	e.preventDefault();
     this.denomField = e.target.value;
   }
 
@@ -151,22 +174,38 @@ class Denom extends Component {
           <Col>
             <h2 className="math-primary">Denominators</h2>
             <InputGroup>
-              <FormControl placeholder="denominator" id="input-denom" onChange={this.setDenom}/>
+              <FormControl placeholder="denominator" id="input-denom" type="tel" onChange={this.setDenom}/>
               <InputGroup.Append>
                 <Button variant="info" onClick={this.selectDenom}>Calculate</Button>
               </InputGroup.Append>
             </InputGroup>
           </Col>
 
-          <Col>
-          </Col>
         </Row>
       </Container>
     )
     } else {
+		const handleClickClose = e => {
+			e.preventDefault();
+			var el = e.currentTarget.parentNode;
+			console.log('close', el);
+			let stateVars = this.state;
+    		this.setState({ ...stateVars, overlay: false });
+		};
+
       return (
       <Container>
         <Row>
+          <Overlay style={{ transitionDuration: "1s", zIndex: this.state.overlay ? 100 : 0, opacity: this.state.overlay ? 1 : 0 }}>
+            <div className="close-overlay" onClick={handleClickClose}>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="currentColor" id="x-circle-fill"><path fill-rule="evenodd" d="M16 8A8 8 0 110 8a8 8 0 0116 0zm-4.146-3.146a.5.5 0 00-.708-.708L8 7.293 4.854 4.146a.5.5 0 10-.708.708L7.293 8l-3.147 3.146a.5.5 0 00.708.708L8 8.707l3.146 3.147a.5.5 0 00.708-.708L8.707 8l3.147-3.146z"></path></svg>
+            </div>
+            <DenomDescription flags={this.state.flags} denomData={this.state.denomData} />
+            <h2>{this.state.fraction}</h2>
+            <div className="expansion">
+            {this.state.forDisplay}
+            </div>
+          </Overlay>
           <Col style={{minWidth: "50%"}}>
             <h2 className="math-primary">Denominators</h2>
             <Table variant="math">
@@ -180,7 +219,7 @@ class Denom extends Component {
               <tr>
                 <td>
                   <InputGroup>
-                    <FormControl placeholder="denominator" id="input-denom" onChange={this.setDenom}/>
+                    <FormControl placeholder="denominator" id="input-denom" type="tel" onChange={this.setDenom}/>
                     <InputGroup.Append>
                       <Button variant="info" onClick={this.selectDenom}>Calculate</Button>
                     </InputGroup.Append>
@@ -211,13 +250,6 @@ class Denom extends Component {
             </Table>
           </Col>
 
-          <Col style={{minWidth: "50%"}}>
-            <DenomDescription flags={this.state.flags} denomData={this.state.denomData} />
-            <h2>{this.state.fraction}</h2>
-            <div className="expansion">
-            {this.state.forDisplay}
-            </div>
-          </Col>
         </Row>
       </Container>
     )

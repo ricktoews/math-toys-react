@@ -31,6 +31,20 @@
   border-radius: 13px;
 }
 
+.numerator-mobile span {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height:40px;
+  text-align: center;
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 8px;
+  background-color: #66866A;
+  color: white;
+  border-radius: 20px;
+}
+
 .non-repeat {
   color: #333;
 }
@@ -49,6 +63,16 @@
 .expansion {
   display: block;
   cursor: pointer;
+  font-size:1rem;
+  color: #8AAF9C;
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+.expansion-mobile {
+  display: block;
+  cursor: pointer;
+  font-size:1.25rem;
+  color: #8AAF9C;
   overflow-wrap: break-word;
   word-break: break-all;
 }
