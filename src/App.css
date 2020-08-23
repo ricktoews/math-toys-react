@@ -6,13 +6,16 @@ html, body {
 }
 
 .App-header {
+  position: relative;
   text-align: center;
   background-color: #282c34;
   min-height: 50px;
+  /*
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  */
   color: white;
 }
 

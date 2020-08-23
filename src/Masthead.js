@@ -1,30 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
+import Hamburger from './Hamburger';
 
-class Masthead extends Component {
-  constructor(props) {
-    super(props);
-    let path = this.props.location.pathname;
-    this.title = this.setTitle(path);
-  }
+function Masthead(props) {
+    var path = props.location.pathname;
 
-  setTitle(path) {
-    let title = 'Home';
-
-    if (path === '/') {
-      title = '- Home';
-    } else if (/denom/.test(path)) {
-      title = '- Denominator Analyzer';
-    }
-    return title;
-  }
-
-  render() {
     return (
       <header className="App-header">
+		<Hamburger toggle={props.toggle} />
         <div className="masthead">The Avocational Arithmophile</div>
-		<Nav>
+		<Nav style={{ left: '200px', display: 'none' }}>
           <Nav.Item>
             <Nav.Link href="/">Home</Nav.Link>
           </Nav.Item>
@@ -40,7 +26,6 @@ class Masthead extends Component {
         </Nav>
       </header>
     );
-  }
 }
 
 export default withRouter(Masthead);
