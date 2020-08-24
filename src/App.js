@@ -9,7 +9,7 @@ import styled from 'styled-components';
 
 const PrimaryNav = styled.ul`
 	position:absolute;
-	z-index:100;
+	z-index:0;
 	left: 10px;
 	list-style-type: none;
 	margin: 0;
@@ -52,6 +52,7 @@ function App() {
 			var ul = document.querySelector('ul');
 			ul.style.transition = '.5s';
 			ul.style.opacity = 0;
+			ul.style.zIndex = 0;
 		}
 		setState(!state);
 	}
@@ -67,6 +68,7 @@ function App() {
 			var ul = document.querySelector('ul');
 			ul.style.transition = '.5s';
 			ul.style.opacity = 1;
+			ul.style.zIndex = 100;
 		}
 	}
 

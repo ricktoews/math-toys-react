@@ -2,15 +2,30 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Table } from 'react-bootstrap';
 import MathJax from 'react-mathjax-preview'
+import styled from 'styled-components';
 import './Home.css';
+
+const HomeWrapper = styled.div`
+	margin-top: 50px;
+
+	.article-title, .article-date {
+		font-size: 1.25rem;
+		font-weight: bold;
+		color: #c448c4;
+	}
+	.article-date {
+		float: right;
+	}
+
+`;
 
 export default () => {
   return (
-    <div>
+    <HomeWrapper>
       <article>
-        <h4>August 16, 2020</h4>
-
+        <p className="article-date">August 16, 2020</p>
         <p className="article-title">Pythagorean Triples - Primitives</p>
+
 
 	    <p>I took some interest in Pythagorean triples--specifically, those that don't have a common factor greater than 1. Examples include the familiar (3, 4, 5), (5, 12, 13), (7, 24, 25). In each of these cases, the difference between b and c is 1.</p>
 
@@ -31,7 +46,7 @@ export default () => {
       </article>
  
       <article>
-        <h4>July 27, 2020</h4>
+        <p className="article-date">July 27, 2020</p>
 
         <p className="article-title">Prime Powers of 2 and Mersenne Primes</p>
 
@@ -41,7 +56,7 @@ export default () => {
       </article>
  
       <article>
-        <h4>July 24, 2020</h4>
+        <p className="article-date">July 24, 2020</p>
 
         <p className="article-title">Golden Ratio Fiddlings</p>
 
@@ -118,7 +133,7 @@ export default () => {
       </article>
 
       <article>
-        <h4>July 16, 2020</h4>
+        <p className="article-date">July 16, 2020</p>
 
         <p className="article-title">Fibonacci Numbers as Sums of Products of Fibonacci Numbers</p>
 
@@ -129,7 +144,7 @@ export default () => {
       </article>
 
       <article>
-        <h4>July 15, 2020</h4>
+        <p className="article-date">July 15, 2020</p>
 
         <p className="article-title">Reciprocals of Composite Denominators</p>
 
@@ -144,7 +159,7 @@ export default () => {
       </article>
 
       <article>
-        <h4>June 29, 2020</h4>
+        <p className="article-date">June 29, 2020</p>
 
         <p className="article-title">Description of Periodic Decimals of Reciprocals of Prime Numbers</p>
 
@@ -175,7 +190,7 @@ export default () => {
 
       </article>
 
-    </div>
+    </HomeWrapper>
   )
 }
 

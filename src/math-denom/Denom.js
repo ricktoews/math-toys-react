@@ -150,6 +150,10 @@ class Denom extends Component {
         <Row>
           <Col>
             <h2 className="math-primary">Denominators</h2>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
             <InputGroup>
               <FormControl placeholder="denominator" id="input-denom" onChange={this.setDenom}/>
               <InputGroup.Append>
@@ -167,8 +171,12 @@ class Denom extends Component {
       return (
       <Container>
         <Row>
-          <Col style={{minWidth: "50%"}}>
+          <Col>
             <h2 className="math-primary">Denominators</h2>
+          </Col>
+        </Row>
+        <Row>
+          <Col style={{minWidth: "50%"}}>
             <Table variant="math">
               <thead>
               <tr>

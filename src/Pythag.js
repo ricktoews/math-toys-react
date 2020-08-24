@@ -38,29 +38,43 @@ function squarePosition(row, col) {
   return { top, left };
 }
 
+function resetASquares(triple) {
+	var size = triple.a;
+	var totalSquares = size * size;
+	for (let i = 0; i < totalSquares; i++) {
+		let r = Math.ceil((i + 1) / size), c = (i % size) + 1;
+		let pos = squarePosition(r, c);
+		let id = `a-${i}`;
+		let el = document.querySelector('#' + id);
+		el.style.transition = '.5s';
+		el.style.top = pos.top + 'px';
+		el.style.left = pos.left + 'px';
+	}
+}
+
+
 function makeSquares(triple, letter, squareType = '') {
-  var size = triple[letter];
-  var squares = [];
-  let className = 'square';
-  if (squareType) className += ' ' + squareType;
-  var totalSquares = size * size;
-  var offset = letter === 'b' ? triple.c - triple.b : 0;
-  var backgroundColor = { a: 'rbga(223, 240, 184, .9)', b: '#dff0b8', c: 'rgba(223, 240, 184, .5)' };
+	var size = triple[letter];
+	var squares = [];
+	let className = 'square';
+	if (squareType) className += ' ' + squareType;
+	var totalSquares = size * size;
+	var offset = letter === 'b' ? triple.c - triple.b : 0;
+	var backgroundColor = { a: 'rbga(223, 240, 184, .9)', b: '#dff0b8', c: 'rgba(223, 240, 184, .5)' };
 
-  for (let i = 0; i < totalSquares; i++) {
-    let r = Math.ceil((i + 1) / size) + offset, c = (i % size) + 1 + offset;
-    let pos = squarePosition(r, c);
-    let id = `${letter}-${i}`;
-    squares.push(<div id={id} key={i} className={ className } style={{ 
-      top: pos.top + 'px', 
-      left: pos.left + 'px',
-      width: (SQUARE_WIDTH - 1) + 'px',
-      height: (SQUARE_WIDTH - 1) + 'px',
-//      backgroundColor: backgroundColor[letter]
-    }}></div>);
-  }
+	for (let i = 0; i < totalSquares; i++) {
+		let r = Math.ceil((i + 1) / size) + offset, c = (i % size) + 1 + offset;
+		let pos = squarePosition(r, c);
+		let id = `${letter}-${i}`;
+		squares.push(<div id={id} key={i} className={ className } style={{ 
+			top: pos.top + 'px', 
+			left: pos.left + 'px',
+			width: (SQUARE_WIDTH - 1) + 'px',
+			height: (SQUARE_WIDTH - 1) + 'px',
+		}}></div>);
+	}
 
-  return squares;
+	return squares;
 }
 
 function getASides(triple) {
@@ -122,49 +136,65 @@ function Pythag(props) {
   MOVE_DELAY = 500 - (150*parseInt(triple.c/10,10));
   console.log('square width', SQUARE_WIDTH);
 
-  function handleBlur(e) {
-    e.preventDefault();
-    var el = e.target;
-    getPythagData(el.value).then(res => {
-      let triple = res[0];
-      setTriple({ a: triple.a, b: triple.b, c: triple.c });
-      setTriples(res);
-	  setCorner(el.value);
-    });
-  }
+	const handleClick = e => {
+		e.preventDefault();
+		if (corner) {
+			getPythagData(corner).then(res => {
+				let triple = res[0];
+				setTriple({ a: triple.a, b: triple.b, c: triple.c });
+				setTriples(res);
+			});
+		}
+	}
 
-  function clickHandler(e) {
-    e.preventDefault();
-    var el = e.currentTarget;
-    console.log('dataset',el);
-    var triple = el.dataset.triple.split(',');
-    console.log('triple',triple, triple.length);
-    setTriple({ a: triple[0], b: triple[1], c: triple[2] });
-  }
+	const handleBlur = e => {
+		e.preventDefault();
+		var el = e.target;
+		console.log('handleBlur; corner', el.value);
+		setCorner(el.value);
+	};
+
+	const handleTripletSelect = e => {
+		e.preventDefault();
+		var el = e.currentTarget;
+		console.log('dataset',el);
+		var triple = el.dataset.triple.split(',');
+		console.log('triple',triple, triple.length);
+		setTriple({ a: triple[0], b: triple[1], c: triple[2] });
+	}
 
   // Mainly added to see that it works. It does!
-  function playHandler(e) {
-	  e.preventDefault();
-	  var el = e.target;
-      moveASquares(triple);
-  }
+	function playHandler(e) {
+		e.preventDefault();
+		var el = e.target;
+		moveASquares(triple);
+	}
 
-  var cSide = triple.c * SQUARE_WIDTH + 1;
-  var squares = makeSquares(triple, 'c');
-  var aSquares = makeSquares(triple, 'a', 'a-square');
-  var bSquares = makeSquares(triple, 'b', 'b-square');
-  var bPositions = [];
+	const resetHandler = e => {
+		e.preventDefault();
+		resetASquares(triple);
+	}
+
+	var cSide = triple.c * SQUARE_WIDTH + 1;
+	var squares = makeSquares(triple, 'c');
+	var aSquares = makeSquares(triple, 'a', 'a-square');
+	var bSquares = makeSquares(triple, 'b', 'b-square');
+	var bPositions = [];
   return (
     <div className="Pythagorean-Toy">
       <Container>
         <Row>
           <Col>
             <h2 className="math-primary">Pythagorean Toy</h2>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
             <InputGroup className="pythag-a">
-              <InputGroup.Prepend>
-                <InputGroup.Text id="corner-input">Corner =</InputGroup.Text>
-              </InputGroup.Prepend>
-              <FormControl placeholder="" aria-label="" aria-describedby="corner-input" onBlur={handleBlur}/>
+              <FormControl placeholder="" aria-label="" aria-describedby="" onBlur={handleBlur}/>
+              <InputGroup.Append>
+                <Button variant="info" onClick={handleClick}>Calculate</Button>
+              </InputGroup.Append>
             </InputGroup>
 
             { triple.a && (
@@ -192,7 +222,10 @@ function Pythag(props) {
 
 			) }
 
-            { triple.a && <Button onClick={playHandler} variant="secondary">Rearrange A<sup>2</sup></Button> }
+            { triple.a && (<div className="pythag-buttons" style={{marginBottom: "10px", display: "flex", justifyContent: "space-between" }}>
+				<Button onClick={playHandler} variant="secondary">Rearrange A<sup>2</sup></Button>
+				<Button onClick={resetHandler} variant="secondary">Reset</Button>
+			</div>)}
 
           </Col>
           <Col>
@@ -206,7 +239,7 @@ function Pythag(props) {
 	          </thead>
 	          <tbody>
 	            {triples.map((t, key) => (
-	            <tr key={key} onClick={clickHandler} data-triple={`${t.a},${t.b},${t.c}`}>
+	            <tr key={key} onClick={handleTripletSelect} data-triple={`${t.a},${t.b},${t.c}`}>
 	              <td>({t.a}, {t.b}, {t.c})</td>
 	              <td>{t.a*t.a} + {t.b*t.b} = {t.c*t.c}</td>
 	              <td>{t.isPrimitive?'Yes':'No'}</td>
