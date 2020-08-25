@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Table } from 'react-bootstrap';
 import MathJax from 'react-mathjax-preview'
 import styled from 'styled-components';
-import './Home.css';
+import './Home-mobile.css';
 
 const HomeWrapper = styled.div`
 	margin-top: 40px;
