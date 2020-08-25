@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import MediaQuery from 'react-responsive';
 import { Switch, Route } from 'react-router-dom';
 import Home from './Home';
+import Home_mobile from './Home-mobile';
 import Denom from './math-denom/Denom';
 import Denom_mobile from './math-denom/Denom-mobile';
 import Phi from './Phi';
@@ -26,7 +27,7 @@ class Router extends Component {
 
         <MediaQuery query="(max-width:480px)">
           <Switch>
-            <Route exact path='/' component={Home}/>
+            <Route exact path='/' component={Home_mobile}/>
             <Route exact path='/denom' component={Denom_mobile}/>
             <Route path='/denom/:denom' component={Denom_mobile}/>
             <Route path='/phi' component={Phi}/>

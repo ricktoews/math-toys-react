@@ -1,12 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700&display=swap');
 
 article {
-  color:#999;
+  color:#777;
   font-family: Roboto, futura, sans-serif;
+  font-size: 1.0rem;
+  font-weight: 500;
   line-height: 2;
-  text-align: justify;
   margin-bottom: 25px;
   border-bottom: 1px dotted #66866A;
 }
 
-
+article > p:nth-child(1) {
+	line-height:1.3;
+}
