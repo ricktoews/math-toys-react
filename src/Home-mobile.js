@@ -6,15 +6,18 @@ import styled from 'styled-components';
 import './Home.css';
 
 const HomeWrapper = styled.div`
-	margin-top: 50px;
+	margin-top: 40px;
 
-	.article-title, .article-date {
-		font-size: 1.25rem;
+	.article-title {
+		font-size: 1rem;
 		font-weight: bold;
 		color: #c448c4;
 	}
 	.article-date {
-		float: right;
+		font-size:.75rem;
+		font-weight: bold;
+		color: #3eb4a4;
+		opacity: .5;
 	}
 
 `;
@@ -23,8 +26,10 @@ export default () => {
   return (
     <HomeWrapper>
       <article>
-        <p className="article-date">August 16, 2020</p>
-        <p className="article-title">Pythagorean Triples - Primitives</p>
+        <p>
+          <span className="article-title">Pythagorean Triples - Primitives</span><br/>
+          <span className="article-date">August 16, 2020</span>
+	    </p>
 
 
 	    <p>I took some interest in Pythagorean triples--specifically, those that don't have a common factor greater than 1. Examples include the familiar (3, 4, 5), (5, 12, 13), (7, 24, 25). In each of these cases, the difference between b and c is 1.</p>
@@ -46,9 +51,10 @@ export default () => {
       </article>
  
       <article>
-        <p className="article-date">July 27, 2020</p>
-
-        <p className="article-title">Prime Powers of 2 and Mersenne Primes</p>
+        <p>
+          <span className="article-title">Prime Powers of 2 and Mersenne Primes</span><br/>
+          <span className="article-date">July 27, 2020</span>
+	    </p>
 
         <p>So a Mersenne prime is a prime number of the form 2^n - 1. All known perfect numbers are based on Mersenne primes. I was toying one night with why the power of 2 for a Mersenne prime must itself be prime. I'm sure an algebraic proof would show that 2^n - 1 is factorable (and therefore not prime) if n is composite. But it was a different approach that occurred to me as I was lying there.</p>
 
@@ -56,9 +62,10 @@ export default () => {
       </article>
  
       <article>
-        <p className="article-date">July 24, 2020</p>
-
-        <p className="article-title">Golden Ratio Fiddlings</p>
+        <p>
+          <span className="article-title">Golden Ratio Fiddlings</span><br/>
+          <span className="article-date">July 24, 2020</span>
+        </p>
 
         <p>So I've not explored this much yet, but it's looking curious to me.</p>
 
@@ -101,9 +108,10 @@ export default () => {
       </article>
 
       <article>
-        <p className="article-date">July 16, 2020</p>
-
-        <p className="article-title">Fibonacci Numbers as Sums of Products of Fibonacci Numbers</p>
+        <p>
+          <span className="article-title">Fibonacci Numbers as Sums of Products of Fibonacci Numbers</span><br/>
+          <span className="article-date">July 16, 2020</span>
+        </p>
 
         <p>Let (a, b) be two consecutive fibonacci numbers, and let (c, d) be two consecutive Fibonacci numbers. (a, b) can overlap (c, d). The number ac + bd is a Fibonacci number. Examples: (a=3, b=5), (c=8, d=13). Then ac = 24, bd = 65, ac + bd = 89.</p>
 
@@ -112,9 +120,10 @@ export default () => {
       </article>
 
       <article>
-        <p className="article-date">July 15, 2020</p>
-
-        <p className="article-title">Reciprocals of Composite Denominators</p>
+        <p>
+          <span className="article-title">Reciprocals of Composite Denominators</span><br/>
+          <span className="article-date">July 15, 2020</span>
+        </p>
 
         <p>I've long known that when a denominator is prime (other than 2, 5), the period length of the reciprocal is the smallest 9s reptend that the number divides. For 7, that's 6; for 31, it's 15; for 41, it's 5; and so on. I don't believe there can be a pattern: it just depends on which value 10^n - 1 that prime number happens to divide. Of course, this number will be either one less than the prime number (as with 7), or a factor of that (as with 31 and 41). If the number is even, the period is internally complementary--that is, the sum of its two halves is a 9s reptend. For 1/7, the period is 142857, and 142 + 857 = 999.</p>
 
@@ -127,9 +136,10 @@ export default () => {
       </article>
 
       <article>
-        <p className="article-date">June 29, 2020</p>
-
-        <p className="article-title">Description of Periodic Decimals of Reciprocals of Prime Numbers</p>
+        <p>
+          <span className="article-title">Description of Periodic Decimals of Reciprocals of Prime Numbers</span><br/>
+          <span className="article-date">June 29, 2020</span>
+        </p>
 
         <p>Let p be the denominator, a prime number that is not a factor of the base. So in base 10, p is not 2 or 5.</p>
 
