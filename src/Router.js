@@ -7,6 +7,7 @@ import Denom from './math-denom/Denom';
 import Denom_mobile from './math-denom/Denom-mobile';
 import Phi from './Phi';
 import Pythag from './Pythag';
+import Pythag_mobile from './Pythag-mobile';
 import Mastermind from './mastermind/Mastermind';
 
 class Router extends Component {
@@ -31,7 +32,7 @@ class Router extends Component {
             <Route exact path='/denom' component={Denom_mobile}/>
             <Route path='/denom/:denom' component={Denom_mobile}/>
             <Route path='/phi' component={Phi}/>
-            <Route path='/pythag' component={Pythag}/>
+            <Route path='/pythag' component={Pythag_mobile}/>
             <Route path='/mastermind' component={Mastermind}/>
           </Switch>
         </MediaQuery>
