@@ -28,8 +28,8 @@ const sideBarStyle = {
 	show: {
 		transitionTimingFunction: 'ease',
 		transitionDuration: '1s',
-		width: '500px',
-		height: '500px',
+		width: '380px',
+		height: '380px',
 		opacity: 1,
 	}
 };
