@@ -31,7 +31,7 @@ const PrimaryNav = styled.ul`
 	}
 	li>a:hover {
 		color: white;
-		font-size: 18px;
+		font-size: 14px;
 		text-decoration: none;
 		transition: .25s;
 	}
@@ -66,7 +66,6 @@ function App() {
 		var opacity = el.style.opacity;
 		if (opacity === '1') {
 			var ul = document.querySelector('ul');
-			ul.style.transition = '.5s';
 			ul.style.opacity = 1;
 			ul.style.zIndex = 100;
 		}
