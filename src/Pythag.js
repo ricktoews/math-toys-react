@@ -93,7 +93,7 @@ function Pythag(props) {
 	        <InputGroup className="pythag-a">
 	  
             <Dropdown>
-	          <Dropdown.Toggle variant="success">
+	          <Dropdown.Toggle variant="success" style={{ backgroundColor: "#66866b" }}>
 	            Corner size (Currently {corner})
 	          </Dropdown.Toggle>
 

@@ -3,27 +3,27 @@ import styled from 'styled-components';
 import PythagIllus from './PythagIllus';
 import Help from './Help';
 
-const infoWidth = 500;
+const infoWidth = 760;
 const infoHeight = 500;
 const infoBg = '#eee';
-const infoBorder = '1px solid black';
+const infoBorder = '2px solid #417941';
 
 const Info = styled.div`
 	position: absolute;
 	z-index: 200;
-	width: 500px;
+	width: 760px;
 	height: 500px;
-	background-color: #fffdf3;
-	border: 1px solid #fff375;
-	padding: 5px;
+	background-color: #ffffff;
+	border: 2px solid #417941;
+	padding: 15px;
 	overflow: scroll;
 	font-size: 12px;
 	border-radius: 10px;
 	box-shadow: 1px 1px 6px grey;
 	font-family: roboto;
 	color: #a1a131;
-	top: 17px;
-	left: 239px;
+	top: 57px;
+	left: 160px;
 
 	.close-overlay {
 		position: absolute;
@@ -63,7 +63,7 @@ const info = {
 };
 
 function InfoPanel(props) {
-	const [state, setState] = useState({ show: true });
+	const [state, setState] = useState({ show: false });
 
 	const handleHelpButton = e => {
 		console.log('handleHelpButton');
@@ -77,7 +77,7 @@ function InfoPanel(props) {
 	   	setState({ show: !state.show });
 	};
 
-	return !state.show ? (<Help action={handleHelpButton}/>) : (
+	return !state.show ? (<Help action={handleHelpButton} />) : (
 		<Info style={{ transitionDuration: '1s', opacity: state.show ? 1 : 0 }}>
           <div className="close-overlay" onClick={handleClickClose}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="currentColor" id="x-circle-fill"><path fill-rule="evenodd" d="M16 8A8 8 0 110 8a8 8 0 0116 0zm-4.146-3.146a.5.5 0 00-.708-.708L8 7.293 4.854 4.146a.5.5 0 10-.708.708L7.293 8l-3.147 3.146a.5.5 0 00.708.708L8 8.707l3.146 3.147a.5.5 0 00.708-.708L8.707 8l3.147-3.146z"></path></svg>
