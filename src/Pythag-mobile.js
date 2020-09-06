@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { FormControl, InputGroup } from 'react-bootstrap';
+import { Dropdown, FormControl, InputGroup } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { Table } from 'react-bootstrap';
+import PythagHelper from './pythag-helper';
+import InfoPanel from './InfoPanel';
 
 
 
@@ -127,19 +129,26 @@ function getPythagData(a) {
 }
 
 function Pythag(props) {
-  var [corner, setCorner] = useState(0);
-  var [triple, setTriple] = useState({ });
-  var [triples, setTriples] = useState([]);
+	var [corner, setCorner] = useState(1);
+	var [triple, setTriple] = useState({ });
+	var [triples, setTriples] = useState([]);
 
-  SQUARE_WIDTH = Math.max(STARTING - (5*parseInt(triple.c/10,10)) + 1, 5);
+	SQUARE_WIDTH = Math.max(STARTING - (5*parseInt(triple.c/10,10)) + 1, 5);
   
-  MOVE_DELAY = 500 - (150*parseInt(triple.c/10,10));
-  console.log('square width', SQUARE_WIDTH);
+	useEffect(() => {
+		console.log('corner changed', corner);
+		processCorner();
+	}, [corner]);
 
-	const handleClick = e => {
-		e.preventDefault();
+	SQUARE_WIDTH = Math.max(STARTING - (5*parseInt(triple.c/10,10)) + 1, 5);
+	PythagHelper.setSquareWidth(SQUARE_WIDTH);
+  
+	PythagHelper.MOVE_DELAY = 500 - (150*parseInt(triple.c/10,10));
+	console.log('square width', SQUARE_WIDTH);
+
+	const processCorner = () => {
 		if (corner) {
-			getPythagData(corner).then(res => {
+			PythagHelper.getPythagData(corner).then(res => {
 				let triple = res[0];
 				setTriple({ a: triple.a, b: triple.b, c: triple.c });
 				setTriples(res);
@@ -147,10 +156,19 @@ function Pythag(props) {
 		}
 	}
 
+	const handleDropdown = e => {
+		var el = e.currentTarget;
+		setCorner(el.dataset.corner);
+	}
+
+	const handleClick = e => {
+		e.preventDefault();
+		processCorner();
+	}
+
 	const handleBlur = e => {
 		e.preventDefault();
 		var el = e.target;
-		console.log('handleBlur; corner', el.value);
 		setCorner(el.value);
 	};
 
@@ -167,18 +185,18 @@ function Pythag(props) {
 	function playHandler(e) {
 		e.preventDefault();
 		var el = e.target;
-		moveASquares(triple);
+		PythagHelper.arrangeA(triple, 'wraparound');
 	}
 
 	const resetHandler = e => {
 		e.preventDefault();
-		resetASquares(triple);
+		PythagHelper.arrangeA(triple, 'square');
 	}
 
 	var cSide = triple.c * SQUARE_WIDTH + 1;
-	var squares = makeSquares(triple, 'c');
-	var aSquares = makeSquares(triple, 'a', 'a-square');
-	var bSquares = makeSquares(triple, 'b', 'b-square');
+	var squares = PythagHelper.makeSquares(triple, 'c');
+	var aSquares = PythagHelper.makeSquares(triple, 'a', 'a-square');
+	var bSquares = PythagHelper.makeSquares(triple, 'b', 'b-square');
 	var bPositions = [];
   return (
     <div className="Pythagorean-Toy">
@@ -190,16 +208,26 @@ function Pythag(props) {
         </Row>
         <Row>
           <Col>
-            <InputGroup className="pythag-a">
-              <InputGroup.Prepend>
-                <InputGroup.Text>Corner (c - b)</InputGroup.Text>
-              </InputGroup.Prepend>
-              <FormControl placeholder="" aria-label="" aria-describedby="" onBlur={handleBlur}/>
-              <InputGroup.Append>
-                <Button variant="info" onClick={handleClick}>Calculate</Button>
-              </InputGroup.Append>
+	        <InputGroup className="pythag-a">
+	  
+            <Dropdown>
+	          <Dropdown.Toggle variant="success" style={{ backgroundColor: "#66866b" }}>
+	            Corner size (Currently {corner})
+	          </Dropdown.Toggle>
+
+	          <Dropdown.Menu>
+	  { [1, 2, 3, 8, 9].map(side => {
+	            return <Dropdown.Item data-corner={side} onClick={handleDropdown}>{side}</Dropdown.Item>
+	  }) }
+	          </Dropdown.Menu>
+	          <InfoPanel id="corner-info" />
+	        </Dropdown>
             </InputGroup>
 
+
+	        <p style={{marginTop: "10px" }}>
+	          <Button variant="secondary" onClick={playHandler}>{corner}^2 + 2 x {corner}x{triple.b}</Button> = <Button variant="secondary" onClick={resetHandler}>{triple.a}^2</Button>
+	        </p>
             { triple.a && (
 
             <div className="c-squared" style={{ margin: '40px 0', height: cSide + 'px', width: cSide + 'px' }}>
@@ -218,17 +246,12 @@ function Pythag(props) {
 				  }
                   return square;
                 }) }
-		      <div className="c-label" style={{}}><Square type="c" value={triple.c} /></div>
-		      <div className="b-label" style={{}}><Square type="b" value={triple.b} /></div>
-		      <div className="a-label" style={{}}><Square type="a" value={triple.a} /></div>
+		      <div className="c-label" style={{}}><PythagHelper.Square type="c" value={triple.c} /></div>
+		      <div className="b-label" style={{}}><PythagHelper.Square type="b" value={triple.b} /></div>
+		      <div className="a-label" style={{}}><PythagHelper.Square type="a" value={triple.a} /></div>
             </div> 
 
 			) }
-
-            { triple.a && (<div className="pythag-buttons" style={{marginBottom: "10px", display: "flex", justifyContent: "space-between" }}>
-				<Button onClick={playHandler} variant="secondary">Rearrange A<sup>2</sup></Button>
-				<Button onClick={resetHandler} variant="secondary">Reset</Button>
-			</div>)}
 
           </Col>
         </Row>
