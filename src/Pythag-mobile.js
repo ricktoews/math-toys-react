@@ -5,10 +5,16 @@ import { Button } from 'react-bootstrap';
 import { Table } from 'react-bootstrap';
 import PythagHelper from './pythag-helper';
 import InfoPanel from './InfoPanel';
-
-
-
+import styled from 'styled-components';
 import './pythag.css';
+
+const CurrentConfig = styled.span`
+  border: 1px solid #999;
+  background-color:#eee;
+  border-radius: 5px;
+  padding:10px; 
+`;
+
 
 const STARTING = 20;
 var SQUARE_WIDTH = 21;
@@ -132,7 +138,7 @@ function Pythag(props) {
 	var [corner, setCorner] = useState(1);
 	var [triple, setTriple] = useState({ });
 	var [triples, setTriples] = useState([]);
-    var [aSquaredConfig, setASquaredConfig] = useState('wraparound');
+	var [aSquaredConfig, setASquaredConfig] = useState('wraparound');
 
 	SQUARE_WIDTH = Math.max(STARTING - (5*parseInt(triple.c/10,10)) + 1, 5);
   
@@ -186,13 +192,13 @@ function Pythag(props) {
 	function playHandler(e) {
 		e.preventDefault();
 		var el = e.target;
-        setASquaredConfig('wraparound');   
+		setASquaredConfig('wraparound');   
 		PythagHelper.arrangeA(triple, 'wraparound');
 	}
 
 	const resetHandler = e => {
 		e.preventDefault();
-        setASquaredConfig('square');   
+		setASquaredConfig('square');   
 		PythagHelper.arrangeA(triple, 'square');
 	}
 
@@ -227,8 +233,11 @@ function Pythag(props) {
 	        </Dropdown>
             </InputGroup>
 
+            {triple.a}<sup>2</sup> + {triple.b}<sup>2</sup> = {triple.c}<sup>2</sup>
+
             <p style={{marginTop: "10px" }}>
-              <Button variant="secondary" onClick={playHandler}>{corner}<sup>2</sup> + 2 x {corner}x{triple.b}</Button> = <Button variant="secondary" onClick={resetHandler}>{triple.a}<sup>2</sup></Button> = a<sup>2</sup>
+              a<sup>2</sup> = { aSquaredConfig === 'wraparound' ? <CurrentConfig>{corner}<sup>2</sup> + 2 x {corner}x{triple.b}</CurrentConfig> : <Button variant="warning" onClick={playHandler}>{corner}<sup>2</sup> + 2 x {corner}x{triple.b}</Button> } = &nbsp;
+              { aSquaredConfig === 'square' ? <CurrentConfig>{triple.a}<sup>2</sup></CurrentConfig> : <Button variant="warning" onClick={resetHandler}>{triple.a}<sup>2</sup></Button> } = {triple.a*triple.a}
             </p>
 
             { triple.a && (
