@@ -108,7 +108,7 @@ function Pythag(props) {
 
 
 	        <p style={{marginTop: "10px" }}>
-	          <Button variant="secondary" onClick={playHandler}>{corner}^2 + 2 x {corner}x{triple.b}</Button> = <Button variant="secondary" onClick={resetHandler}>{triple.a}^2</Button>
+	          <Button variant="secondary" onClick={playHandler}>{corner}<sup>2</sup> + 2 x {corner}x{triple.b}</Button> = <Button variant="secondary" onClick={resetHandler}>{triple.a}<sup>2</sup></Button>
 	        </p>
 
             { triple.a && (

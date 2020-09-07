@@ -132,6 +132,7 @@ function Pythag(props) {
 	var [corner, setCorner] = useState(1);
 	var [triple, setTriple] = useState({ });
 	var [triples, setTriples] = useState([]);
+    var [aSquaredConfig, setASquaredConfig] = useState('wraparound');
 
 	SQUARE_WIDTH = Math.max(STARTING - (5*parseInt(triple.c/10,10)) + 1, 5);
   
@@ -185,11 +186,13 @@ function Pythag(props) {
 	function playHandler(e) {
 		e.preventDefault();
 		var el = e.target;
+        setASquaredConfig('wraparound');   
 		PythagHelper.arrangeA(triple, 'wraparound');
 	}
 
 	const resetHandler = e => {
 		e.preventDefault();
+        setASquaredConfig('square');   
 		PythagHelper.arrangeA(triple, 'square');
 	}
 
@@ -198,7 +201,7 @@ function Pythag(props) {
 	var aSquares = PythagHelper.makeSquares(triple, 'a', 'a-square');
 	var bSquares = PythagHelper.makeSquares(triple, 'b', 'b-square');
 	var bPositions = [];
-  return (
+	return (
     <div className="Pythagorean-Toy">
       <Container>
         <Row>
@@ -208,26 +211,26 @@ function Pythag(props) {
         </Row>
         <Row>
           <Col>
-	        <InputGroup className="pythag-a">
+            <InputGroup className="pythag-a">
 	  
-            <Dropdown>
+              <Dropdown>
 	          <Dropdown.Toggle variant="success" style={{ backgroundColor: "#66866b" }}>
 	            Corner size (Currently {corner})
 	          </Dropdown.Toggle>
 
 	          <Dropdown.Menu>
-	  { [1, 2, 3, 8, 9].map(side => {
-	            return <Dropdown.Item data-corner={side} onClick={handleDropdown}>{side}</Dropdown.Item>
+	  { [1, 2, 3, 8, 9].map((side, key) => {
+	            return <Dropdown.Item key={key} data-corner={side} onClick={handleDropdown}>{side}</Dropdown.Item>
 	  }) }
 	          </Dropdown.Menu>
-	          <InfoPanel id="corner-info" />
+	          <InfoPanel id="corner-info" isMobile={true} />
 	        </Dropdown>
             </InputGroup>
 
+            <p style={{marginTop: "10px" }}>
+              <Button variant="secondary" onClick={playHandler}>{corner}<sup>2</sup> + 2 x {corner}x{triple.b}</Button> = <Button variant="secondary" onClick={resetHandler}>{triple.a}<sup>2</sup></Button> = a<sup>2</sup>
+            </p>
 
-	        <p style={{marginTop: "10px" }}>
-	          <Button variant="secondary" onClick={playHandler}>{corner}^2 + 2 x {corner}x{triple.b}</Button> = <Button variant="secondary" onClick={resetHandler}>{triple.a}^2</Button>
-	        </p>
             { triple.a && (
 
             <div className="c-squared" style={{ margin: '40px 0', height: cSide + 'px', width: cSide + 'px' }}>
