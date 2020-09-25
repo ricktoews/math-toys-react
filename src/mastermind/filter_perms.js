@@ -1,6 +1,6 @@
 'use strict';
 
-import { permutations } from './permutations.js';
+import { permutations } from './perms.js';
 
 const BLK_CODE_MARKED = '_';
 const BLK_GUESS_MARKED = '-';

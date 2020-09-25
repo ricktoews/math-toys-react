@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { permutations } from './perms.js';
 import { score_guess, filter_perms, update_perms  } from './filter_perms.js';
 /*
  * function Mastermind
  */
 function Mastermind(props) {
+
 	var perms = permutations.build(6, 4);
 	var code = permutations.choose(perms);
 	const [ state, setState ] = useState({ black: 0, white: 0, code: code });
 	const [ flags, setFlags ] = useState({ notyet: false, solved: false, oops: false, entries: [], score: { black: 0, white: 0 }});
+
+	const handleBlack = e => {
+		setState({ ...state, black: 1*e.currentTarget.value });
+	}
+
+	const handleWhite = e => {
+		setState({ ...state, white: 1*e.currentTarget.value });
+	}
 
 	const handleAccept = () => {
 		perms = filter_perms(state.black, state.white, state.code);
@@ -21,19 +30,20 @@ function Mastermind(props) {
 			update_perms(perms);
 			setState({ code: permutations.choose(perms) });
 			setFlags({
+				...flags,
 				oops: false,
 				notyet: true,
 				solved: true,
 				score: { black: 0, white: 0 }
 			});
 		} else if (perms.length === 0) {
-			setFlags({ oops: true });
+			setFlags({ ...flags, oops: true });
 		}
 	};
 
 	const handleBegin = (e) => {
 		e.preventDefault();
-		setFlags({ notyet: false, solved: false, entries: [] });
+		setFlags({ ...flags, notyet: false, solved: false, entries: [] });
 	};
 
 
@@ -71,8 +81,8 @@ function Mastermind(props) {
             </tr>
             <tr>
               <td>{state.code}</td>
-              <td><input type="text" size="1" black /></td>
-              <td><input type="text" size="1" white /></td>
+              <td><input type="text" size="1" onBlur={handleBlack} black /></td>
+              <td><input type="text" size="1" onBlur={handleWhite} white /></td>
               <td><button className="btn" onClick={handleAccept}>Accept</button></td>
             </tr>
           </table>
