@@ -63,28 +63,32 @@ function Mastermind(props) {
 		});
 	};
   return (
-<div class="container">
-  <div class="row">
-    <div class="col-md-4">
+<div className="container">
+  <div className="row">
+    <div className="col-md-4">
 	  { flags.notyet && (<div>
         <p>The code will contain four letters in the range of A-F. A letter can be used any number of times, so that there are 1,296 possible codes. You will choose the code; the computer will guess, based on your feedback. Click Begin when you have chosen.</p>
         <p><button onClick={handleBegin} className="btn btn-info">Begin</button></p>
       </div> ) }
       <div className="info-column">
 	    { !flags.notyet && !flags.solved && (<div>
-		  <table className="table table-bordered">
+          <table className="table table-bordered">
+            <thead>
             <tr className="success">
               <th>Code</th>
               <th>Black</th>
               <th>White</th>
               <th></th>
             </tr>
+            </thead>
+            <tbody>
             <tr>
               <td>{state.code}</td>
-              <td><input type="text" size="1" onBlur={handleBlack} black /></td>
-              <td><input type="text" size="1" onBlur={handleWhite} white /></td>
+              <td><input type="text" size="1" onBlur={handleBlack} /></td>
+              <td><input type="text" size="1" onBlur={handleWhite} /></td>
               <td><button className="btn" onClick={handleAccept}>Accept</button></td>
             </tr>
+            </tbody>
           </table>
         </div> ) }
 
@@ -95,19 +99,22 @@ function Mastermind(props) {
 	    { flags.oops && (<div>
           <p>Um. OK. So... Something seems to have gone wrong. Based on the feedback you've given me, there aren't any codes left for me to pick from. Not sure how that happened, but ...</p>
           <p>To investigate and find out what you did wrong--yes YOU--let's have the code you chose.</p>
-          <p><input type="text" size="6" targetcode /> <button class="btn" onClick={handleGetTarget}>Enter</button></p>
+          <p><input type="text" size="6" targetcode /> <button className="btn" onClick={handleGetTarget}>Enter</button></p>
         </div> ) }
       </div>
     </div>
     <div className="col-md-8">
       <div>
         <table className="table table-bordered">
+          <thead>
           <tr className="success">
             <th>Round</th>
             <th>Code Entry</th>
             <th>Score</th>
             <th>Pool</th>
           </tr>
+          </thead>
+          <tbody>
 	  { flags.entries.map((entry, key) => {
           return (<tr key={key} id={'attempt-' + key}>
             <td>{key}</td>
@@ -122,6 +129,7 @@ function Mastermind(props) {
             </td>
           </tr>)
 	  } ) }
+          </tbody>
         </table>
       </div>
     </div>
