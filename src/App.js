@@ -41,6 +41,7 @@ const menuOpts = [
 	{ label: 'Home', link: '/' },
 	{ label: 'Pythagorean Triples', link: '/pythag' },
 	{ label: 'Denominators', link: '/denom' },
+	{ label: 'Mastermind', link: '/mastermind' },
 ];
 
 function App() {

@@ -8,9 +8,9 @@ function Masthead(props) {
 
     return (
       <header className="App-header">
-		<Hamburger toggle={props.toggle} />
+        <Hamburger toggle={props.toggle} />
         <div className="masthead">The Avocational Arithmophile</div>
-		<Nav style={{ left: '200px', display: 'none' }}>
+          <Nav style={{ left: '200px', display: 'none' }}>
           <Nav.Item>
             <Nav.Link href="/">Home</Nav.Link>
           </Nav.Item>
