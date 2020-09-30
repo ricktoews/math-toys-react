@@ -12,18 +12,18 @@ function Mastermind(props) {
 	const [ flags, setFlags ] = useState({ notyet: false, solved: false, oops: false, entries: [], score: { black: 0, white: 0 }});
 
 	const handleBlack = e => {
-		setState({ ...state, black: 1*e.currentTarget.value });
+		setState({ ...state, black: 1*e.currentTarget.selectedIndex });
 	}
 
 	const handleWhite = e => {
-		setState({ ...state, white: 1*e.currentTarget.value });
+		setState({ ...state, white: 1*e.currentTarget.selectedIndex });
 	}
 
 	const handleAccept = () => {
-		perms = filter_perms(state.black, state.white, state.code);
+		perms = filter_perms(state.black || 0, state.white || 0, state.code);
 		flags.entries.push({ code: state.code, black: state.black, white: state.white, pool: perms });
 		update_perms(perms);
-		setState({ code: permutations.choose(perms) });
+		setState({ black: 0, white: 0, code: permutations.choose(perms) });
 
 		if (state.black === 4) {
 			perms = permutations.build(6, 4);
@@ -82,11 +82,24 @@ function Mastermind(props) {
             </tr>
             </thead>
             <tbody>
+   	  { flags.entries.map((entry, key) => {
+          return (<tr key={key} id={'attempt-' + key}>
+            <td>{entry.code}</td>
+            <td>{entry.black}</td>
+            <td>{entry.white}</td>
+          </tr>)
+	  } ) }
             <tr>
               <td>{state.code}</td>
-              <td><input type="text" size="1" onBlur={handleBlack} /></td>
-              <td><input type="text" size="1" onBlur={handleWhite} /></td>
-              <td><button className="btn" onClick={handleAccept}>Accept</button></td>
+              <td>
+                <select onChange={handleBlack} value={state.black}>
+                  {[0,1,2,3,4].map(n => <option key={n}>{n}</option>)}
+                </select>
+              </td>
+              <td><select onChange={handleWhite} value={state.white}>
+                  {[0,1,2,3,4].map(n => <option key={n}>{n}</option>)}
+              </select></td>
+              <td><button className="btn btn-info" onClick={handleAccept}>Accept</button></td>
             </tr>
             </tbody>
           </table>
@@ -124,7 +137,7 @@ function Mastermind(props) {
               Pool size: {entry.pool.length}
 			  { entry.pool.length <= 10 && (
               <div>
-                {entry.pool}
+                {entry.pool.join(', ')}
               </div>) }
             </td>
           </tr>)
