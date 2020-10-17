@@ -7,16 +7,6 @@ import './Home.css';
 
 const HomeWrapper = styled.div`
 	margin-top: 50px;
-
-	.article-title, .article-date {
-		font-size: 1.25rem;
-		font-weight: bold;
-		color: #c448c4;
-	}
-	.article-date {
-		float: right;
-	}
-
 `;
 
 export default () => {

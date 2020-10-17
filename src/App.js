@@ -17,9 +17,6 @@ const PrimaryNav = styled.ul`
 	opacity: 0;
 	line-height: 2;
 
-	l>li {
-	}
-
 	li:hover {
 		cursor: pointer;
 	}
@@ -48,7 +45,6 @@ function App() {
 	const [state, setState] = useState(false);
 
 	const  toggleMenu = e => {
-		console.log('getting here', state);
 		if (state) {
 			var ul = document.querySelector('ul');
 			ul.style.transition = '.5s';
@@ -74,18 +70,18 @@ function App() {
 
 	return (
 	<div>
-	<Sidebar visible={state} options={menuOpts} handleTransitionEnd={handleTransitionEnd} />
-	<Masthead toggle={toggleMenu} />
-	<PrimaryNav>
-		{menuOpts.map((opt, key) => <li key={key}><Link to={opt.link} onClick={handleClick}>{opt.label}</Link></li>) }
-	</PrimaryNav>
-    <Container>
-	  <Row>
-        <Col>
-          <Router />
-        </Col>
-      </Row>
-    </Container>
+		<Sidebar visible={state} options={menuOpts} handleTransitionEnd={handleTransitionEnd} />
+		<Masthead toggle={toggleMenu} />
+		<PrimaryNav>
+			{menuOpts.map((opt, key) => <li key={key}><Link to={opt.link} onClick={handleClick}>{opt.label}</Link></li>) }
+		</PrimaryNav>
+		<Container>
+			<Row>
+				<Col>
+					<Router />
+				</Col>
+			</Row>
+		</Container>
 	</div>
   );
 }
