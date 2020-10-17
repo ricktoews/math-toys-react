@@ -147,6 +147,11 @@ function Pythag(props) {
 		processCorner();
 	}, [corner]);
 
+	// Need to be clear on exactly when this fires. Look up useEffect, second parameter.
+	useEffect(() => {
+		PythagHelper.arrangeA(triple, 'wraparound');
+	});
+
 	SQUARE_WIDTH = Math.max(STARTING - (5*parseInt(triple.c/10,10)) + 1, 5);
 	PythagHelper.setSquareWidth(SQUARE_WIDTH);
   
