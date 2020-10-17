@@ -124,9 +124,9 @@ function layoutWrapAround(triple) {
 	}
 }
 
-
+var count = 0;
 function makeSquares(triple, letter, squareType = '') {
-	squarePositions = getSquarePos(triple); console.log('square pos', squarePositions); 
+	squarePositions = getSquarePos(triple);
 
 	var side = triple[letter];
 	var squares = [];

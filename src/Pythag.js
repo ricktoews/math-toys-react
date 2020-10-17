@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import { renderToString } from 'react-dom/server';
 import { Dropdown, FormControl, InputGroup } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { Table } from 'react-bootstrap';
@@ -18,15 +19,18 @@ function Pythag(props) {
 	var SQUARE_WIDTH = PythagHelper.SQUARE_WIDTH;
   
 	useEffect(() => {
-		console.log('corner changed', corner);
 		processCorner();
 	}, [corner]);
+
+	// Need to be clear on exactly when this fires. Look up useEffect, second parameter.
+	useEffect(() => {
+		PythagHelper.arrangeA(triple, 'wraparound');
+	});
 
 	SQUARE_WIDTH = Math.max(STARTING - (5*parseInt(triple.c/10,10)) + 1, 5);
 	PythagHelper.setSquareWidth(SQUARE_WIDTH);
   
 	PythagHelper.MOVE_DELAY = 500 - (150*parseInt(triple.c/10,10));
-	console.log('square width', SQUARE_WIDTH);
 
 	const processCorner = () => {
 		if (corner) {
@@ -57,9 +61,7 @@ function Pythag(props) {
 	const handleTripletSelect = e => {
 		e.preventDefault();
 		var el = e.currentTarget;
-		console.log('dataset',el);
 		var triple = el.dataset.triple.split(',');
-		console.log('triple',triple, triple.length);
 		setTriple({ a: triple[0], b: triple[1], c: triple[2] });
 }
 
@@ -99,7 +101,7 @@ function Pythag(props) {
 
 	          <Dropdown.Menu>
 	  { [1, 2, 3, 8, 9].map(side => {
-	            return <Dropdown.Item data-corner={side} onClick={handleDropdown}>{side}</Dropdown.Item>
+	            return <Dropdown.Item key={side} data-corner={side} onClick={handleDropdown}>{side}</Dropdown.Item>
 	  }) }
 	          </Dropdown.Menu>
 	          <InfoPanel id="corner-info" />
