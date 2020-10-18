@@ -151,6 +151,7 @@ function makeSquares(triple, letter, squareType = '') {
 
 
 function arrangeA(triple, layout) {
+	console.log('got arrangeA', layout);
 	if (layout === 'square') {
 		layoutSquare(triple);
 	} else if (layout === 'wraparound') {

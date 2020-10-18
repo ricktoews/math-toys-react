@@ -149,7 +149,9 @@ function Pythag(props) {
 
 	// Need to be clear on exactly when this fires. Look up useEffect, second parameter.
 	useEffect(() => {
-		PythagHelper.arrangeA(triple, 'wraparound');
+		var layout = aSquaredConfig === 'wraparound' ? 'square' : 'wraparound';
+		console.log('useEffect to call arrangeA,', layout);
+		PythagHelper.arrangeA(triple, layout);
 	});
 
 	SQUARE_WIDTH = Math.max(STARTING - (5*parseInt(triple.c/10,10)) + 1, 5);
@@ -240,10 +242,21 @@ function Pythag(props) {
 
             {triple.a}<sup>2</sup> + {triple.b}<sup>2</sup> = {triple.c}<sup>2</sup>
 
+            <p>Layout for a<sup>2</sup>: {aSquaredConfig === 'wraparound' ? <span>Square {triple.a}<sup>2</sup></span> : <span>Wraparound {corner}<sup>2</sup> + 2 x {corner}x{triple.b}</span>}</p>
+            <p>Toggle to {aSquaredConfig === 'wraparound' ? <span onClick={resetHandler}>Wraparound</span> : <span onClick={playHandler}>Square</span>}</p>
+		{/*
             <p style={{marginTop: "10px" }}>
-              a<sup>2</sup> = { aSquaredConfig === 'wraparound' ? <CurrentConfig>{corner}<sup>2</sup> + 2 x {corner}x{triple.b}</CurrentConfig> : <Button variant="warning" onClick={playHandler}>{corner}<sup>2</sup> + 2 x {corner}x{triple.b}</Button> } = &nbsp;
-              { aSquaredConfig === 'square' ? <CurrentConfig>{triple.a}<sup>2</sup></CurrentConfig> : <Button variant="warning" onClick={resetHandler}>{triple.a}<sup>2</sup></Button> } = {triple.a*triple.a}
+              a<sup>2</sup> =&nbsp; 
+
+              { aSquaredConfig === 'wraparound' ? 
+                  <CurrentConfig>{corner}<sup>2</sup> + 2 x {corner}x{triple.b}</CurrentConfig> : 
+                  <Button variant="warning" onClick={playHandler}>{corner}<sup>2</sup> + 2 x {corner}x{triple.b}</Button> } = &nbsp;
+
+              { aSquaredConfig === 'square' ? 
+                  <CurrentConfig>{triple.a}<sup>2</sup></CurrentConfig> : 
+                  <Button variant="warning" onClick={resetHandler}>{triple.a}<sup>2</sup></Button> } = {triple.a*triple.a}
             </p>
+			*/}
 
             { triple.a && (
 

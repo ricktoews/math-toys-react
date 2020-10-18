@@ -24,6 +24,7 @@ function Pythag(props) {
 
 	// Need to be clear on exactly when this fires. Look up useEffect, second parameter.
 	useEffect(() => {
+		console.log('useEffect to call arrangeA, wraparound');
 		PythagHelper.arrangeA(triple, 'wraparound');
 	});
 
