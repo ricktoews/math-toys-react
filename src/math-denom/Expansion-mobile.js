@@ -21,10 +21,19 @@ class Expansion extends Component {
     super(props);
     this.setNumerator = this.setNumerator.bind(this);
     this.handleClick = this.handleClick.bind(this);
+
+    this.state = { expansion: '' }
+  }
+
+  componentWillReceiveProps() {
+console.log('Expansion will receive props; props', this.props.item, 'state.expansion', this.state.expansion);
+      this.setState({ expansion: this.props.item.expansion });
   }
 
   componentDidUpdate() {
-//          console.log('Expansion componentDidUpdate');
+  }
+
+  componentDidMount() {
   }
 
   formatNumeratorList(numerators) {
@@ -43,7 +52,8 @@ class Expansion extends Component {
   expansionForDisplay(data) {
     let { nonRepeat, repeat } = data;
     let repeatStr = '';
-    let maxLength = 1000;
+//    let maxLength = 1000;
+    let maxLength = 2 * repeat.length;
     // Create a bunch of periods, followed by '...'.
     // Suggestion: make it truncate if the maxlength is exceeded by more than some amount.
     if (repeat.length > 0) {
@@ -72,7 +82,9 @@ class Expansion extends Component {
   setNumerator(expansionData) {
     let fraction = <span className="fraction"><span className="numerator">{expansionData.numerator}</span> / <span className="denominator">{this.props.denom}</span></span>;
     let forDisplay = this.expansionForDisplay(expansionData);
-    this.props.displayNumerator({ fraction, forDisplay });
+console.log('update expansion');
+this.setState({expansion: forDisplay});
+//    this.props.displayNumerator({ fraction, forDisplay });
   }
 
   handleClick(e) {
@@ -82,10 +94,11 @@ class Expansion extends Component {
 
   render() {
     const g = this.props.item;
+    const exp = this.state.expansion;
     const numClass = this.props.showNumerators ? 'show-numerators' : 'hide-numerators';
     return (
       <div key={g.expansion}>
-      <span className="expansion-mobile" onClick={this.handleClick}>{g.expansion}</span>
+      <span className="expansion-mobile" onClick={this.handleClick}>{this.state.expansion}</span>
         <div className={numClass}>
         {this.formatNumeratorList(g.numerators)}
         </div>
