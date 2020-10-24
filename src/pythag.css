@@ -50,3 +50,16 @@
 tr {
 	cursor: pointer;
 }
+
+.info {
+	margin-top: 10px;
+	font-size: 11pt;
+}
+
+.toggle-layout {
+	font-weight: bold;
+	color: #ccc;
+	padding: 5px;
+	border: 1px solid #666;
+	border-radius: 5px;
+}

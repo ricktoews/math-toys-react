@@ -242,8 +242,10 @@ function Pythag(props) {
 
             {triple.a}<sup>2</sup> + {triple.b}<sup>2</sup> = {triple.c}<sup>2</sup>
 
+		    <div className="info">
             <p>Layout for a<sup>2</sup>: {aSquaredConfig === 'wraparound' ? <span>Square {triple.a}<sup>2</sup></span> : <span>Wraparound {corner}<sup>2</sup> + 2 x {corner}x{triple.b}</span>}</p>
-            <p>Toggle to {aSquaredConfig === 'wraparound' ? <span onClick={resetHandler}>Wraparound</span> : <span onClick={playHandler}>Square</span>}</p>
+            <p>Toggle to {aSquaredConfig === 'wraparound' ? <span className="toggle-layout" onClick={resetHandler}>Wraparound</span> : <span className="toggle-layout" onClick={playHandler}>Square</span>}</p>
+		    </div>
 		{/*
             <p style={{marginTop: "10px" }}>
               a<sup>2</sup> =&nbsp; 
