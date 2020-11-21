@@ -4,7 +4,7 @@ import { Table } from 'react-bootstrap';
 import MathJax from 'react-mathjax-preview';
 
 /* REST call; should be external */
-const api_call = 'http://arithmo-rest.toewsweb.net/phi/powers/';
+const api_call = '//arithmo-rest.toewsweb.net/phi/powers/';
 function fetchPhiPower(p) {
 	let url = api_call + p;
 	return fetch(url).then(res => res.json()).then(res => {
