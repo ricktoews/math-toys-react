@@ -178,7 +178,7 @@ function Square(props) {
 }
 
 function getPythagData(a) {
-	const url = 'http://arithmo.toewsweb.net:3000/pythag/' + a;
+	const url = '//arithmo.toewsweb.net:3000/pythag/' + a;
 	return fetch(url).then(res => res.json()).then(res => { return res; });
 }
 
