@@ -36,7 +36,7 @@ function fetchDenomDesc(denom) {
 }
 
 function fetchDenom(denom) {
-  var url = 'http://arithmo.toewsweb.net:3000/denom_byexpansion/' + denom;
+  var url = '//arithmo.toewsweb.net:3000/denom_byexpansion/' + denom;
   return fetch(url)
     .then(res => {
       return res.json();
