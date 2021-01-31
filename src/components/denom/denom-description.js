@@ -2,7 +2,7 @@
 	function getDC(denom, num) {
 		var api = '/dc/' + denom;
 		if (num) api += '/' + num;
-		var url = '//arithmo-rest.toewsweb.net' + api;
+		var url = 'https://arithmo-rest.toewsweb.net' + api;
 
 		return fetch(url).then(res => res.json()).then(res => {
 			console.log('getDC', denom, res);

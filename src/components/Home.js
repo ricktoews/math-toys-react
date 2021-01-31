@@ -3,18 +3,35 @@ import { Link } from 'react-router-dom';
 import { Table } from 'react-bootstrap';
 import MathJax from 'react-mathjax-preview'
 import styled from 'styled-components';
-import './Home.css';
 
 const HomeWrapper = styled.div`
 	margin-top: 50px;
+
+	article {
+		color: ${({ theme }) => theme.primaryColor};
+		font-family: Roboto, futura, sans-serif;
+		font-size: 1.0rem;
+		line-height: 2;
+		margin-bottom: 15px;
+		border-bottom: 1px dotted #66866A;
+	}
+
+	article .article-title, .article-date {
+		font-size: 1rem;
+		color: ${({ theme }) => theme.headingColor};
+	}
+	article .article-date {
+		display: none;
+		float: right;
+	}
 `;
 
 export default () => {
   return (
-    <HomeWrapper>
+    <HomeWrapper className="container">
       <article>
         <p className="article-date">August 16, 2020</p>
-        <p className="article-title">Pythagorean Triples - Primitives</p>
+        <div className="article-title">Pythagorean Triples - Primitives</div>
 
 
 	    <p>I took some interest in Pythagorean triples--specifically, those that don't have a common factor greater than 1. Examples include the familiar (3, 4, 5), (5, 12, 13), (7, 24, 25). In each of these cases, the difference between b and c is 1.</p>
@@ -59,10 +76,10 @@ export default () => {
         <p>The interesting thing is that as that as these powers increase, the ratio of a / b approaches <math><msqrt><mn>5</mn></msqrt></math>, 2.23606...:</p>
 <Table variant="math" bordered>
   <tr className="success text-success">
-    <th>Power</th>
-    <th>Fractional Form</th>
-    <th>a (Lucas number) / b (Fibonacci number)</th>
-    <th>Approximation to √5</th>
+    <th>phi<sup>n</sup></th>
+    <th>Fraction Form</th>
+    <th>a / b</th>
+    <th>Approx to √5</th>
   </tr>
   <tr>
     <td>phi<sup>4</sup></td>

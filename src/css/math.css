@@ -1,0 +1,19 @@
+/* Table coloring for math. */
+.table-math th {
+	background-color: #dff0d8;
+	color: #3c763d;
+}
+.table-math tr:nth-of-type(odd) {
+	background-color: rgba(223, 240, 216, .2);
+	color: #666;
+}
+.table-math tr:nth-of-type(even) {
+	background-color: white;
+	color: #666;
+}
+
+.math-primary {
+	color: #337ab7;
+	font-size: 1.25em;
+}
+

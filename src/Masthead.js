@@ -1,31 +1,42 @@
-import React, { Component, useState } from 'react';
-import { withRouter } from 'react-router-dom';
-import { Nav } from 'react-bootstrap';
-import Hamburger from './Hamburger';
+import React, { useRef, useState } from 'react';
+import { useOnClickOutside } from './hooks';
+import { Burger, Menu } from './components/nav';
+import styled from 'styled-components';
+
+const SiteHeader = styled.header`
+	position: fixed;
+	z-index: 100;
+	top: 0;
+	left: 0;
+	width: 100vw;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 50px;
+
+	background: ${({ theme }) => theme.mastheadBg};
+	color: ${({ theme }) => theme.mastheadColor};
+	font-size: 20px;
+`;
 
 function Masthead(props) {
-    var path = props.location.pathname;
+	const { title, children } = props;
+	const [open, setOpen] = useState(false);
 
-    return (
-      <header className="App-header">
-        <Hamburger toggle={props.toggle} />
-        <div className="masthead">The Avocational Arithmophile</div>
-          <Nav style={{ left: '200px', display: 'none' }}>
-          <Nav.Item>
-            <Nav.Link href="/">Home</Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link href="/pythag">Pythagorean Triples</Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link href="/denom">Denominators</Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link href="/phi">Phi</Nav.Link>
-          </Nav.Item>
-        </Nav>
-      </header>
-    );
+	const node = useRef(); 
+	useOnClickOutside(node, () => setOpen(false));
+
+	return (
+		<SiteHeader>
+	          <div ref={node}>
+	            <Burger open={open} setOpen={setOpen}/>
+	            <Menu open={open} setOpen={setOpen}/>
+	          </div>
+		  {children}
+                  <div className="title">{title}</div>
+		</SiteHeader>
+	);
 }
 
-export default withRouter(Masthead);
+export default Masthead;

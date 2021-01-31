@@ -29,6 +29,7 @@ var permutations = {
 var perms = permutations.build(6, 4);
 
 function score_guess(guess, code) {
+console.log('score_guess guess', guess);
         var { guess, code, black } = score_black(guess, code);
         var { guess, code, white } = score_white(guess, code);
         return { black, white };
@@ -45,6 +46,7 @@ function score_guess(guess, code) {
 */
 function score_black(guess, code) {
         var black = 0;
+console.log('score_black guess', guess);
         for (let i = 0; i < guess.length; i++) {
                 if (guess[i] === code[i]) {
                         black++;
@@ -62,6 +64,7 @@ function score_black(guess, code) {
 */
 function score_white(guess, code) {
         var white = 0;
+console.log('score_white guess', guess);
         for (let i = 0; i < guess.length; i++) {
                 if (code.indexOf(guess[i]) !== -1) {
                         code = code.replace(guess[i], WHITE_CODE_MARKED);

@@ -10,6 +10,7 @@ function Mastermind(props) {
 	var code = permutations.choose(perms);
 	const [ state, setState ] = useState({ black: 0, white: 0, code: code });
 	const [ flags, setFlags ] = useState({ notyet: false, solved: false, oops: false, entries: [], score: { black: 0, white: 0 }});
+	const [ mycode, setMyCode ] = useState('');
 
 	const handleBlack = e => {
 		setState({ ...state, black: 1*e.currentTarget.selectedIndex });
@@ -50,15 +51,15 @@ function Mastermind(props) {
 	const handleGetTarget = e => {
 		e.preventDefault();
 		var entries = flags.entries;
-		var mycode = state.mycode;
+            console.log(`handleGetTarget mycode ${mycode}, entries`, entries);
 		entries.forEach((entry, ndx) => {
 			let score = score_guess(mycode, entry.code);
             console.log(`compare ${mycode} with ${entry.code}: `, score, entry.black, entry.white);
             if (score.black !== entry.black || score.white !== entry.white) {
-                let row = document.getElementById('attempt-' + ndx);
+                let row = document.getElementById('feedback-' + ndx);
                 row.style.color = 'red';
                 let correction = row.querySelector('.correction');
-                correction.innerHTML = `Correction: black ${score.black}; white ${score.white}`;
+                if (correction) { correction.innerHTML = `Correction: black ${score.black}; white ${score.white}`; }
             }
 		});
 	};
@@ -112,7 +113,7 @@ function Mastermind(props) {
 	    { flags.oops && (<div>
           <p>Um. OK. So... Something seems to have gone wrong. Based on the feedback you've given me, there aren't any codes left for me to pick from. Not sure how that happened, but ...</p>
           <p>To investigate and find out what you did wrong--yes YOU--let's have the code you chose.</p>
-          <p><input type="text" size="6" targetcode /> <button className="btn" onClick={handleGetTarget}>Enter</button></p>
+          <p><input type="text" size="6" onBlur={e => { console.log('setMyCode to', e.currentTarget.value); setMyCode(e.currentTarget.value); }} /> <button className="btn" onClick={handleGetTarget}>Enter</button></p>
         </div> ) }
       </div>
     </div>
@@ -129,7 +130,7 @@ function Mastermind(props) {
           </thead>
           <tbody>
 	  { flags.entries.map((entry, key) => {
-          return (<tr key={key} id={'attempt-' + key}>
+          return (<tr key={key} id={'feedback-' + key}>
             <td>{key}</td>
             <td>{entry.code}</td>
             <td>Correct position: {entry.black}<br/>Correct Elements: {entry.white}<div className="correction"></div></td>
