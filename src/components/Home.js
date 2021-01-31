@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Table } from 'react-bootstrap';
 import MathJax from 'react-mathjax-preview'
 import styled from 'styled-components';
+import Periodic from './Periodic';
 
 const HomeWrapper = styled.div`
 
@@ -14,7 +15,8 @@ const HomeWrapper = styled.div`
 		border-bottom: 1px dotted #66866A;
 	}
 
-	article .article-title, .article-date {
+	article .article-title {
+		cursor: pointer;
 		font-size: 1rem;
 		color: ${({ theme }) => theme.headingColor};
 	}
@@ -24,21 +26,67 @@ const HomeWrapper = styled.div`
 	}
 `;
 
+const ToggleRead = styled.div`
+	&.article-closed {
+		display: none;
+	}
+	&.article-opened {
+		display: block;
+	}
+`;
+
+
+// Click an article title to toggle it open or closed.
+const readArticle = e => {
+	e.preventDefault();
+
+	var classList = e.target.nextSibling.classList;
+	if (classList.contains('article-closed')) {
+		classList.remove('article-closed');
+		classList.add('article-opened');
+	} else {
+		classList.remove('article-opened');
+		classList.add('article-closed');
+	}
+}
+
 export default () => {
-  return (
+
+	// This is for adding the 'click' handler to each article title.
+	useEffect(() => {
+		var els = Array.from(document.querySelectorAll('.article-title'));
+		els.map(el => el.addEventListener('click', readArticle, el));
+	}, []);
+  
+	return (
     <HomeWrapper className="container">
+      <article>
+        <div className="article-title">New Insight On 1/11</div>
+
+        <ToggleRead className="article-open">
+        <p>In base 10, the reciprocal of 11&mdash;1/11&mdash;has the decimal expansion <Periodic whole="0" repeating="09" />. This caught my attention long ago, since 1/9 is <Periodic whole="0" repeating="11" />. That is, the period of 1/11 is 1 &times; 9, and the period of 1/9 is 1 &times; 11. Curious; but Why?</p>
+
+        <p>As it happens, the answer is quite simple. It boils down to the fact that x<sup>2</sup> / (x + 1) = (x - 1) remainder 1. In this application, x is the number base: in this case, 10.</p>
+
+        <p>This question came to the fore when a friend showed me a chart of the digits of the sexagesimal numbering system. I speculated that 1/11 in base 60 would have an expansion of <Periodic whole="0" repeating="0[59]" />, but I didn't have a handy way of demonstrating that&mdash;and I didn't feel like mucking about with the actual calculation.</p>
+
+        <p>However, the pieces sort of fell in place. In the long division process for calculating 1/11, you have to add two 0s, since 11 necessarily does not go into 10 (regardless of the number base). Since 100 is the base squared, and 11 is the base + 1, you're dividing (x + 1) into x<sup>2</sup>, the result of which is (x - 1), with a remainder of 1. (Basic algebra: (x+1)(x-1) = x<sup>2</sup>-1.) So for base 60, you're dividing 61 into 3600. This gives you 59, remainder 1; and 59 is the highest digit in the sexagesimal system.</p>
+        </ToggleRead>
+      </article>
+
       <article>
         <p className="article-date">August 16, 2020</p>
         <div className="article-title">Pythagorean Triples - Primitives</div>
 
+	<ToggleRead className="article-closed">
 
-	    <p>I took some interest in Pythagorean triples--specifically, those that don't have a common factor greater than 1. Examples include the familiar (3, 4, 5), (5, 12, 13), (7, 24, 25). In each of these cases, the difference between b and c is 1.</p>
+	    <p>I took some interest in Pythagorean triples&mdash;specifically, those that don't have a common factor greater than 1. Examples include the familiar (3, 4, 5), (5, 12, 13), (7, 24, 25). In each of these cases, the difference between b and c is 1.</p>
 
 	    <p>Another triple is (6, 8, 10), since 36 + 64 = 100. However, this isn't a primitive, as a, b, and c are all divisible by 2.</p>
 
 	    <p>My approach to generating a Pythagorean triple is to start with c - b and then calculate values for a^2. I envison b^2 positioned within c^2, so that the two share the lower right corner. Then, a^2 wraps around b^2, with the corner of a^2 being the square of (c - b).</p>
 
-	    <p>Let n = (c - b). Then the area of a^2 is n^2 + 2(nb). Since this must be square, I rearrange the terms: n(n + 2b). If n is square, then (n + 2b) must also be square. If n isn't square, then (n + 2b) must be a square, multiplied by some number that, if mulplied by n would yield a square. (For example, if n is 12, (n + 2b) would have to be a square multiplied by 3--or 3 times some square.)</p>
+	    <p>Let n = (c - b). Then the area of a^2 is n^2 + 2(nb). Since this must be square, I rearrange the terms: n(n + 2b). If n is square, then (n + 2b) must also be square. If n isn't square, then (n + 2b) must be a square, multiplied by some number that, if mulplied by n would yield a square. (For example, if n is 12, (n + 2b) would have to be a square multiplied by 3&mdash;or 3 times some square.)</p>
 
 	    <p>Since I'm interested in primitives, I want to find triples that don't have common factors. This is true for all triples where n = 1. What about for n = 2? Since 2 isn't a square, (n + 2b) must be a square multiplied by 2. With (c - b) of 2, a^2 will be even, and a will therefore be even. Therefore, b must be odd if we want a primitive triple. So with n = 2, we are looking for square products of 2(2+2b) such that b is an odd number. Algebra: 2(2+2b) = 4+4b = 4(1 + b). Since 4 is square, 1 + b must be square, and b must be one less than an even square. So: 3, 15, 35, 63, &c. Let's look at these.</p>
 
@@ -48,22 +96,22 @@ export default () => {
 
 	    <p>In general, primitives are possible only with values of n that are either odd squares or doubled squares. This is because for n as an odd square (n + 2b) can be a square without n and b having any common factors. Likewise, with n being double a square, (n + 2b).</p>
 
+	</ToggleRead>
       </article>
  
       <article>
-        <p className="article-date">July 27, 2020</p>
-
-        <p className="article-title">Prime Powers of 2 and Mersenne Primes</p>
+        <div className="article-title">Prime Powers of 2 and Mersenne Primes</div>
+	<ToggleRead className="article-closed">
 
         <p>So a Mersenne prime is a prime number of the form 2^n - 1. All known perfect numbers are based on Mersenne primes. I was toying one night with why the power of 2 for a Mersenne prime must itself be prime. I'm sure an algebraic proof would show that 2^n - 1 is factorable (and therefore not prime) if n is composite. But it was a different approach that occurred to me as I was lying there.</p>
 
-        <p>Think of 2^n - 1 in its binary representation. It's just a repdigit of n 1s, right? So if n is composite--say axb--then 2^n - 1 can be described as a groups of b 1s, which is itself obviously composite. To illustrate, suppose n is 15 with a = 3, b = 5. Then 2^15 - 1 = 111111111111111, or 3 groups of 5 1s. Any number whose digits form multiple groups of the same pattern of digits can be expressed as a multiple of that pattern of digits--and therefore not a prime number.</p>
+        <p>Think of 2^n - 1 in its binary representation. It's just a repdigit of n 1s, right? So if n is composite&mdash;say axb&mdash;then 2^n - 1 can be described as a groups of b 1s, which is itself obviously composite. To illustrate, suppose n is 15 with a = 3, b = 5. Then 2^15 - 1 = 111111111111111, or 3 groups of 5 1s. Any number whose digits form multiple groups of the same pattern of digits can be expressed as a multiple of that pattern of digits&mdash;and therefore not a prime number.</p>
+        </ToggleRead>
       </article>
  
       <article>
-        <p className="article-date">July 24, 2020</p>
-
-        <p className="article-title">Golden Ratio Fiddlings</p>
+        <div className="article-title">Golden Ratio Fiddlings</div>
+	<ToggleRead className="article-closed">
 
         <p>So I've not explored this much yet, but it's looking curious to me.</p>
 
@@ -107,25 +155,25 @@ export default () => {
 
         <p>So why should it be that the ratios of a/b in increasingly larger powers of phi approach a number that's not just another of the infinitely many undistinguished irrational numbers out there but is instead the square root of an integer? And I suspect I'm looking at a slipknot.</p>
 
+        </ToggleRead>
       </article>
 
       <article>
-        <p className="article-date">July 16, 2020</p>
-
-        <p className="article-title">Fibonacci Numbers as Sums of Products of Fibonacci Numbers</p>
+        <div className="article-title">Fibonacci Numbers as Sums of Products of Fibonacci Numbers</div>
+	<ToggleRead className="article-closed">
 
         <p>Let (a, b) be two consecutive fibonacci numbers, and let (c, d) be two consecutive Fibonacci numbers. (a, b) can overlap (c, d). The number ac + bd is a Fibonacci number. Examples: (a=3, b=5), (c=8, d=13). Then ac = 24, bd = 65, ac + bd = 89.</p>
 
         <p>I don't have a proof that this always works, though I'm pretty sure it does.</p>
 
+        </ToggleRead>
       </article>
 
       <article>
-        <p className="article-date">July 15, 2020</p>
+        <div className="article-title">Reciprocals of Composite Denominators</div>
+	<ToggleRead className="article-closed">
 
-        <p className="article-title">Reciprocals of Composite Denominators</p>
-
-        <p>I've long known that when a denominator is prime (other than 2, 5), the period length of the reciprocal is the smallest 9s reptend that the number divides. For 7, that's 6; for 31, it's 15; for 41, it's 5; and so on. I don't believe there can be a pattern: it just depends on which value 10^n - 1 that prime number happens to divide. Of course, this number will be either one less than the prime number (as with 7), or a factor of that (as with 31 and 41). If the number is even, the period is internally complementary--that is, the sum of its two halves is a 9s reptend. For 1/7, the period is 142857, and 142 + 857 = 999.</p>
+        <p>I've long known that when a denominator is prime (other than 2, 5), the period length of the reciprocal is the smallest 9s reptend that the number divides. For 7, that's 6; for 31, it's 15; for 41, it's 5; and so on. I don't believe there can be a pattern: it just depends on which value 10^n - 1 that prime number happens to divide. Of course, this number will be either one less than the prime number (as with 7), or a factor of that (as with 31 and 41). If the number is even, the period is internally complementary&mdash;that is, the sum of its two halves is a 9s reptend. For 1/7, the period is 142857, and 142 + 857 = 999.</p>
 
         <p>Today's observation has to do with the length of the period for the reciprocal of a composite number whose factors, again, do not include 2 and 5. For these, the period length is also the minimum 9s reptend that the denominator will divide.</p>
 
@@ -133,12 +181,12 @@ export default () => {
 
         <p>I needed to be satisfied that there was a reason why this should work. Since the minimum 9s reptend that 7 divides is 999999 (7x142957), and the minimum one that 41 divides is 99999 (41x2439), what must be the minimum 9s reptend that 287 divides? It would be the shortest one that's divisible by both 7 and 41, so it must be the smallest 9s reptend whose length is divisible by both 6 and 5. The least common multiple of 6 and 5 is 30.</p>
 
+        </ToggleRead>
       </article>
 
       <article>
-        <p className="article-date">June 29, 2020</p>
-
-        <p className="article-title">Description of Periodic Decimals of Reciprocals of Prime Numbers</p>
+        <div className="article-title">Description of Periodic Decimals of Reciprocals of Prime Numbers</div>
+	<ToggleRead className="article-closed">
 
         <p>Let p be the denominator, a prime number that is not a factor of the base. So in base 10, p is not 2 or 5.</p>
 
@@ -151,7 +199,7 @@ export default () => {
           <li>If the period length is even, the period can be split into two parts, the sum of which is 10^x - 1, where x is one half the period length.</li>
         </ul>
 
-        <p>I actually did find it a little tiresome to try to defend some of these; however, I think I succeeded--or at least was confident of navigating there.</p>
+        <p>I actually did find it a little tiresome to try to defend some of these; however, I think I succeeded&mdash;or at least was confident of navigating there.</p>
 
         <p>Two classic examples: 1/7, whose period is 142857; and 1/13, with period 076923.</p>
 
@@ -165,9 +213,10 @@ export default () => {
 
         <p>In many cases, the period length is odd, so you don't get complementary halves. The determining factor is the smallest 9s repdigit (10^n - 1) the prime number happens to divide. For example, not only do 7 and 13 divide 999999: 37 also divides it, as do 3 and 11. However, the period lengths of 1/3, 1/11, and 1/37 are 1, 2, and 3, since 3 divides 10^1 - 1, 11 divides 10^2 - 1, and 37 divides 10^3 - 1.</p>
 
+        </ToggleRead>
       </article>
 
     </HomeWrapper>
-  )
+	)
 }
 
