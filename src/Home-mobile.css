@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,100;1,300;1,400;1,500;1,700&display=swap');
 
 article {
-  color:#777;
-  font-family: Roboto, futura, sans-serif;
-  font-size: .9rem;
-  font-weight: 500;
+  color: #3A4340;
+  font-family: Roboto;
+  font-size: .9em;
+  font-weight: 400;
   line-height: 1.75;
   margin-bottom: 25px;
   border-bottom: 1px dotted #66866A;

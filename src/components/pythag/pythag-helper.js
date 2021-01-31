@@ -160,6 +160,24 @@ function arrangeA(triple, layout) {
 }
 
 
+function LabelASquared(props) {
+	var { layout, triple, corner } = props;
+    var desc = layout === 'wraparound' 
+		? (<div>a<span>2</span> = {triple.a} x {triple.a} ({triple.a*triple.a})</div>) 
+		: (<div style={{whiteSpace: 'nowrap'}}>a<span className="exp">2</span> = <span className="a-side">{corner}x{triple.b}</span> + <span className="a-corner">{corner}<span className="exp">2</span></span> + <span className="a-top">{corner}x{triple.b}</span> ({triple.a*triple.a})</div>)
+	return (
+    <div style={{ position: 'relative' }}>
+      <div className="square a-square" style={{
+      display: 'none',
+      width: (SQUARE_WIDTH - 1) + 'px',
+      height: (SQUARE_WIDTH - 1) + 'px',
+      border: '1px solid black'
+    }}></div>
+      {desc}
+    </div>
+	);
+}
+
 function Square(props) {
 	var className = 'square';
 	if (props.type === 'a') { className += ' a-square'; }
@@ -178,7 +196,7 @@ function Square(props) {
 }
 
 function getPythagData(a) {
-	const url = '//arithmo.toewsweb.net:3000/pythag/' + a;
+	const url = 'https://arithmo.toewsweb.net:3000/pythag/' + a;
 	return fetch(url).then(res => res.json()).then(res => { return res; });
 }
 
@@ -186,6 +204,7 @@ const PythagHelper = {
 	getPythagData,
 	setSquareWidth,
 	Square,
+	LabelASquared,
 	makeSquares,
 	arrangeA,
 	SQUARE_WIDTH,

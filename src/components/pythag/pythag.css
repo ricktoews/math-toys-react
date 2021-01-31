@@ -1,0 +1,65 @@
+.square {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  margin: 1px 0 0 1px;
+  background-color: #C5CCD2;
+}
+.a-square {
+  background-color: #8AAF9C;
+}
+.b-square {
+  background-color:#66866A;
+}
+.c-squared {
+  position: relative;
+  background-color: #dfdfdf;
+}
+.c-label {
+  position: absolute;
+  font-size: 13px;
+  bottom: -20px;
+}
+.c-label span {
+  vertical-align: super;
+}
+.b-label {
+  position: absolute;
+  font-size: 13px;
+  bottom: 0px;
+  right: -28px;
+  color: #66866a;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+.b-label span {
+  vertical-align: super;
+  color: #66866a;
+}
+.a-label {
+  position: absolute;
+  font-size: 13px;
+  top: -23px;
+  left: 0px;
+  color: #66866a;
+}
+.a-label span {
+  vertical-align: super;
+}
+
+tr {
+	cursor: pointer;
+}
+
+.info {
+	margin-top: 10px;
+	font-size: 11pt;
+}
+
+.toggle-layout {
+	font-weight: bold;
+	color: #ccc;
+	padding: 5px;
+	border: 1px solid #666;
+	border-radius: 5px;
+}

@@ -36,7 +36,7 @@ function fetchDenomDesc(denom) {
 }
 
 function fetchDenom(denom) {
-  var url = '//arithmo.toewsweb.net:3000/denom_byexpansion/' + denom;
+  var url = 'https://arithmo.toewsweb.net:3000/denom_byexpansion/' + denom;
   return fetch(url)
     .then(res => {
       return res.json();
@@ -172,7 +172,6 @@ class Denom extends Component {
       <Container>
         <Row>
           <Col>
-            <h2 className="math-primary">Denominators</h2>
             <InputGroup>
               <FormControl placeholder="denominator" id="input-denom" type="tel" onChange={this.setDenom}/>
               <InputGroup.Append>
@@ -194,7 +193,7 @@ class Denom extends Component {
 		};
 
       return (
-      <Container>
+      <Container className="Denominator-Calculator">
         <Row>
           <Overlay style={{ transitionDuration: "1s", zIndex: this.state.overlay ? 100 : 0, opacity: this.state.overlay ? 1 : 0 }}>
             <div className="close-overlay" onClick={handleClickClose}>
@@ -207,7 +206,6 @@ class Denom extends Component {
             </div>
           </Overlay>
           <Col style={{minWidth: "50%"}}>
-            <h2 className="math-primary">Denominators</h2>
             <Table variant="math">
               <thead>
               <tr>

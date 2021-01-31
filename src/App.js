@@ -1,88 +1,44 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import './App.css';
-import Router from './Router';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import React from 'react';
+import { ThemeProvider } from 'styled-components';
+import { GlobalStyles } from './global';
+import { theme } from './theme';
 import Masthead from './Masthead';
-import { Container, Row, Col } from 'react-bootstrap';
-import Sidebar from './Sidebar';
-import styled from 'styled-components';
 
-const PrimaryNav = styled.ul`
-	position:absolute;
-	z-index:0;
-	left: 10px;
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	opacity: 0;
-	line-height: 2;
+import { Switch, Route } from 'react-router-dom';
+import Home from './components/Home';
+import Pythag from './components/pythag/Pythag-mobile';
+import Denom from './components/denom/Denom-mobile';
+import Mastermind from './components/mastermind/Mastermind';
+//import './css/math.css';
 
-	li:hover {
-		cursor: pointer;
-	}
-	li>a {
-		color: white;
-		font-size: 14px;
-		text-shadow: 1px 1px 1px #5f0764;
-		transition: .25s;
-	}
-	li>a:hover {
-		color: white;
-		font-size: 14px;
-		text-decoration: none;
-		transition: .25s;
-	}
-`;
+function withNav(MyComponent, title) {
 
-const menuOpts = [
-	{ label: 'Home', link: '/' },
-	{ label: 'Pythagorean Triples', link: '/pythag' },
-	{ label: 'Denominators', link: '/denom' },
-	{ label: 'Mastermind', link: '/mastermind' },
-];
+  return function(...props) {
+
+    return (
+    <>
+      <Masthead title={title} />
+      <main>
+        <MyComponent {...props} />
+      </main>
+    </>
+    );
+  }
+};
 
 function App() {
-	const [state, setState] = useState(false);
 
-	const  toggleMenu = e => {
-		if (state) {
-			var ul = document.querySelector('ul');
-			ul.style.transition = '.5s';
-			ul.style.opacity = 0;
-			ul.style.zIndex = 0;
-		}
-		setState(!state);
-	}
-
-	function handleClick(e) {
-		console.log('handleClick from App');
-		toggleMenu();
-	}
-
-	function handleTransitionEnd(el) {
-		var opacity = el.style.opacity;
-		if (opacity === '1') {
-			var ul = document.querySelector('ul');
-			ul.style.opacity = 1;
-			ul.style.zIndex = 100;
-		}
-	}
-
-	return (
-	<div>
-		<Sidebar visible={state} options={menuOpts} handleTransitionEnd={handleTransitionEnd} />
-		<Masthead toggle={toggleMenu} />
-		<PrimaryNav>
-			{menuOpts.map((opt, key) => <li key={key}><Link to={opt.link} onClick={handleClick}>{opt.label}</Link></li>) }
-		</PrimaryNav>
-		<Container>
-			<Row>
-				<Col>
-					<Router />
-				</Col>
-			</Row>
-		</Container>
-	</div>
+  return (
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      <Switch>
+        <Route exact path="/" component={withNav(Home, 'Home')} />
+        <Route path="/pythag" component={withNav(Pythag, 'Pythagorean Toy')} />
+        <Route path="/denom" component={withNav(Denom, 'Denominators')} />
+        <Route path="/mastermind" component={withNav(Mastermind, 'Mastermind')} />
+      </Switch>
+    </ThemeProvider>
   );
 }
 
