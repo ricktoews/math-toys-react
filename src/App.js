@@ -33,7 +33,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <Switch>
-        <Route exact path="/" component={withNav(Home, 'Home')} />
+        <Route exact path="/" component={withNav(Home, 'The Avocational Arithmophile')} />
         <Route path="/pythag" component={withNav(Pythag, 'Pythagorean Toy')} />
         <Route path="/denom" component={withNav(Denom, 'Denominators')} />
         <Route path="/mastermind" component={withNav(Mastermind, 'Mastermind')} />

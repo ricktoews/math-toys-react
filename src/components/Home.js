@@ -5,7 +5,6 @@ import MathJax from 'react-mathjax-preview'
 import styled from 'styled-components';
 
 const HomeWrapper = styled.div`
-	margin-top: 50px;
 
 	article {
 		color: ${({ theme }) => theme.primaryColor};
@@ -75,12 +74,15 @@ export default () => {
 
         <p>The interesting thing is that as that as these powers increase, the ratio of a / b approaches <math><msqrt><mn>5</mn></msqrt></math>, 2.23606...:</p>
 <Table variant="math" bordered>
+  <thead>
   <tr className="success text-success">
     <th>phi<sup>n</sup></th>
     <th>Fraction Form</th>
     <th>a / b</th>
     <th>Approx to √5</th>
   </tr>
+  </thead>
+  <tbody>
   <tr>
     <td>phi<sup>4</sup></td>
     <td>(7 + 3√5) / 2</td>
@@ -99,6 +101,7 @@ export default () => {
     <td>9349 / 4181</td>
     <td>2.23606...</td>
   </tr>
+  </tbody>
 </Table>
 
         <p>Playing with other sequences in which each element is the sum of the previous two, I see that the ratios appear to approach some irrational (I assume) real number, but it's not evident to me that it's a number that can be expressed tidily. 2.23067977499... is irrational but what the decimal form approximates is precisely the square root of 5.</p>
