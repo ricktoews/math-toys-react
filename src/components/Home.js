@@ -8,7 +8,6 @@ const HomeWrapper = styled.div`
 
 	article {
 		color: ${({ theme }) => theme.primaryColor};
-		font-family: Roboto, futura, sans-serif;
 		font-size: 1.0rem;
 		line-height: 2;
 		margin-bottom: 15px;
