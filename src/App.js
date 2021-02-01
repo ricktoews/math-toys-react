@@ -4,11 +4,13 @@ import { ThemeProvider } from 'styled-components';
 import { GlobalStyles } from './global';
 import { theme } from './theme';
 import Masthead from './Masthead';
+import SubMenuBar from './SubMenuBar';
 
 import { Switch, Route } from 'react-router-dom';
 import Home from './components/Home';
 import Pythag from './components/pythag/Pythag-mobile';
 import Denom from './components/denom/Denom-mobile';
+import Calendar from './components/calendar/Calendar';
 import Mastermind from './components/mastermind/Mastermind';
 //import './css/math.css';
 
@@ -36,6 +38,7 @@ function App() {
         <Route exact path="/" component={withNav(Home, 'The Avocational Arithmophile')} />
         <Route path="/pythag" component={withNav(Pythag, 'Pythagorean Toy')} />
         <Route path="/denom" component={withNav(Denom, 'Denominators')} />
+        <Route path="/calendar" component={withNav(Calendar, 'Gregorian Calendar')} />
         <Route path="/mastermind" component={withNav(Mastermind, 'Mastermind')} />
       </Switch>
     </ThemeProvider>

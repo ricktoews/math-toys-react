@@ -14,6 +14,9 @@ const Menu = ({ open }) => {
       <a href="/denom">
         Denominators
       </a>
+      <a href="/calendar">
+        Gregorian Calendar
+      </a>
       <a href="/mastermind">
         Mastermind
       </a>
