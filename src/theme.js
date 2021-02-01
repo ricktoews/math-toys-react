@@ -21,6 +21,9 @@ export const theme = {
 		fontSize: '1.25em',
 	},
 
+	circleBg: 'rgba(108, 132, 170, .7)',
+	circleColor: 'white',
+
 	primaryDark: '#0D0C1D',
 	primaryLight: '#EFFFFA',
 	primaryHover: '#343078',
