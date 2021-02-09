@@ -154,21 +154,23 @@ function Calendar(props) {
 	var years = Array.from({length: rangeLength}, (n, offset) => startingYear + offset);
 
 	return (
-	<Container>
-	  <Row>
-	    <Col>
-	      <MenuBar>
+		<>
+	      <Container>
+	        <Row>
+	          <Col>
+	            <MenuBar>
 <div onClick={toggleFriday13thCount}>Fridays the 13th Count</div>
 <div onClick={toggleFriday13th}>Fridays the 13th</div>
-	      </MenuBar>
-	      <YearGrid ref={yearGridRef} className="year-grid">
-	      { years.map((y, key) => <DrawYear12Digit key={key} year={y} handleYearClick={handleYearClick} /> ) }
-	      </YearGrid>
+	            </MenuBar>
+	            <YearGrid ref={yearGridRef} className="year-grid">
+	            { years.map((y, key) => <DrawYear12Digit key={key} year={y} handleYearClick={handleYearClick} /> ) }
+	            </YearGrid>
 
+	          </Col>
+	        </Row>
+	      </Container>
 		  { monthData ? <CalendarLayout ref={calendarLayoutRef} months={monthData} hideCalendar={closeCalendarLayout} /> : null }
-	    </Col>
-	  </Row>
-	</Container>
+		</>
 	);
 }
 
