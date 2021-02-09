@@ -30,7 +30,6 @@ const CalendarCloseButton = styled.div`
 `;
 
 const CalendarLayout = React.forwardRef((props, ref) => {
-	console.log('CalendarLayout props.months', props.months[0]);
 	return (
 		  <CalendarLayoutPlaceholder ref={ref}>
 		    <CalendarLayoutWrapper>
