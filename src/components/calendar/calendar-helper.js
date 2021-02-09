@@ -40,7 +40,7 @@ export const generateMonthData = ({ year, janDigit, isLeap }) => {
 
 	var data = [];
 	template.forEach((digit, monthNdx) => {
-		let month = { year, days: monthDays[monthNdx], blanks: (digit + 1*janDigit) % 7 };
+		let month = { year, month: monthNdx, days: monthDays[monthNdx], blanks: (digit + 1*janDigit) % 7 };
 		data.push(month);
 	});
 	if (isLeap) data[1].days = 29;

@@ -23,7 +23,7 @@ const MonthHeader = styled.div`
 	text-align:center;
 `;
 
-const MonthName = styled.div`
+const MonthMasthead = styled.div`
 	font-size:1.25em;
 	margin-bottom: 3px;
 `;
@@ -38,14 +38,14 @@ const DateCell = styled.div`
 
 function DrawMonth(props) {
 	const [ monthData, setMonthData ] = useState(props.monthData);
-
+console.log('DrawMOnth props', props);
 	useEffect(() => {
 		setMonthData(props.monthData);
 	}, [props.monthData]);
 
 	const generateHeader = () => {
 		return (<MonthHeader>
-		          <MonthName>{monthData.month} {monthData.year}</MonthName>
+		          <MonthMasthead>{monthName[monthData.month]} {monthData.year}</MonthMasthead>
 		        </MonthHeader>); 
 	}
 
