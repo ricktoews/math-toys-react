@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import styled from 'styled-components';
-import DrawMonth from './DrawMonth'; // Do we need this?
 import DrawYear12Digit from './DrawYear12Digit';
+import CalendarLayout from './CalendarLayout';
+import { generateMonthData } from './calendar-helper';
 
 const MenuBar = styled.div`
 	position: fixed;
@@ -50,8 +51,10 @@ function Calendar(props) {
 	const [ yearBlocks, setYearBlocks ] = useState([]);
 	const [ showFriday13thCount, setShowFriday13thCount ] = useState(false);
 	const [ showFriday13th, setShowFriday13th ] = useState(false);
+	const [ monthData, setMonthData ] = useState(null);
 
 	const yearGridRef = useRef();
+	const calendarLayoutRef = React.createRef();
 
 	useEffect(() => {
 		var els = Array.from(document.querySelectorAll('.year-block'));
@@ -82,9 +85,13 @@ function Calendar(props) {
 		// Get info from clicked year.
 		e.preventDefault();
 		var el = e.currentTarget;
+		var year = el.dataset.year;
 		var matchJan = el.dataset.jan;
 		var matchIsLeap = el.dataset.leap;
-
+		var data = generateMonthData({ year, janDigit: matchJan, isLeap: matchIsLeap === 'true' });
+		if (calendarLayoutRef.current) calendarLayoutRef.current.style.display = 'block';
+		console.log('handleYearClick', data[0]);
+		setMonthData(data);
 		// Highlight exactly matching years.
 		var matchingYearBlocks = yearBlocks.filter(yb => yb.dataset.jan === matchJan && yb.dataset.leap === matchIsLeap);
 		matchingYearBlocks.forEach(yb => yb.classList.add('matching-year'));
@@ -123,14 +130,24 @@ function Calendar(props) {
 		setShowFriday13th(!showFriday13th);		
 	}
 
-	var postDate = {
-		days: 31,
-		year: 2021,
-		month: 1,
-		day: 30,
-		blanks: 5
+	const closeCalendarLayout = () => {
+		calendarLayoutRef.current.style.display = 'none';
+	}
 
-	};
+	var postDates = [
+		{ days: 31, year: 2021, month: 1, day: 30, blanks: 5 },
+		{ days: 28, year: 2021, month: 2, day: 30, blanks: 1 },
+		{ days: 31, year: 2021, month: 3, day: 30, blanks: 1 },
+		{ days: 30, year: 2021, month: 4, day: 30, blanks: 4 },
+		{ days: 31, year: 2021, month: 5, day: 30, blanks: 6 },
+		{ days: 30, year: 2021, month: 6, day: 30, blanks: 2 },
+		{ days: 31, year: 2021, month: 7, day: 30, blanks: 4 },
+		{ days: 31, year: 2021, month: 8, day: 30, blanks: 0 },
+		{ days: 30, year: 2021, month: 9, day: 30, blanks: 3 },
+		{ days: 31, year: 2021, month: 10, day: 30, blanks: 5 },
+		{ days: 30, year: 2021, month: 11, day: 30, blanks: 1 },
+		{ days: 31, year: 2021, month: 12, day: 30, blanks: 3 }
+	];
 
 	var rangeLength = 800;
 	var startingYear = 1600;
@@ -148,7 +165,7 @@ function Calendar(props) {
 	      { years.map((y, key) => <DrawYear12Digit key={key} year={y} handleYearClick={handleYearClick} /> ) }
 	      </YearGrid>
 
-	      {/*<DrawMonth postDate={postDate} />*/}
+		  { monthData ? <CalendarLayout ref={calendarLayoutRef} months={monthData} hideCalendar={closeCalendarLayout} /> : null }
 	    </Col>
 	  </Row>
 	</Container>
