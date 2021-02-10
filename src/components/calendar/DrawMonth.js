@@ -9,9 +9,24 @@ const monthName = [
 ];
 
 const MonthWrapper = styled.div`
+	position: relative;
 	display: inline-block;
 	font-size: .5em;
 	padding: 3px;
+`;
+
+const MonthDigit = styled.div`
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	padding-top: 25px;
+	text-align: center;
+	font-family: times new roman;
+	font-style: italic;
+	font-size:7em;
+	color: rgba(240,0,0,1);
 `;
 
 const MonthRow = styled.div`
@@ -20,7 +35,10 @@ const MonthRow = styled.div`
 
 const MonthHeader = styled.div`
 	font-size: 1em;
+	font-weight: bold;
 	text-align:center;
+	border-radius: 10px;
+	background-color: red;
 `;
 
 const MonthMasthead = styled.div`
@@ -33,12 +51,20 @@ const DateCell = styled.div`
 	width: 14px;
 	height: 14px;
 	display: flex;
-	justify-content: flex-end;
+	justify-content: center;
+	align-items: center;
+
+	.blank {
+		margin: 0 2px;
+		background: red;
+		height: 3px;
+		width: 10px;
+	}
 `;
 
 function DrawMonth(props) {
 	const [ monthData, setMonthData ] = useState(props.monthData);
-console.log('DrawMOnth props', props);
+
 	useEffect(() => {
 		setMonthData(props.monthData);
 	}, [props.monthData]);
@@ -50,9 +76,9 @@ console.log('DrawMOnth props', props);
 	}
 
 	const drawDate = date => {
-		var dateClass = date.selected ? `date-selected date-selected-${date.category}` : 'date-unselected';
+		var dateClass = date.dt === '' ? `blank` : '';
 		return <DateCell key={date.ndx}>
-		         <div>{date.dt}</div>
+		         <div className={dateClass}>{date.dt}</div>
 		       </DateCell>
 	}
 
@@ -91,6 +117,7 @@ console.log('DrawMOnth props', props);
 	}
 
 	return <MonthWrapper>
+	         <MonthDigit>{monthData.blanks}</MonthDigit>
 	         {generateHeader()}
 	         {generateCalendar()}
 	       </MonthWrapper>;
