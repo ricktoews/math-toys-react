@@ -59,6 +59,8 @@ const DateCell = styled.div`
 		background: red;
 		height: 3px;
 		width: 10px;
+		transition-delay: .5s;
+		transition-duration: 1s;
 	}
 `;
 

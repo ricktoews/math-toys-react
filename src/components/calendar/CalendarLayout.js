@@ -20,6 +20,13 @@ const CalendarMonthGrid = styled.div`
 	background: black;
 	color: white;
 	border-radius: 10px;
+
+	.year-header {
+		grid-area: 1 / 1 / 1 / 4;
+		display: flex;
+		font-size: .7rem;
+		justify-content: space-between;
+	}
 `;
 
 const CalendarCloseButton = styled.div`
@@ -33,12 +40,22 @@ const CalendarCloseButton = styled.div`
 	align-items: center;
 `;
 
+const make12DigitString = months => {
+	var digits = months.map(m => m.blanks);
+	var digitStr = digits.join(' ');
+	return digitStr;
+};
+
 const CalendarLayout = React.forwardRef((props, ref) => {
+console.log('CalendarLayout props', props);
 	return (
 		  <CalendarLayoutPlaceholder ref={ref}>
 		    <CalendarLayoutWrapper>
 		      <CalendarMonthGrid>
-		        <div /><div /><div style={{display: 'flex', justifyContent: 'flex-end'}}><CalendarCloseButton onClick={props.hideCalendar}></CalendarCloseButton></div>
+		        <div className="year-header">
+	                  <div>{props.months[0].year} - {make12DigitString(props.months)}</div>
+                          <CalendarCloseButton onClick={props.hideCalendar}></CalendarCloseButton>
+                        </div>
 	          { props.months.map((m, key) => <DrawMonth key={key} monthData={m} />) }
 		      </CalendarMonthGrid>
 		    </CalendarLayoutWrapper>
