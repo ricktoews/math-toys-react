@@ -59,6 +59,8 @@ const DateCell = styled.div`
 		background: red;
 		height: 3px;
 		width: 10px;
+		transition-delay: .5s;
+		transition-duration: 1s;
 	}
 `;
 
@@ -71,7 +73,7 @@ function DrawMonth(props) {
 
 	const generateHeader = () => {
 		return (<MonthHeader>
-		          <MonthMasthead>{monthName[monthData.month]} {monthData.year}</MonthMasthead>
+		          <MonthMasthead>{monthName[monthData.month]}</MonthMasthead>
 		        </MonthHeader>); 
 	}
 
