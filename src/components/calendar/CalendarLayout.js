@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import DrawMonth from './DrawMonth'; // Do we need this?
-import close from '../../close.svg';
 
 const CalendarLayoutPlaceholder = styled.div`
 	position: fixed;
