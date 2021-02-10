@@ -73,7 +73,7 @@ function DrawMonth(props) {
 
 	const generateHeader = () => {
 		return (<MonthHeader>
-		          <MonthMasthead>{monthName[monthData.month]} {monthData.year}</MonthMasthead>
+		          <MonthMasthead>{monthName[monthData.month]}</MonthMasthead>
 		        </MonthHeader>); 
 	}
 
