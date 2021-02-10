@@ -45,6 +45,10 @@ const YearGrid = styled.div`
 			color: red;
 		}
 	}
+
+	.current-year {
+		background-color: ${({ theme }) => theme.calendarCurrentBg};
+	}
 `;
 
 function Calendar(props) {
@@ -65,8 +69,8 @@ function Calendar(props) {
 		var currentYearEl;
 		els.forEach(el => {
 			if (el.dataset.year === currentYear) {
-				currentYearEl = el;
-				el.classList.add('current-year');
+			currentYearEl = el;
+			el.classList.add('current-year');
 			}
 		});
 		currentYearEl.scrollIntoView({ block: 'center', behavior: 'smooth' });

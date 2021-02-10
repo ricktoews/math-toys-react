@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import DrawMonth from './DrawMonth'; // Do we need this?
+import close from '../../close.svg';
 
 const CalendarLayoutPlaceholder = styled.div`
 	position: fixed;
@@ -23,10 +24,14 @@ const CalendarMonthGrid = styled.div`
 `;
 
 const CalendarCloseButton = styled.div`
-	width: 16px;
-	height: 16px;
+	width: 18px;
+	height: 18px;
 	border-radius: 50%;
-	background-color: green;
+	background-color: ${({ theme }) => theme.calendarCloseBg};
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;
 
 const CalendarLayout = React.forwardRef((props, ref) => {
@@ -34,7 +39,7 @@ const CalendarLayout = React.forwardRef((props, ref) => {
 		  <CalendarLayoutPlaceholder ref={ref}>
 		    <CalendarLayoutWrapper>
 		      <CalendarMonthGrid>
-		        <div /><div /><div style={{display: 'flex', justifyContent: 'flex-end'}}><CalendarCloseButton onClick={props.hideCalendar} /></div>
+		        <div /><div /><div style={{display: 'flex', justifyContent: 'flex-end'}}><CalendarCloseButton onClick={props.hideCalendar}></CalendarCloseButton></div>
 	          { props.months.map((m, key) => <DrawMonth key={key} monthData={m} />) }
 		      </CalendarMonthGrid>
 		    </CalendarLayoutWrapper>
