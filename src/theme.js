@@ -24,6 +24,9 @@ export const theme = {
 	circleBg: 'rgba(108, 132, 170, .7)',
 	circleColor: 'white',
 
+	calendarCurrentBg: 'rgba(108, 132, 170, .3)',
+	calendarCloseBg: '#e00903',
+
 	primaryDark: '#0D0C1D',
 	primaryLight: '#EFFFFA',
 	primaryHover: '#343078',
