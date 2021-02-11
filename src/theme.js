@@ -21,7 +21,7 @@ export const theme = {
 		fontSize: '1.25em',
 	},
 
-	circleBg: 'rgba(108, 132, 170, .7)',
+	circleBg: 'rgba(240, 0, 0, .9)',
 	circleColor: 'white',
 
 	calendarCurrentBg: 'rgba(108, 132, 170, .3)',

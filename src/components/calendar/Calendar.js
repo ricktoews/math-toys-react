@@ -49,6 +49,12 @@ const YearGrid = styled.div`
 	.current-year {
 		background-color: ${({ theme }) => theme.calendarCurrentBg};
 	}
+	.matching-year {
+		background-color: #ccc;
+	}
+	.mostly-matching-year {
+		background-color: #eee;
+	}
 `;
 
 function Calendar(props) {
@@ -163,8 +169,8 @@ function Calendar(props) {
 	        <Row>
 	          <Col>
 	            <MenuBar>
-<div onClick={toggleFriday13thCount}>Fridays the 13th Count</div>
-<div onClick={toggleFriday13th}>Fridays the 13th</div>
+                      <div onClick={toggleFriday13thCount}>Fridays the 13th Count</div>
+{/* <div onClick={toggleFriday13th}>Fridays the 13th</div> */}
 	            </MenuBar>
 	            <YearGrid ref={yearGridRef} className="year-grid">
 	            { years.map((y, key) => <DrawYear12Digit key={key} year={y} handleYearClick={handleYearClick} /> ) }
