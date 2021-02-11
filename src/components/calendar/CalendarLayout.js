@@ -24,7 +24,7 @@ const CalendarMonthGrid = styled.div`
 	.year-header {
 		grid-area: 1 / 1 / 1 / 4;
 		display: flex;
-		font-size: .7rem;
+		font-size: .9rem;
 		justify-content: space-between;
 	}
 `;
@@ -53,7 +53,7 @@ console.log('CalendarLayout props', props);
 		    <CalendarLayoutWrapper>
 		      <CalendarMonthGrid>
 		        <div className="year-header">
-	                  <div>{props.months[0].year} - {make12DigitString(props.months)}</div>
+	                  <div>{props.months[0].year}</div>
                           <CalendarCloseButton onClick={props.hideCalendar}></CalendarCloseButton>
                         </div>
 	          { props.months.map((m, key) => <DrawMonth key={key} monthData={m} />) }

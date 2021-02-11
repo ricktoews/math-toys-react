@@ -56,11 +56,10 @@ const DateCell = styled.div`
 
 	.blank {
 		margin: 0 2px;
-		background: red;
-		height: 3px;
-		width: 10px;
-		transition-delay: .5s;
-		transition-duration: 1s;
+		background: transparent;
+		height: 5px;
+		width: 5px;
+		border-radius: 50%;
 	}
 `;
 
