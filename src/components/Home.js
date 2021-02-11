@@ -72,7 +72,7 @@ export default () => {
 
         <p>Take June 28, 2021 as an example. The digit for June 2021 is 2. Adding this digit to the date (28) gives you 30. When you divide 30 by 7, you get 4 remainder 2. The 2nd day of the week is Monday. So June 28, 2021 is a Monday.</p>
 
-        <p>A brother of one of my dad's uncles introduced me to this stuff ages ago. He showed me what the calendar looked like for 1975 and taught me how to use it, and I took an interest and made it a project to write out the calendars for centuries back, thus becoming very familiar with the pattern.</p>
+        <p>A brother of one of my dad's uncles introduced me to this stuff ages ago. He showed me what the calendar looked like for 1975 and taught me how to use it, and I took an interest and made it a project to write out the calendars for centuries back, thus becoming very familiar with the pattern. For a list of 12-digit calendars spanning several centuries, starting with 1600, have a look at the <a href="/calendar">Gregorian Calendar</a> page.</p>
 
         </ToggleRead>
       </article>
