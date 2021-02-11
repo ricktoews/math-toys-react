@@ -61,9 +61,26 @@ export default () => {
 	return (
     <HomeWrapper className="container">
       <article>
-        <div className="article-title">New Insight On 1/11</div>
+        <div className="article-title">The 12-digit Calendar, Part 1</div>
 
         <ToggleRead className="article-open">
+        <p>Part 1. Does that imply multiple parts? I suppose it does. And perhaps there will be multiple parts.</p>
+
+        <p>It was a brother of one of my dad's uncles who taught me about the 12-digit calendar. He showed me what the calendar looked like for 1975, and I took an interest and made it a project to write out the calendars for centuries back, thus becoming very familiar with the pattern.</p>
+
+        <p>The concept is simple enough: each month is represented by a single digit in the range 0-6. If you've ever noticed how most months on a conventional calendar have a number of blanks in the week before the first day of the month, that number of blanks is the digit for that month. For 2021, the digits are Jan: 5, Feb: 1, Mar: 1, Apr: 4, May: 6, Jun: 2, Jul: 4, Aug: 0, Sep: 3, Oct: 5, Nov: 1, Dec: 3.</p>
+
+        <p>To calculate the day of the week a date lands on, you start by adding the date to the month's digit. Then, you divide by 7 and take the remainder. If there is no remainder, the day of the week for that date is Saturday. Otherwise, it's the number corresponding to the day within the week: 1 = Sunday, 2 = Monday, &c.</p>
+
+        <p>Take June 28, 2021 as an example. The digit for June 2021 is 2. Adding this digit to the date (28) gives you 30. When you divide 30 by 7, you get 4 remainder 2. The 2nd day of the week is Monday. So June 28, 2021 is a Monday.</p>
+
+        </ToggleRead>
+      </article>
+
+      <article>
+        <div className="article-title">New Insight On 1/11</div>
+
+        <ToggleRead className="article-closed">
         <p>In base 10, the reciprocal of 11&mdash;1/11&mdash;has the decimal expansion <Periodic whole="0" repeating="09" />. This caught my attention long ago, since 1/9 is <Periodic whole="0" repeating="11" />. That is, the period of 1/11 is 1 &times; 9, and the period of 1/9 is 1 &times; 11. Curious; but Why?</p>
 
         <p>As it happens, the answer is quite simple. It boils down to the fact that x<sup>2</sup> / (x + 1) = (x - 1) remainder 1. In this application, x is the number base: in this case, 10.</p>
