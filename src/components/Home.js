@@ -64,15 +64,15 @@ export default () => {
         <div className="article-title">The 12-digit Calendar, Part 1</div>
 
         <ToggleRead className="article-open">
-        <p>Part 1. Does that imply multiple parts? I suppose it does. And perhaps there will be multiple parts.</p>
+        <p>2021: 5 1 1 4 6 2 4 0 3 5 1 3</p>
 
-        <p>It was a brother of one of my dad's uncles who taught me about the 12-digit calendar. He showed me what the calendar looked like for 1975, and I took an interest and made it a project to write out the calendars for centuries back, thus becoming very familiar with the pattern.</p>
-
-        <p>The concept is simple enough: each month is represented by a single digit in the range 0-6. If you've ever noticed how most months on a conventional calendar have a number of blanks in the week before the first day of the month, that number of blanks is the digit for that month. For 2021, the digits are Jan: 5, Feb: 1, Mar: 1, Apr: 4, May: 6, Jun: 2, Jul: 4, Aug: 0, Sep: 3, Oct: 5, Nov: 1, Dec: 3.</p>
+        <p>The concept is simple enough: each month is represented by a single digit in the range 0-6. If you've ever noticed how most months on a conventional calendar have a number of blank weekdays leading up to the first day of the month, that number of blanks is the digit for that month. For 2021, the digits are Jan: 5, Feb: 1, Mar: 1, Apr: 4, May: 6, Jun: 2, Jul: 4, Aug: 0, Sep: 3, Oct: 5, Nov: 1, Dec: 3.</p>
 
         <p>To calculate the day of the week a date lands on, you start by adding the date to the month's digit. Then, you divide by 7 and take the remainder. If there is no remainder, the day of the week for that date is Saturday. Otherwise, it's the number corresponding to the day within the week: 1 = Sunday, 2 = Monday, &c.</p>
 
         <p>Take June 28, 2021 as an example. The digit for June 2021 is 2. Adding this digit to the date (28) gives you 30. When you divide 30 by 7, you get 4 remainder 2. The 2nd day of the week is Monday. So June 28, 2021 is a Monday.</p>
+
+        <p>A brother of one of my dad's uncles introduced me to this stuff ages ago. He showed me what the calendar looked like for 1975 and taught me how to use it, and I took an interest and made it a project to write out the calendars for centuries back, thus becoming very familiar with the pattern.</p>
 
         </ToggleRead>
       </article>
