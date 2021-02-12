@@ -4,7 +4,12 @@ import DrawMonth from './DrawMonth'; // Do we need this?
 
 const CalendarLayoutPlaceholder = styled.div`
 	position: fixed;
-	top: 80px;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	padding-top: 80px;
+	background: rgba(128,128,128,.5);
 `;
 
 const CalendarLayoutWrapper = styled.div`
@@ -38,6 +43,7 @@ const CalendarCloseButton = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	cursor: pointer;
 `;
 
 const make12DigitString = months => {
