@@ -5,6 +5,12 @@ import MathJax from 'react-mathjax-preview'
 import styled from 'styled-components';
 import Periodic from './Periodic';
 
+const Footnote = styled.div`
+	font-size: .7rem;
+	line-height: 1rem;
+	margin-bottom: 10px;
+`;
+
 const HomeWrapper = styled.div`
 
 	article {
@@ -70,29 +76,32 @@ export default () => {
 
         <p>OK, so you can get the day of the week for any date in 2021. That's neat. But what about for other years?</p>
 
-        <p>So. Piscatology 101. I've always started by getting the base number for the year and then adding the offset for the target month.</p>
+        <p>So. Piscatology 101. Remember the 12-digit calendar for 2021? Well, the following table is a list of month offsets you will use to find dates in any whatever year you're looking for. You'll do this in three steps: 1) Find the base number for the year, 2) Find the number for your target month, 3) Find the day of the week for the target date.</p>
 
-        <div style={{ display: 'flex', justifyContent: 'center'}}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '10px'}}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)'}}>
-            <div style={{gridArea: '1/1/2/7', textAlign: 'center'}}>Month Offsets</div>
+            <div style={{gridArea: '1/1/2/7', textAlign: 'center', fontWeight: 'bold'}}>Month Offsets</div>
           { months.map((m, key) => <React.Fragment key={key}><div style={{paddingRight: '3px'}}>{m}</div><div>{yearTemplate[key]}</div></React.Fragment>) }
           </div>
         </div>
 
-	<p>Let's start with the most likely practical application: years in the recent past or future. This is easy.</p>
+        <Footnote>So, you remember how you had to memorize your multiplication table in school, and you were eternally grateful that that was part of your education? ... Yeah, this is the same kind of thing.</Footnote>
+
+	<p>Let's start with the most likely practical application: years in the recent past or future.</p>
 
         <ul className="steps">
           <li><b>First, get the base number for the year</b>.</li>
           <li>Start with the last two digits of the year you want.</li>
-          <li>Divide that by 4, and add the integer result to your year. (<i>If your year is a leap year, AND you're finding a date in January or February, subtract 1</i>.)</li>
+          <li>Divide that by 4, and add the integer result to your year<sup>*</sup>. (<i>If your year is a leap year, AND you're finding a date in January or February, subtract 1</i>.)</li>
           <li><b>Next, find your taget month</b>.</li>
-          <li>Get the month's offset value from the above table, and add it to the base number for the year.</li>
-          <li>This is the target month's number. <i>Note: You can divide this by 7 and use the remainder, if that's more convenient for you</i>.</li>
+          <li>Get the month's offset value from the above table, and add it to the base number for the year. This is the target month's number. <i>Note: You can divide this by 7 and use the remainder, if that's more convenient for you</i>.</li>
           <li><b>Finally, get the day of the week</b>.</li>
           <li>Add the date to the target month's number.</li>
           <li>Divide by 7, and keep the remainder.</li>
           <li>The remainder is the number of the day of the week. (If there is no remainder, the date falls on a Saturday.)</li>
         </ul>
+
+        <Footnote><sup>*</sup>Except for the step of dividing the year by 4, you can reduce any number you're working with by taking the remainder of that number divided by 7. For example, if you were working with the year 2085, you would divide 85 by 4, giving you 21. (You would not reduce 85 before dividing by 4.) However, you could then reduce both 85 (1) and 21 (0) when you added them, giving you 1 for as the base number for 2085.</Footnote>
 
         <p>Let's try an example or two.</p>
 
@@ -100,8 +109,8 @@ export default () => {
 
 	<ul>
           <li>Start with the last two digits of the year: 25.</li>
-          <li>Divide by 4, and add the integer result to your year. The integer part of 25 divided by 4 is 6. Add 6 to 25, for a total of 31.</li>
-          <li>The offset for September is 5, so add 5 to 31, giving you 36. <i>Note: You can divide this by 7 and proceed with the remainder (1), if that's more convenient for you</i>.</li>
+          <li>Divide by 4, and add the integer result to your year. The integer part of 25 divided by 4 is 6. Add 6 to 25, for a total of 31 (3, if you reduce).</li>
+          <li>The offset for September is 5, so add 5 to 31, giving you 36 (1, if you reduce).</li>
           <li>The date is the 16th, so add 16 to 36 (or 1), giving you 52 (or 17).</li>
           <li>Divide 52 (or 17) by 7, and keep the remainder. The remainder is 3.</li>
           <li><i>September 16, 2025 falls on the 3rd day of the week, which is <b>Tuesday</b></i>.</li>
@@ -111,13 +120,14 @@ export default () => {
 
 	<ul>
           <li>Start with the last two digits of the year: 28.</li>
-          <li>Divide by 4, and add the integer result to your year. The integer part of 28 divided by 4 is 7. Add 7 to 28, for a total of 35. <i>Since 2028 is a leap year, AND you're looking for a date in January or February, subtract 1, leaving 34</i>.</li>
-          <li>The offset for February is 3, so add 3 to 34, giving you 37. <i>Note: You can continue with 37, or use the remainder of 37 divided by 7 (2)</i>.</li>
+          <li>Divide by 4, and add the integer result to your year. The integer part of 28 divided by 4 is 7. Add 7 to 28, for a total of 35. <i>Since 2028 is a leap year, AND you're looking for a date in January or February, subtract 1, leaving 34 (6, if you reduce)</i>.</li>
+          <li>The offset for February is 3, so add 3 to 34 (or 6), giving you 37 (or 9, which you could further reduce to 2).</li>
           <li>The date is the 4th, so add 4 to 37 (or 2), giving you 41 (or 6).</li>
           <li>Divide 41 (or 6) by 7, and keep the remainder. The remainder is 6.</li>
           <li><i>February 4, 2028 falls on the 6th day of the week, which is <b>Friday</b></i>.</li>
         </ul>
 
+        <p style={{textAlign: 'center', fontWeight: 'bold'}}>0 3 3 6 1 4 6 2 5 0 3 5</p>
 
         </ToggleRead>
       </article>
