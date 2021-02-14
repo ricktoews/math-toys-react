@@ -24,6 +24,18 @@ export const GlobalStyles = createGlobalStyle`
 		margin-top: 25px;
 	}
 
+	article ul {
+		font-size: .8rem;
+		list-style-type: none;
+		padding: 10px;
+		border-radius: 5px;
+		background-color: #ddd;
+	}
+
+	article li:not(:last-child) {
+		padding-bottom: 10px;
+	}
+
 /* Table coloring for math. */
 	.table-math th {
 		background-color: ${({ theme }) => theme.math.headerBg};
