@@ -26,6 +26,7 @@ export const GlobalStyles = createGlobalStyle`
 
 	article ul {
 		font-size: .8rem;
+		line-height: 1.0rem;
 		list-style-type: none;
 		padding: 10px;
 		border-radius: 5px;
