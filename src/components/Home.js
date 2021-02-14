@@ -58,12 +58,74 @@ export default () => {
 		els.map(el => el.addEventListener('click', readArticle, el));
 	}, []);
   
+	const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+	const yearTemplate = [0, 3, 3, 6, 1, 4, 6, 2, 5, 0, 3, 5];
+
 	return (
     <HomeWrapper className="container">
       <article>
-        <div className="article-title">The 12-digit Calendar, Part 1</div>
+        <div className="article-title">The 12-digit Calendar, Part 2</div>
 
         <ToggleRead className="article-open">
+
+        <p>OK, so you can get the day of the week for any date in 2021. That's neat. But what about for other years?</p>
+
+        <p>So. Piscatology 101. I've always started by getting the base number for the year and then adding the offset for the target month.</p>
+
+        <div style={{ display: 'flex', justifyContent: 'center'}}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)'}}>
+            <div style={{gridArea: '1/1/2/7', textAlign: 'center'}}>Month Offsets</div>
+          { months.map((m, key) => <React.Fragment key={key}><div style={{paddingRight: '3px'}}>{m}</div><div>{yearTemplate[key]}</div></React.Fragment>) }
+          </div>
+        </div>
+
+	<p>Let's start with the most likely practical application: years in the recent past or future. This is easy.</p>
+
+        <ul className="steps">
+          <li><b>First, get the base number for the year</b>.</li>
+          <li>Start with the last two digits of the year you want.</li>
+          <li>Divide that by 4, and add the integer result to your year. (<i>If your year is a leap year, AND you're finding a date in January or February, subtract 1</i>.)</li>
+          <li><b>Next, find your taget month</b>.</li>
+          <li>Get the month's offset value from the above table, and add it to the base number for the year.</li>
+          <li>This is the target month's number. <i>Note: You can divide this by 7 and use the remainder, if that's more convenient for you</i>.</li>
+          <li><b>Finally, get the day of the week</b>.</li>
+          <li>Add the date to the target month's number.</li>
+          <li>Divide by 7, and keep the remainder.</li>
+          <li>The remainder is the number of the day of the week. (If there is no remainder, the date falls on a Saturday.)</li>
+        </ul>
+
+        <p>Let's try an example or two.</p>
+
+        <p>How about September 16, 2025.</p>
+
+	<ul>
+          <li>Start with the last two digits of the year: 25.</li>
+          <li>Divide by 4, and add the integer result to your year. The integer part of 25 divided by 4 is 6. Add 6 to 25, for a total of 31.</li>
+          <li>The offset for September is 5, so add 5 to 31, giving you 36. <i>Note: You can divide this by 7 and proceed with the remainder (1), if that's more convenient for you</i>.</li>
+          <li>The date is the 16th, so add 16 to 36 (or 1), giving you 52 (or 17).</li>
+          <li>Divide 52 (or 17) by 7, and keep the remainder. The remainder is 3.</li>
+          <li><i>September 16, 2025 falls on the 3rd day of the week, which is <b>Tuesday</b></i>.</li>
+        </ul>
+
+        <p>Now, let's try a leap year. How about February 4, 2028:</p>
+
+	<ul>
+          <li>Start with the last two digits of the year: 28.</li>
+          <li>Divide by 4, and add the integer result to your year. The integer part of 28 divided by 4 is 7. Add 7 to 28, for a total of 35. <i>Since 2028 is a leap year, AND you're looking for a date in January or February, subtract 1, leaving 34</i>.</li>
+          <li>The offset for February is 3, so add 3 to 34, giving you 37. <i>Note: You can continue with 37, or use the remainder of 37 divided by 7 (2)</i>.</li>
+          <li>The date is the 4th, so add 4 to 37 (or 2), giving you 41 (or 6).</li>
+          <li>Divide 41 (or 6) by 7, and keep the remainder. The remainder is 6.</li>
+          <li><i>February 4, 2028 falls on the 6th day of the week, which is <b>Friday</b></i>.</li>
+        </ul>
+
+
+        </ToggleRead>
+      </article>
+
+      <article>
+        <div className="article-title">The 12-digit Calendar, Part 1</div>
+
+        <ToggleRead className="article-closed">
         <p>2021: 5 1 1 4 6 2 4 0 3 5 1 3</p>
 
         <p>The concept is simple enough: each month is represented by a single digit in the range 0-6. If you've ever noticed how most months on a conventional calendar have a number of blank weekdays leading up to the first day of the month, that number of blanks is the digit for that month. For 2021, the digits are Jan: 5, Feb: 1, Mar: 1, Apr: 4, May: 6, Jun: 2, Jul: 4, Aug: 0, Sep: 3, Oct: 5, Nov: 1, Dec: 3.</p>
