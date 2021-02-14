@@ -101,7 +101,7 @@ export default () => {
           <li>The remainder is the number of the day of the week. (If there is no remainder, the date falls on a Saturday.)</li>
         </ul>
 
-        <Footnote><sup>*</sup>Except for the step of dividing the year by 4, you can reduce any number you're working with by taking the remainder of that number divided by 7. For example, if you were working with the year 2085, you would divide 85 by 4, giving you 21. (You would not reduce 85 before dividing by 4.) However, you could then reduce both 85 (1) and 21 (0) when you added them, giving you 1 for as the base number for 2085.</Footnote>
+        <Footnote><sup>*</sup>Except for the step of dividing the year by 4, you can reduce any number you're working with by taking the remainder of that number divided by 7. For example, if you were working with the year 2085, you would divide 85 by 4, giving you 21. You could then reduce both 85 (1) and 21 (0) when you added them, giving you 1 as the base number for 2085. Note that this would be the same result as adding 85 and 21 and then taking the remainder of 106 divided by 7.</Footnote>
 
         <p>Let's try an example or two.</p>
 
