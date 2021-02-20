@@ -37,6 +37,12 @@ export const GlobalStyles = createGlobalStyle`
 		padding-bottom: 10px;
 	}
 
+	.step-input {
+		border: none;
+		border-bottom: 1px solid green;
+		width: 30px;
+	}
+
 /* Table coloring for math. */
 	.table-math th {
 		background-color: ${({ theme }) => theme.math.headerBg};
