@@ -11,6 +11,7 @@ import Home from './components/Home';
 import Pythag from './components/pythag/Pythag-mobile';
 import Denom from './components/denom/Denom-mobile';
 import Calendar from './components/calendar/Calendar';
+import CalendarPractice from './components/calendar/CalendarPractice';
 import Mastermind from './components/mastermind/Mastermind';
 //import './css/math.css';
 
@@ -39,6 +40,7 @@ function App() {
         <Route path="/pythag" component={withNav(Pythag, 'Pythagorean Toy')} />
         <Route path="/denom" component={withNav(Denom, 'Denominators')} />
         <Route path="/calendar" component={withNav(Calendar, 'Gregorian Calendar')} />
+        <Route path="/calendar-practice" component={withNav(CalendarPractice, 'Calendar Practice')} />
         <Route path="/mastermind" component={withNav(Mastermind, 'Mastermind')} />
       </Switch>
     </ThemeProvider>
