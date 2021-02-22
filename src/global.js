@@ -37,10 +37,19 @@ export const GlobalStyles = createGlobalStyle`
 		padding-bottom: 10px;
 	}
 
+	.date-prompt {
+		border-bottom: 1px solid gray;
+		margin-bottom: 20px;
+	}
+
+	.steps-container {
+	}
+
 	.step-input {
 		border: none;
-		border-bottom: 1px solid green;
-		width: 30px;
+		border-bottom: 1px solid gray;
+		width: 50px;
+		outline: none;
 	}
 
 /* Table coloring for math. */
