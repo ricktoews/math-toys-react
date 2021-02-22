@@ -45,4 +45,9 @@ export const fillIn = (str) => {
 	return str;
 }
 
-
+export const formatDate = ({ targetYear, targetMonth, targetDate }) => {
+	var d = new Date(targetYear, targetMonth - 1, targetDate);
+	var monthName = d.toLocaleString('en-EN', { month: 'long' });
+	var formatted = `${monthName} ${targetDate}, ${targetYear}`;
+	return formatted;
+}

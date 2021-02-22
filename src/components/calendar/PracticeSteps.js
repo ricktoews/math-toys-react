@@ -37,7 +37,6 @@ console.log('useEffect el', el);
 		currentStep.input = val;
 
 		var correct, expected, hint;
-console.log('handleStep', currentStep.expected);
 		expected = eval(fillIn(currentStep.expected));
 		hint = fillIn(currentStep.hint);
 		correct = val === expected;
