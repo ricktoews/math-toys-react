@@ -21,3 +21,5 @@ FROM nginx:1.19.8-alpine
 COPY --from=build /usr/src/app/build /usr/share/nginx/html
 
 COPY --from=build /usr/src/app/nginx-config/default.conf /etc/nginx/conf.d/default.conf
+
+COPY --from=build /usr/src/app/nginx-config/ssl /etc/nginx/ssl
