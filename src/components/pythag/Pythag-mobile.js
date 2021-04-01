@@ -8,6 +8,8 @@ import PythagHelper from './pythag-helper';
 import styled from 'styled-components';
 import '../../css/pythag.css';
 
+const MaxCMinusB = 25;
+
 const CurrentConfig = styled.span`
   border: 1px solid #999;
   background-color:#eee;
@@ -24,6 +26,10 @@ const Triple = styled.div`
 const LayoutToggle = styled.div`
   display: flex;
   justify-content: center;
+
+  .toggle-layout {
+  	outline: none;
+  }
 `;
 
 const Circle = styled.div`
@@ -31,11 +37,11 @@ const Circle = styled.div`
   height: 36px;
   margin: 0 8px;
   border-radius: 50%;
-  background-color: green;
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
+  cursor: pointer;
 `;
 
 const STARTING = 20;
@@ -283,10 +289,10 @@ function Pythag(props) {
         <Row>
           <Col>
             <Triple>
-              <Circle onClick={highlightA}>{triple.a}<sup>2</sup></Circle> + <Circle onClick={highlightB}>{triple.b}<sup>2</sup></Circle> = <Circle>{triple.c}<sup>2</sup></Circle>
+              <Circle onClick={highlightA} className="btn-info">{triple.a}<sup>2</sup></Circle> + <Circle onClick={highlightB} className="btn-info">{triple.b}<sup>2</sup></Circle> = <Circle className="btn-info">{triple.c}<sup>2</sup></Circle>
             </Triple>
 
-            <LayoutToggle><span className="toggle-layout" onClick={toggleAHandler}>Toggle a^2 Layout</span></LayoutToggle>
+            <LayoutToggle><button className="toggle-layout btn-warning" onClick={toggleAHandler}>Toggle a^2 Layout</button></LayoutToggle>
 
             { triple.a && (
 <div style={{display: 'flex', justifyContent: 'center' }}>
@@ -315,12 +321,12 @@ function Pythag(props) {
             <InputGroup className="pythag-a">
 	  
               <Dropdown>
-	          <Dropdown.Toggle size="sm" variant="success" style={{ backgroundColor: "#66866b" }}>
-	            Corner size (Currently {corner})
+	          <Dropdown.Toggle size="sm" variant="warning">
+	            c - b = {corner}
 	          </Dropdown.Toggle>
 
 	          <Dropdown.Menu>
-	  { [1, 2, 3, 8, 9].map((side, key) => {
+	  { Array.from(Array(MaxCMinusB).keys()).map(n => n+1).map((side, key) => {
 	            return <Dropdown.Item key={key} data-corner={side} onClick={handleDropdown}>{side}</Dropdown.Item>
 	  }) }
 	          </Dropdown.Menu>
