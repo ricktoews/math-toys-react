@@ -9,6 +9,7 @@ import SubMenuBar from './SubMenuBar';
 import { Switch, Route } from 'react-router-dom';
 import Home from './components/Home';
 import Pythag from './components/pythag/Pythag-mobile';
+import PythagC from './components/pythag/Pythag-C';
 import Denom from './components/denom/Denom-mobile';
 import Calendar from './components/calendar/Calendar';
 import CalendarPractice from './components/calendar/CalendarPractice';
@@ -38,6 +39,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={withNav(Home, 'The Avocational Arithmophile')} />
         <Route path="/pythag" component={withNav(Pythag, 'Pythagorean Toy')} />
+        <Route path="/pythag-c" component={withNav(PythagC, 'Pythagorean-related  Experiment')} />
         <Route path="/denom" component={withNav(Denom, 'Denominators')} />
         <Route path="/calendar" component={withNav(Calendar, 'Gregorian Calendar')} />
         <Route path="/calendar-practice" component={withNav(CalendarPractice, 'Calendar Practice')} />

@@ -1,4 +1,5 @@
 import React from 'react';
+import { checkSquare } from './pythag-check-c';
 
 var SQUARE_WIDTH = 21;
 var MOVE_DELAY = 500;
@@ -55,7 +56,6 @@ function squareCSSPosition(row, col) {
 	return { top, left };
 }
 
-
 function layoutSquare(triple) {
 	var side = triple.a;
 	var totalSquares = side * side;
@@ -69,43 +69,6 @@ function layoutSquare(triple) {
 		el.style.left = pos.left + 'px';
 	}
 }
-
-
-/*
-function getASides(triple) {
-	var topWidth = triple.b;
-	var topHeight = triple.c - triple.b;
-	var totalSquares = triple.c * triple.c;
-	var aSides = [];
-	for (let i = 0; i < totalSquares; i++) {
-		let row = Math.ceil((i + 1) / triple.c), col = (i % triple.c) + 1;
-		if (col > triple.a && row <= triple.c - triple.b || col <= triple.c - triple.b && row > triple.a) {
-			let moveToRow = Math.ceil((i + 1) / triple.c);
-			let moveToCol = (i % triple.c) + 1;
-			aSides.push({ row: moveToRow - 1, col: moveToCol - 1, posOnly: (col > triple.a || row > triple.a) });
-		}
-	}
-	return aSides;
-}
-
-
-function wraparoundPosition(triple, squareMoved) {
-	var aSides = getASides(triple);
-	var top = aSides[squareMoved].row * SQUARE_WIDTH;
-	var left =aSides[squareMoved].col * SQUARE_WIDTH;
-	return { top, left };
-}
-
-
-function moveSquare(id, triple, squareMoved) {
-	var dest = wraparoundPosition(triple, squareMoved);
-	var el = document.querySelector('#' + id);
-	el.style.transition = '1s';
-	el.style.transform = 'rotate(360deg)';
-	el.style.top = dest.top + 'px';
-	el.style.left = dest.left + 'px';
-}
-*/
 
 
 function layoutWrapAround(triple) {
@@ -130,15 +93,21 @@ function makeSquares(triple, letter, squareType = '') {
 
 	var side = triple[letter];
 	var squares = [];
-	let className = 'square';
-	if (squareType) { className += ' ' + squareType; }
+	let baseClassName = 'square';
+	if (squareType) { baseClassName += ' ' + squareType; }
+	var layerData = checkSquare(side).layers;
+
 	var totalSquares = side * side;
 	var offset = letter === 'b' ? triple.c - triple.b : 0;
 	for (let i = 0; i < totalSquares; i++) {
 		let {r, c} = letter === 'a' ? squarePositions[letter].wraparound[i] : squarePositions[letter].square[i];
+		let layer = Math.min(r, c);
+		let className = baseClassName + ' layer-' + layer;
+		let upToLayer = layerData.slice(0, layer).reduce((a, cv) => a+cv, 0);
+		let isSquare = Math.sqrt(upToLayer) === Math.ceil(Math.sqrt(upToLayer));
 		let pos = squareCSSPosition(r, c);
 		let id = `${letter}-${i}`;
-		squares.push(<div id={id} key={i} className={ className } style={{ 
+		squares.push(<div id={id} data-row={r} data-col={c} data-layer={layer} data-is-square={isSquare} key={i} className={ className } style={{ 
 			top: pos.top + 'px', 
 			left: pos.left + 'px',
 			width: (SQUARE_WIDTH - 1) + 'px',
@@ -151,7 +120,6 @@ function makeSquares(triple, letter, squareType = '') {
 
 
 function arrangeA(triple, layout) {
-	console.log('got arrangeA', layout);
 	if (layout === 'square') {
 		layoutSquare(triple);
 	} else if (layout === 'wraparound') {
@@ -184,12 +152,6 @@ function Square(props) {
 	else if (props.type === 'b') { className += ' b-square'; }
 	return (
     <div style={{ position: 'relative' }}>
-      <div className={ className } style={{
-      display: 'none',
-      width: (SQUARE_WIDTH - 1) + 'px',
-      height: (SQUARE_WIDTH - 1) + 'px',
-      border: '1px solid black'
-    }}></div>
       <div>{props.type}<span>2</span> = {props.value} x {props.value} ({props.value*props.value})</div>
     </div>
 	);

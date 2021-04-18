@@ -166,19 +166,18 @@ function Pythag(props) {
 	var [corner, setCorner] = useState(1);
 	var [triple, setTriple] = useState({ });
 	var [triples, setTriples] = useState([]);
+	var [cWidth, setCSide] = useState(5);
 	var [aSquaredConfig, setASquaredConfig] = useState('wraparound');
 
 	SQUARE_WIDTH = Math.max(STARTING - (5*parseInt(triple.c/10,10)) + 1, 5);
   
 	useEffect(() => {
-		console.log('corner changed', corner);
 		processCorner();
 	}, [corner]);
 
 	// Need to be clear on exactly when this fires. Look up useEffect, second parameter.
 	useEffect(() => {
 		var layout = aSquaredConfig === 'wraparound' ? 'square' : 'wraparound';
-		console.log('useEffect to call arrangeA,', layout);
 		PythagHelper.arrangeA(triple, layout);
 	});
 
@@ -186,15 +185,13 @@ function Pythag(props) {
 	PythagHelper.setSquareWidth(SQUARE_WIDTH);
   
 	PythagHelper.MOVE_DELAY = 500 - (150*parseInt(triple.c/10,10));
-	console.log('square width', SQUARE_WIDTH);
 
-	const processCorner = () => {
+	const processCorner = async () => {
 		if (corner) {
-			PythagHelper.getPythagData(corner).then(res => {
-				let triple = res[0];
-				setTriple({ a: triple.a, b: triple.b, c: triple.c });
-				setTriples(res);
-			});
+			var res = await PythagHelper.getPythagData(corner);
+			let triple = res[0];
+			setTriple({ a: triple.a, b: triple.b, c: triple.c });
+			setTriples(res);
 		}
 	}
 
@@ -203,15 +200,13 @@ function Pythag(props) {
 		setCorner(el.dataset.corner);
 	}
 
-	const handleClick = e => {
-		e.preventDefault();
-		processCorner();
-	}
 
-	const handleBlur = e => {
+	const handleChange = e => {
 		e.preventDefault();
 		var el = e.target;
-		setCorner(el.value);
+		var val = el.value;
+		setCSide(val);
+console.log('C side', val);
 	};
 
 	const handleTripletSelect = e => {
@@ -347,6 +342,7 @@ function Pythag(props) {
 	          </Dropdown.Menu>
 {/*	          <InfoPanel id="corner-info" isMobile={true} /> */}
 	        </Dropdown>
+                <input onChange={handleChange} type="text" className="input" value={cWidth} />
             </InputGroup>
 
 

@@ -42,15 +42,33 @@ function organizeSquares(c, squares) {
 	return organized;
 }
 
-var tally = 0;
-var total = 0;
-for (let c = 5; c <= 100; c++) {
+export const checkSquare = c => {
 	let layers = checkWrap(c);
 	let squares = findSquares(layers);
-	let organized = organizeSquares(c, squares);
-	if (organized.length > 0) {
-		console.log(`c = ${c}, c^2 = ${c*c}`, organized);
-		tally++;
+//	let organized = organizeSquares(c, squares);
+	return {
+		layers, squares
 	}
-	total++;
+}
+
+export const findNextSquareLayer = (el, squareSide) => {
+	var c = squareSide * 1; // Force c to type int.
+	var ndx = el.id.substr(2) * 1; // Extract the ndx from the element ID, and force it to type int.
+	var row = Math.ceil((ndx + 1) / c); // e.g., with 5x5, ndx 7: ceil(8 / 5) is row 2
+	var col = ndx % c + 1; // e.g., 5x5, ndx 7: 8 % 5 is col 3.
+	var cornerRC = Math.min(row, col);
+
+	// Corner index of current layer. Now, find next square layer, if there is one.
+	var cornerNdx = (cornerRC - 1) * c + (cornerRC - 1); // e.g., (3, 3) is (2 * 5) + (2), or ndx 12;
+	var foundSquareLayer = false;
+	var sqEl;
+	while (!foundSquareLayer && cornerNdx + 1 < c*c) {	
+		sqEl = document.querySelector(`#c-${cornerNdx}`);
+		foundSquareLayer = sqEl.dataset.isSquare === 'true';
+		if (!foundSquareLayer) cornerNdx += (c + 1);
+	}
+
+	var nextSquareLayer = foundSquareLayer ? sqEl.dataset.layer : -1;
+console.log('Found square?', foundSquareLayer, sqEl.dataset.layer);
+	return nextSquareLayer;
 }
