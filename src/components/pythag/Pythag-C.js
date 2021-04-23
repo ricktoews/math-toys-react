@@ -8,7 +8,18 @@ import { checkSquare, findNextSquareLayer } from './pythag-check-c';
 import styled from 'styled-components';
 import '../../css/pythag.css';
 
-var SQUARE_WIDTH = 21;
+const cData = [
+	{ c: 5, pythag: ['3^2 + 4^2 (9 + 16)'] },
+	{ c: 10, pythag: ['6^2 + 8^2 (36 + 64)'] },
+	{ c: 13, pythag: ['5^2 + 12^2 (25 + 144)'] },
+	{ c: 15, pythag: ['9^2 + 12^2 (81 + 144)'] },
+	{ c: 17, pythag: ['8^2 + 15^2 (64 + 225)'] },
+	{ c: 20, pythag: ['12^2 + 16^2 (144 + 256)'] },
+	{ c: 25, pythag: ['7^2 + 24^2 (49 + 576)', '15^2 + 20^2 (225 + 400)' ] },
+	{ c: 26, pythag: ['10^2 + 24^2 (100 + 576)'] },
+];
+
+var SQUARE_WIDTH = 11;
 
 function PythagC(props) {
 	const [ squareSide, setSquareSide ] = useState(5);
@@ -70,8 +81,13 @@ function PythagC(props) {
 	`;
 
 	const handleSetSide = e => {
-		var el = e.target;
-		var side = el.value;
+		var el = e.currentTarget;
+		var side;
+		if (el.dataset && el.dataset.c) {
+			side = el.dataset.c;
+		} else {
+			side = el.value;
+		}
 		setSquareSide(side);
 	}
 
@@ -109,9 +125,11 @@ function PythagC(props) {
 	}
 	return (
 	<Container>
-		<div>Check square for containing two squares.</div>
 		<div>Square side <input className="input" id="square-side" onChange={handleSetSide} value={squareSide} /></div>
-		<div>Squares in selected layer(s) {layerSquareCount} {isSquare?'square':'not a square'}</div>
+		<div>c^2 = {squareSide}^2 = {squareSide*squareSide}</div>
+		<div>a^2 = {layerSquareCount}</div>
+		<div>b^2 = {squareSide*squareSide - layerSquareCount}</div>
+		{/* <div>Squares in selected layer(s) {layerSquareCount} {isSquare?'square':'not a square'}</div> */}
 		<Button style={{display:'none'}} onClick={toggleAHandler}>Arrange</Button>
 		<CSquare className="c-squared" onMouseOver={selectLayer}>
               { squares.map((square, ndx) => {
@@ -121,7 +139,32 @@ function PythagC(props) {
                   return square;
                 }) */}
 		</CSquare> 
-	</Container>
+	        <Table variant="math" bordered hover>
+	          <thead>
+	            <tr>
+	              <th>c</th>
+	              <th>c<sup>2</sup></th>
+	              <th>a, b</th>
+	            </tr>
+	          </thead>
+	          <tbody>
+		{ cData.map((item, key) => {
+		    return (
+	            <tr key={key} data-c={item.c} onClick={handleSetSide}>
+	              <td>{item.c}</td>
+	              <td>{item.c*item.c}</td>
+	              <td>
+			{ item.pythag.map((p, pKey) => {
+			return (
+			  <div key={pKey}>{p}</div>
+			) } ) }
+                      </td>
+	            </tr>
+	            );
+		} ) }
+	          </tbody>
+	        </Table>
+       	</Container>
 	);
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { checkSquare } from './pythag-check-c';
 
-var SQUARE_WIDTH = 21;
+var SQUARE_WIDTH = 11;
 var MOVE_DELAY = 500;
 var squarePositions = {};
 
