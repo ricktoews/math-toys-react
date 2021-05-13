@@ -1,0 +1,98 @@
+select, button {
+	height: 30px;
+	border: 1px solid #f90;
+	border-radius: 5px;
+	margin: 0 5px;
+	background-color:#f90;
+	color: white;
+}
+
+.page-title, .controls, .game-container, .report-container {
+  display: flex;
+  justify-content: center;
+}
+.game-area {
+  position: relative;
+  margin-top: 10px;
+  width: 500px;
+  height: 150px;
+  border: 2px solid #f90;
+  border-radius: 5px;
+}
+
+.base {
+  position: relative;
+  bottom: 0;
+  width: 100px;
+  height: 2px;
+  background: black;
+}
+#tower-0 {
+  position: absolute;
+  bottom: 10px;
+  left: 50px;
+}
+#tower-1 {
+  position: absolute;
+  bottom: 15px;
+  left: 200px;
+}
+#tower-2 {
+  position: absolute;
+  bottom: 10px;
+  left: 350px;
+}
+.disc {
+  position: relative;
+  height: 10px;
+  width: 100px;
+  padding-bottom: 1px;
+}
+.disc > div {
+  height: 100%;
+  border-radius: 6px;
+  margin: 0 auto;
+}
+#disc-0 > div {
+  width: 20px;
+}
+#disc-1 > div {
+  width: 30px;
+}
+#disc-2 > div {
+  width: 40px;
+}
+#disc-3 > div {
+  width: 50px;
+}
+#disc-4 > div {
+  width: 60px;
+}
+#disc-5 > div {
+  width: 70px;
+}
+#disc-6 > div {
+  width: 80px;
+}
+#disc-7 > div {
+  width: 90px;
+}
+#disc-8 > div {
+  width: 100px;
+}
+#disc-9 > div {
+  width: 110px;
+}
+
+.report-container {
+	height: 300px;
+	overflow-y: scroll;
+}
+
+.report-container table {
+	width: 500px;
+}
+
+.report-container table tr:nth-child(odd) {
+	background-color: #ccc;
+}
