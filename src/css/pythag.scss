@@ -11,19 +11,22 @@
   background-color: rgba(138,175,156,.5);
 }
 .a-square-on {
-  background-color: rgba(255,144,0,1);
+  background-color: var(--cyan);
 }
 .b-square {
 /*  background-color:#66866A; */
   background-color: rgba(102,134,106,.5);
 }
 .b-square-on {
-  background-color: rgba(0,144,255,1);
+  background-color: var(--teal);
 }
 .c-squared {
   position: relative;
   background-color: rgba(223,223,223,.55);
 /*  background-color: #dfdfdf; */
+}
+.square-on {
+    background-color: var(--pink);
 }
 .c-label {
   position: absolute;

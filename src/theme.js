@@ -1,8 +1,8 @@
 // theme.js
 export const theme = {
-	mastheadBg: '#6C84AA',
+	mastheadBg: '#72899f',
 	mastheadColor: 'white',
-	menuBg: '#9CB9BB',
+	menuBg: '#8b9aa1',
 	menuFg: '#162D2D',
 
 	primaryBg: 'white',

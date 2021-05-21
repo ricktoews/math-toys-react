@@ -6,7 +6,7 @@ import { Table } from 'react-bootstrap';
 import PythagHelper from './pythag-helper';
 //import InfoPanel from './InfoPanel';
 import styled from 'styled-components';
-import '../../css/pythag.css';
+import '../../css/pythag.scss';
 
 const MaxCMinusB = 25;
 
@@ -278,6 +278,21 @@ function Pythag(props) {
 		}, 500);
 	};
 
+    const highlightC = () => {
+		var els = Array.from(document.getElementsByClassName('square'));
+		els.forEach(el => {
+			el.classList.add('square-on');
+			el.classList.remove('square');
+		});
+		setTimeout(() => {
+			els = Array.from(document.getElementsByClassName('c-squared-on'));
+			els.forEach(el => {
+				el.classList.remove('square-on');
+				el.classList.add('square');
+			});
+		}, 500);
+    };
+
 	var cSide = triple.c * SQUARE_WIDTH + 1;
 	var squares = PythagHelper.makeSquares(triple, 'c');
 	var aSquares = PythagHelper.makeSquares(triple, 'a', 'a-square');
@@ -289,10 +304,10 @@ function Pythag(props) {
         <Row>
           <Col>
             <Triple>
-              <Circle onClick={highlightA} className="btn-info">{triple.a}<sup>2</sup></Circle> + <Circle onClick={highlightB} className="btn-info">{triple.b}<sup>2</sup></Circle> = <Circle className="btn-info">{triple.c}<sup>2</sup></Circle>
+              <Circle onClick={highlightA} className="btn-primary">{triple.a}<sup>2</sup></Circle> + <Circle onClick={highlightB} className="btn-primary">{triple.b}<sup>2</sup></Circle> = <Circle className="btn-primary">{triple.c}<sup>2</sup></Circle>
             </Triple>
 
-            <LayoutToggle><button className="toggle-layout btn-warning" onClick={toggleAHandler}>Toggle a^2 Layout</button></LayoutToggle>
+            <LayoutToggle><button className="toggle-layout btn-primary" onClick={toggleAHandler}>Toggle a^2 Layout</button></LayoutToggle>
 
             { triple.a && (
 <div style={{display: 'flex', justifyContent: 'center' }}>
@@ -321,7 +336,7 @@ function Pythag(props) {
             <InputGroup className="pythag-a">
 	  
               <Dropdown>
-	          <Dropdown.Toggle size="sm" variant="warning">
+	          <Dropdown.Toggle size="sm" variant="primary">
 	            c - b = {corner}
 	          </Dropdown.Toggle>
 
