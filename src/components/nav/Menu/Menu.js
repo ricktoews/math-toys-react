@@ -11,6 +11,9 @@ const Menu = ({ open }) => {
       <a href="/pythag">
         Pythagorean Triples
       </a>
+      <a href="/pythag-c">
+        Pythagorean C Triples
+      </a>
       <a href="/denom">
         Denominators
       </a>
