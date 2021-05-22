@@ -4,20 +4,11 @@ import { Dropdown, FormControl, InputGroup } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { Table } from 'react-bootstrap';
 import PythagHelper from './pythag-helper';
-import { checkSquare, findNextSquareLayer } from './pythag-check-c';
+import { makeCList, checkSquare, findNextSquareLayer } from './pythag-check-c';
 import styled from 'styled-components';
 import '../../css/pythag.css';
 
-const cData = [
-	{ c: 5, pythag: ['3^2 + 4^2 (9 + 16)'] },
-	{ c: 10, pythag: ['6^2 + 8^2 (36 + 64)'] },
-	{ c: 13, pythag: ['5^2 + 12^2 (25 + 144)'] },
-	{ c: 15, pythag: ['9^2 + 12^2 (81 + 144)'] },
-	{ c: 17, pythag: ['8^2 + 15^2 (64 + 225)'] },
-	{ c: 20, pythag: ['12^2 + 16^2 (144 + 256)'] },
-	{ c: 25, pythag: ['7^2 + 24^2 (49 + 576)', '15^2 + 20^2 (225 + 400)' ] },
-	{ c: 26, pythag: ['10^2 + 24^2 (100 + 576)'] },
-];
+var cData = makeCList(100);
 
 var SQUARE_WIDTH = 11;
 
@@ -55,10 +46,6 @@ function PythagC(props) {
 
 
 	useEffect(() => {
-//console.log('Layer square count', layerSquareCount);
-	}, [layerSquareCount]);
-
-	useEffect(() => {
 		var cSquareEls = document.querySelectorAll('.c-squared > div');
 		cSquareEls = Array.from(cSquareEls);
 
@@ -84,6 +71,9 @@ function PythagC(props) {
 		var el = e.currentTarget;
 		var side;
 		if (el.dataset && el.dataset.c) {
+			let abCol = el.childNodes[2];
+			let ab = abCol.getElementsByClassName('ab');
+console.log('set side', ab);
 			side = el.dataset.c;
 		} else {
 			side = el.value;
@@ -124,8 +114,10 @@ function PythagC(props) {
 		}
 	}
 	return (
-	<Container>
-		<div>Square side <input className="input" id="square-side" onChange={handleSetSide} value={squareSide} /></div>
+	<div className="container">
+          <div className="row">
+            <div className="col">
+{/*		<div>Square side <input className="input" id="square-side" onChange={handleSetSide} value={squareSide} /></div> */}
 		<div>c^2 = {squareSide}^2 = {squareSide*squareSide}</div>
 		<div>a^2 = {layerSquareCount}</div>
 		<div>b^2 = {squareSide*squareSide - layerSquareCount}</div>
@@ -139,6 +131,9 @@ function PythagC(props) {
                   return square;
                 }) */}
 		</CSquare> 
+            </div>
+            <div className="col">
+              <div className="table-wrapper-scroll-y" style={{ height: "calc(100vh - 100px)", overflowY: "scroll", border: "1px solid #ccc" }}>
 	        <Table variant="math" bordered hover>
 	          <thead>
 	            <tr>
@@ -156,7 +151,7 @@ function PythagC(props) {
 	              <td>
 			{ item.pythag.map((p, pKey) => {
 			return (
-			  <div key={pKey}>{p}</div>
+			  <div className="ab" data-a={p.a} data-b={p.b} key={pKey}>{p.equation}</div>
 			) } ) }
                       </td>
 	            </tr>
@@ -164,7 +159,10 @@ function PythagC(props) {
 		} ) }
 	          </tbody>
 	        </Table>
-       	</Container>
+              </div>
+            </div>
+          </div>
+       	</div>
 	);
 }
 

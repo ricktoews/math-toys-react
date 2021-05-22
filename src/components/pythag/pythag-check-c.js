@@ -1,3 +1,5 @@
+import React from 'react';
+
 /*
  * The approach is to check the wrapping on two sides of the square whose side is c.
  * Example: if c = 5, the first layer is 9, because there are 9 squares from TR to BL.
@@ -72,3 +74,50 @@ export const findNextSquareLayer = (el, squareSide) => {
 console.log('Found square?', foundSquareLayer, sqEl.dataset.layer);
 	return nextSquareLayer;
 }
+
+function layers(c) {
+	var result = [];
+	var layerSum = 0;
+	var layer = c * 2 - 1;
+	// All this does is start with the outer layer and work our way in.
+	// Whenever the sum of the layers is a square, note it.
+	while (layer > 5) {
+		layerSum += layer;
+		if (Math.sqrt(layerSum) === parseInt(Math.sqrt(layerSum), 10)) {
+			result.push(layerSum);
+		}
+		layer -= 2;
+	}
+	return result;
+}
+
+function makeEquation(a, b) {
+	return <div>{a}<sup>2</sup> + {b}<sup>2</sup> ({a*a} + {b*b})</div>;
+}
+
+export const makeCList = maxC => {
+	var cList = [];
+	var pythag = [];
+	for (let c = 5; c < 400; c++) {
+		let a_squares = layers(c);
+		if (a_squares.length > 0) {
+			let used = {};
+			a_squares.forEach(a_squared => {
+				let a = Math.pow(a_squared, .5);
+				let b = Math.pow(c*c - a_squared, .5);
+				if (!used[a] && !used[b]) {
+					pythag.push({ a, b, equation: makeEquation(a, b) });
+				}
+				used[a] = true;
+				used[b] = true;
+			});
+		}
+
+		if (pythag.length > 0) {
+			cList.push({ c, pythag });
+		}
+		pythag = [];
+	}
+	return cList;
+}
+
