@@ -4,12 +4,13 @@ import { Dropdown, FormControl, InputGroup } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { Table } from 'react-bootstrap';
 import PythagHelper from './pythag-helper';
-import { makeCList, checkSquare, findNextSquareLayer } from './pythag-check-c';
+import { showTriples, makeCList, checkSquare, findNextSquareLayer } from './pythag-check-c';
 import styled from 'styled-components';
-import '../../css/pythag.css';
+import '../../css/pythag.scss';
 
 var cData = makeCList(100);
 
+const STARTING = 20;
 var SQUARE_WIDTH = 11;
 
 function PythagC(props) {
@@ -20,10 +21,14 @@ function PythagC(props) {
 	const [ aSquares, setASquares] = useState([]);
 	const [ aSquaredConfig, setASquaredConfig] = useState('wraparound');
 	const [ squareEls, setSquareEls ] = useState();
+	var [triple, setTriple] = useState({ });
+	var [triples, setTriples] = useState([]);
 
 	var cSide = squareSide * SQUARE_WIDTH + 1;
 	var triple = { c: squareSide };
 	var squares = PythagHelper.makeSquares(triple, 'c');
+	SQUARE_WIDTH = Math.max(STARTING - (5*parseInt(triple.c/10,10)) + 1, 5);
+	PythagHelper.setSquareWidth(SQUARE_WIDTH);
 
 	useEffect(() => {
 		var colors = ['#C31D2E', '#FD5510', '#F6EC6B', '#627656', '#1B666E'];
@@ -69,16 +74,31 @@ function PythagC(props) {
 
 	const handleSetSide = e => {
 		var el = e.currentTarget;
-		var side;
+		var pythagC;
+		var triples = [];
 		if (el.dataset && el.dataset.c) {
 			let abCol = el.childNodes[2];
-			let ab = abCol.getElementsByClassName('ab');
-console.log('set side', ab);
-			side = el.dataset.c;
+			let ab = Array.from(abCol.getElementsByClassName('ab'));
+			pythagC = 1*el.dataset.c;
+			ab.forEach(item => {
+				let triple = { a: 1*item.dataset.a, b: 1*item.dataset.b, c: pythagC, isPrimitive: item.dataset.primitive };
+				triples.push(triple);
+			});
+
 		} else {
-			side = el.value;
+			pythagC = el.value;
 		}
-		setSquareSide(side);
+		setSquareSide(pythagC);
+		setTriples(triples);
+	}
+
+	const handleTripletSelect = e => {
+		e.preventDefault();
+		var el = e.currentTarget;
+		console.log('dataset',el);
+		var triple = el.dataset.triple.split(',');
+		console.log('triple',triple, triple.length);
+		setTriple({ a: triple[0], b: triple[1], c: triple[2] });
 	}
 
 	// Select the next square layer, if there is one.
@@ -118,10 +138,7 @@ console.log('set side', ab);
           <div className="row">
             <div className="col">
 {/*		<div>Square side <input className="input" id="square-side" onChange={handleSetSide} value={squareSide} /></div> */}
-		<div>c^2 = {squareSide}^2 = {squareSide*squareSide}</div>
-		<div>a^2 = {layerSquareCount}</div>
-		<div>b^2 = {squareSide*squareSide - layerSquareCount}</div>
-		{/* <div>Squares in selected layer(s) {layerSquareCount} {isSquare?'square':'not a square'}</div> */}
+{ triples.length > 0 && showTriples(triples) }
 		<Button style={{display:'none'}} onClick={toggleAHandler}>Arrange</Button>
 		<CSquare className="c-squared" onMouseOver={selectLayer}>
               { squares.map((square, ndx) => {
@@ -151,7 +168,7 @@ console.log('set side', ab);
 	              <td>
 			{ item.pythag.map((p, pKey) => {
 			return (
-			  <div className="ab" data-a={p.a} data-b={p.b} key={pKey}>{p.equation}</div>
+			  <div className="ab" data-primitive={p.isPrimitive} data-a={p.a} data-b={p.b} key={pKey}>{p.equation}</div>
 			) } ) }
                       </td>
 	            </tr>

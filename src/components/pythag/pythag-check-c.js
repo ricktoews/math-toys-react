@@ -91,8 +91,21 @@ function layers(c) {
 	return result;
 }
 
+function isPrimitive(a, b) {
+	[a, b] = [Math.min(a, b), Math.max(a, b)];
+	var safety = 50;
+	while (a > 1 && safety > 0) {
+		[a, b] = [Math.min(b%a, a), Math.max(b%a, a)];
+		safety--;
+	}
+
+	return a === 1;
+}
+
 function makeEquation(a, b) {
-	return <div>{a}<sup>2</sup> + {b}<sup>2</sup> ({a*a} + {b*b})</div>;
+	var primitive = isPrimitive(a, b);
+	var primitiveMark = primitive ? <span> &#183;</span> : <span></span>;
+	return <div>{a}<sup>2</sup> + {b}<sup>2</sup> ({a*a} + {b*b}) {primitiveMark}</div>;
 }
 
 export const makeCList = maxC => {
@@ -106,7 +119,7 @@ export const makeCList = maxC => {
 				let a = Math.pow(a_squared, .5);
 				let b = Math.pow(c*c - a_squared, .5);
 				if (!used[a] && !used[b]) {
-					pythag.push({ a, b, equation: makeEquation(a, b) });
+					pythag.push({ a, b, equation: makeEquation(a, b), isPrimitive: isPrimitive(a, b) });
 				}
 				used[a] = true;
 				used[b] = true;
@@ -119,5 +132,23 @@ export const makeCList = maxC => {
 		pythag = [];
 	}
 	return cList;
+}
+
+export const showTriples = (triples) => {
+	var c = triples[0].c;
+
+	var triplesHeader = <div className="triple-c">Given c = {c} ({c}<sup>2</sup> = {c*c}):</div>;
+
+	var triplesBody = triples.map((item, key) => {
+console.log('triples', item);
+		var primitiveMark = item.isPrimitive === 'true' ? <span> &#183;</span> : <span></span>;
+		return (<div key={key} className="pythag-triple">
+			{item.a}<sup>2</sup> + {item.b}<sup>2</sup> ({item.a*item.a} + {item.b*item.b}) {primitiveMark}
+		</div>)
+		}
+	);
+
+	return <div>{triplesHeader}{triplesBody}</div>;
+
 }
 
