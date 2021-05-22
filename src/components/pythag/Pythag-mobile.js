@@ -166,7 +166,6 @@ function Pythag(props) {
 	var [corner, setCorner] = useState(1);
 	var [triple, setTriple] = useState({ });
 	var [triples, setTriples] = useState([]);
-	var [cWidth, setCSide] = useState(5);
 	var [aSquaredConfig, setASquaredConfig] = useState('wraparound');
 
 	SQUARE_WIDTH = Math.max(STARTING - (5*parseInt(triple.c/10,10)) + 1, 5);
@@ -200,14 +199,6 @@ function Pythag(props) {
 		setCorner(el.dataset.corner);
 	}
 
-
-	const handleChange = e => {
-		e.preventDefault();
-		var el = e.target;
-		var val = el.value;
-		setCSide(val);
-console.log('C side', val);
-	};
 
 	const handleTripletSelect = e => {
 		e.preventDefault();
@@ -342,7 +333,6 @@ console.log('C side', val);
 	          </Dropdown.Menu>
 {/*	          <InfoPanel id="corner-info" isMobile={true} /> */}
 	        </Dropdown>
-                <input onChange={handleChange} type="text" className="input" value={cWidth} />
             </InputGroup>
 
 
