@@ -8,7 +8,7 @@ import { makeCList, checkSquare, findNextSquareLayer, getLayers } from './pythag
 import styled from 'styled-components';
 import '../../css/pythag.scss';
 
-var cData = makeCList(100);
+var cData = makeCList(300);
 
 const STARTING = 20;
 var SQUARE_WIDTH = 11;
@@ -159,7 +159,8 @@ console.log('nextSquareLayer', nextSquareLayer);
 	return (
 	<div className="container">
           <div className="row">
-            <div className="col">
+              
+            <div style={{display:"none"}} className="col">
 {/*		<div>Square side <input className="input" id="square-side" onChange={handleSetSide} value={squareSide} /></div> */}
 { triples.length > 0 && showTriples(triples) }
 		<Button style={{display:'none'}} onClick={toggleAHandler}>Arrange</Button>
@@ -173,6 +174,7 @@ console.log('nextSquareLayer', nextSquareLayer);
                 }) */}
 		</CSquare> 
             </div>
+  
             <div className="col">
               <div className="table-wrapper-scroll-y" style={{ height: "calc(100vh - 100px)", overflowY: "scroll", border: "1px solid #ccc" }}>
 	        <Table variant="math" bordered hover>
