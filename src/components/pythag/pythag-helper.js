@@ -97,15 +97,15 @@ function makeSquares(triple, letter, squareType = '') {
 	if (squareType) { baseClassName += ' ' + squareType; }
 	var layerData = checkSquare(side).layers;
 
-	var totalSquares = side * side;
-	var offset = letter === 'b' ? triple.c - triple.b : 0;
+    var totalSquares = side * side;
+    var halfwayPoint = totalSquares / 2;
 	for (let i = 0; i < totalSquares; i++) {
 		let {r, c} = letter === 'a' ? squarePositions[letter].wraparound[i] : squarePositions[letter].square[i];
 		let layer = Math.min(r, c);
 		let className = baseClassName + ' layer-' + layer;
 		let upToLayer = layerData.slice(0, layer).reduce((a, cv) => a+cv, 0);
-		let isSquare = Math.sqrt(upToLayer) === Math.ceil(Math.sqrt(upToLayer));
-		let pos = squareCSSPosition(r, c);
+		let isSquare = upToLayer < halfwayPoint && Math.sqrt(upToLayer) === Math.ceil(Math.sqrt(upToLayer));
+        let pos = squareCSSPosition(r, c);
 		let id = `${letter}-${i}`;
 		squares.push(<div id={id} data-row={r} data-col={c} data-layer={layer} data-is-square={isSquare} key={i} className={ className } style={{ 
 			top: pos.top + 'px', 

@@ -3,8 +3,8 @@
   width: 20px;
   height: 20px;
   margin: 1px 0 0 1px;
-  background-color: #C5CCD2;
-  background-color: rgba(197,204,210,.2);
+  background-color: rgb(59, 150, 241);
+ // background-color: rgba(197,204,210,.2);
 }
 .a-square {
 /*  background-color: #8AAF9C; */
@@ -78,5 +78,17 @@ tr {
 }
 
 .highlight-layer {
-	background-color:#627656;
+	background-color:#056796;
+}
+
+.pythag-triple {
+    background-color:#056796;
+    color: white;
+    border-radius: 20px;
+    padding: 3px 8px;
+    margin-bottom: 2px;
+    cursor: pointer;
+}
+.pythag-triple:hover {
+    background-color: #09f;
 }

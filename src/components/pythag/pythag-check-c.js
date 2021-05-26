@@ -27,21 +27,17 @@ function findSquares(layers) {
 	return squares;
 }
 
-function organizeSquares(c, squares) {
-	var squared = c*c;
-	var organized = [];
-	while (squares.length > 0) {
-		let sq = squares.shift();
-		let diff = squared - sq;
-		let compNdx = squares.findIndex(s => s === diff);
-		squares.splice(compNdx, 1);
-
-		let a = Math.sqrt(sq);
-		let b = Math.sqrt(diff);
-		let pythag = `${a}^2 + ${b}^2 (${sq} + ${diff})`;
-		organized.push({pythag});
-	}
-	return organized;
+export const getLayers = triple => {
+    var layerSum = 0;
+    var aSquared = triple[0] * triple[0];
+    var s = 1*triple[2];
+    var layer = 0;
+    while (layerSum < aSquared && s > 0) {
+        layer++;
+        layerSum += s + s - 1;
+        s--;
+    }
+    return layer;
 }
 
 export const checkSquare = c => {
@@ -95,7 +91,7 @@ function isPrimitive(a, b) {
 	[a, b] = [Math.min(a, b), Math.max(a, b)];
 	var safety = 50;
 	while (a > 1 && safety > 0) {
-		[a, b] = [Math.min(b%a, a), Math.max(b%a, a)];
+		[a, b] = [b%a, a];
 		safety--;
 	}
 
@@ -134,15 +130,16 @@ export const makeCList = maxC => {
 	return cList;
 }
 
-export const showTriples = (triples) => {
+/*
+const showTriples = (triples) => {
 	var c = triples[0].c;
 
 	var triplesHeader = <div className="triple-c">Given c = {c} ({c}<sup>2</sup> = {c*c}):</div>;
 
 	var triplesBody = triples.map((item, key) => {
-console.log('triples', item);
+
 		var primitiveMark = item.isPrimitive === 'true' ? <span> &#183;</span> : <span></span>;
-		return (<div key={key} className="pythag-triple">
+		return (<div key={key} onMouseOver={handleTripletSelect} className="pythag-triple">
 			{item.a}<sup>2</sup> + {item.b}<sup>2</sup> ({item.a*item.a} + {item.b*item.b}) {primitiveMark}
 		</div>)
 		}
@@ -151,4 +148,4 @@ console.log('triples', item);
 	return <div>{triplesHeader}{triplesBody}</div>;
 
 }
-
+*/

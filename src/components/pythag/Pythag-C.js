@@ -4,7 +4,7 @@ import { Dropdown, FormControl, InputGroup } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { Table } from 'react-bootstrap';
 import PythagHelper from './pythag-helper';
-import { showTriples, makeCList, checkSquare, findNextSquareLayer } from './pythag-check-c';
+import { makeCList, checkSquare, findNextSquareLayer, getLayers } from './pythag-check-c';
 import styled from 'styled-components';
 import '../../css/pythag.scss';
 
@@ -14,7 +14,7 @@ const STARTING = 20;
 var SQUARE_WIDTH = 11;
 
 function PythagC(props) {
-	const [ squareSide, setSquareSide ] = useState(5);
+	const [ squareSide, setSquareSide ] = useState(0);
 	const [ layerSquareCount, setLayerSquareCount ] = useState(0);
 	const [ selectedLayer, setSelectedLayer ] = useState();
 	const [ isSquare, setIsSquare ] = useState(false);
@@ -27,10 +27,12 @@ function PythagC(props) {
 	var cSide = squareSide * SQUARE_WIDTH + 1;
 	var triple = { c: squareSide };
 	var squares = PythagHelper.makeSquares(triple, 'c');
-	SQUARE_WIDTH = Math.max(STARTING - (5*parseInt(triple.c/10,10)) + 1, 5);
+	//SQUARE_WIDTH = Math.max(STARTING - (5*parseInt(triple.c/10,10)) + 1, 5);
 	PythagHelper.setSquareWidth(SQUARE_WIDTH);
 
 	useEffect(() => {
+console.log('squareSide changed', squareSide);
+/*        
 		var colors = ['#C31D2E', '#FD5510', '#F6EC6B', '#627656', '#1B666E'];
 		var starting = squareSide - 2;
 		var currentColor = 'none';
@@ -44,9 +46,10 @@ function PythagC(props) {
 			var classes = Array.from(el.classList);
 			var layerClass = classes.find(c => c.substr(0, 6) === 'layer-');
 			var layerEls = Array.from(document.querySelectorAll('.' + layerClass));
-			layerEls.forEach(layerEl => layerEl.style.backgroundColor = currentColor);
+//			layerEls.forEach(layerEl => layerEl.style.backgroundColor = currentColor);
 			starting--;
-		}
+        }
+*/
 	}, [squareSide]);
 
 
@@ -92,12 +95,31 @@ function PythagC(props) {
 		setTriples(triples);
 	}
 
+const showTriples = (triples) => {
+	var c = triples[0].c;
+
+	var triplesHeader = <div className="triple-c">Given c = {c} ({c}<sup>2</sup> = {c*c}):</div>;
+
+	var triplesBody = triples.map((item, key) => {
+
+		var primitiveMark = item.isPrimitive === 'true' ? <span> &#183;</span> : <span></span>;
+		return (<div key={key} data-triple={`${item.a}, ${item.b}, ${item.c}`} onClick={handleTripletSelect} className="pythag-triple">
+			{item.a}<sup>2</sup> + {item.b}<sup>2</sup> ({item.a*item.a} + {item.b*item.b}) {primitiveMark}
+		</div>)
+		}
+	);
+
+	return <div>{triplesHeader}{triplesBody}</div>;
+
+}
+
 	const handleTripletSelect = e => {
 		e.preventDefault();
 		var el = e.currentTarget;
-		console.log('dataset',el);
-		var triple = el.dataset.triple.split(',');
-		console.log('triple',triple, triple.length);
+        var triple = el.dataset.triple.split(',');
+        console.log('triple',triple, triple.length);
+        console.log('layers:', getLayers(triple));
+        setSelectedLayer(getLayers(triple));
 		setTriple({ a: triple[0], b: triple[1], c: triple[2] });
 	}
 
@@ -108,7 +130,8 @@ function PythagC(props) {
 
 		// Starting at the selected layer, check for isSquare, and keep pealing layers until one is found.
 		var nextSquareLayer = findNextSquareLayer(el, squareSide);
-		if (nextSquareLayer === selectedLayer) return;
+console.log('nextSquareLayer', nextSquareLayer);
+        if (nextSquareLayer === selectedLayer) return;
 		var layers = checkSquareData.layers.slice(0, nextSquareLayer);
 
 		var count = layers.reduce((a, cv) => a+cv, 0);
@@ -140,6 +163,7 @@ function PythagC(props) {
 {/*		<div>Square side <input className="input" id="square-side" onChange={handleSetSide} value={squareSide} /></div> */}
 { triples.length > 0 && showTriples(triples) }
 		<Button style={{display:'none'}} onClick={toggleAHandler}>Arrange</Button>
+
 		<CSquare className="c-squared" onMouseOver={selectLayer}>
               { squares.map((square, ndx) => {
                   return square;
