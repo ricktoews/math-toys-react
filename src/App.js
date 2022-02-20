@@ -13,7 +13,7 @@ import PythagC from './components/pythag/Pythag-C';
 import Denom from './components/denom/Denom-mobile';
 import Calendar from './components/calendar/Calendar';
 import CalendarPractice from './components/calendar/CalendarPractice';
-import Mastermind from './components/mastermind/Mastermind';
+import Mastermind from './components/mastermind/AppSolves';
 //import './css/math.css';
 
 function withNav(MyComponent, title) {

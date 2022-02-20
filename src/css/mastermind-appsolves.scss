@@ -1,0 +1,57 @@
+$peg-diameter: 50px;
+$code-peg-diameter: 15px;
+$peg-blank: #ccc;
+$peg-red: #ff0000;
+$peg-blue: #09f;
+$peg-green: #0f0;
+$peg-yellow: #ff0;
+$peg-black: #000;
+$peg-purple: #f0f;
+
+.peg-wrapper {
+	display: flex;
+	flex-direction: row;
+}
+
+.code-peg {
+	width: $code-peg-diameter;
+	height: $code-peg-diameter;
+	margin: 3px;
+	border-radius: 50%;
+	background-color: $peg-blank;
+}
+
+.peg {
+	width: $peg-diameter;
+	height: $peg-diameter;
+	margin: 3px;
+	border-radius: 50%;
+	background-color: $peg-blank;
+}
+
+.peg-blank {
+	background-color: $peg-blank;
+}
+.peg-red {
+	background-color: $peg-red;
+}
+.peg-green {
+	background-color: $peg-green;
+}
+.peg-blue {
+	background-color: $peg-blue;
+}
+.peg-yellow {
+	background-color: $peg-yellow;
+}
+.peg-black {
+	background-color: $peg-black;
+}
+.peg-purple {
+	background-color: $peg-purple;
+}
+
+.code-picker {
+	width: 400px;
+
+}
