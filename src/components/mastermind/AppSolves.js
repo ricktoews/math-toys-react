@@ -125,12 +125,15 @@ console.log('handleAccept; black', state.black, 'white', state.white);
 		entries.forEach((entry, ndx) => {
 			let score = score_guess(mycode, entry.code);
             console.log(`compare ${mycode} with ${entry.code}: `, score, entry.black, entry.white);
+/*
+			// Believed to pertain to correction, which shouldn't apply anymore, given self-scoring.
             if (score.black !== entry.black || score.white !== entry.white) {
                 let row = document.getElementById('feedback-' + ndx);
                 row.style.color = 'red';
                 let correction = row.querySelector('.correction');
                 if (correction) { correction.innerHTML = `Correction: black ${score.black}; white ${score.white}`; }
             }
+*/
 		});
 	};
 
@@ -149,8 +152,7 @@ console.log('handleAccept; black', state.black, 'white', state.white);
             <thead>
             <tr className="success">
               <th>Code</th>
-              <th>Black</th>
-              <th>White</th>
+              <th>Score</th>
               <th></th>
             </tr>
             </thead>
@@ -158,40 +160,13 @@ console.log('handleAccept; black', state.black, 'white', state.white);
    	  { flags.entries.map((entry, key) => {
           return (<tr key={key} id={'attempt-' + key}>
             <td>{codeToPegs(entry.code)}</td>
-            <td>{entry.black}</td>
-            <td>{entry.white}</td>
+            <td><ScorePegs black={entry.black} white={entry.white} /></td>
+            <td></td>
           </tr>)
 	  } ) }
             <tr>
               <td>{codeToPegs(state.code)}</td>
-              <td>
-                <ScorePegs type="black" quantity={state.black} />
-{/*
-                <select onChange={handleBlack} defaultValue={state.black}>
-                  {[0,1,2,3,4].map(n => { 
-					let option = <option key={n} value={n}>{n}</option>
-					if (n === tallies.blackTally) {
-						option = <option key={n} value={n}>{n}</option> 
-					}
-					return option;
-				  })}
-                </select>
-*/}
-              </td>
-              <td>
-                <ScorePegs type="white" quantity={state.white} />
-{/*
-                <select onChange={handleWhite} defaultValue={state.white}>
-                  {[0,1,2,3,4].map(n => { 
-					let option = <option key={n} value={n}>{n}</option>
-					if (n === tallies.whiteTally) {
-						option = <option key={n} value={n}>{n}</option> 
-					}
-					return option;
-				  })}
-              </select>
-*/}
-              </td>
+              <td><ScorePegs black={state.black} white={state.white} /></td>
               <td><button className="btn btn-info" onClick={handleAccept}>Accept</button></td>
             </tr>
             </tbody>
@@ -202,11 +177,6 @@ console.log('handleAccept; black', state.black, 'white', state.white);
           <p>Solved!</p>
         </div>) }
 
-	    { flags.oops && (<div>
-          <p>Um. OK. So... Something seems to have gone wrong. Based on the feedback you've given me, there aren't any codes left for me to pick from. Not sure how that happened, but ...</p>
-          <p>To investigate and find out what you did wrong--yes YOU--let's have the code you chose.</p>
-          <p><input type="text" size="6" onBlur={e => { console.log('setMyCode to', e.currentTarget.value); setMyCode(e.currentTarget.value); }} /> <button className="btn" onClick={handleGetTarget}>Enter</button></p>
-        </div> ) }
       </div>
     </div>
     <div className="col-md-8">
@@ -225,12 +195,15 @@ console.log('handleAccept; black', state.black, 'white', state.white);
           return (<tr key={key} id={'feedback-' + key}>
             <td>{key}</td>
             <td>{codeToPegs(entry.code)}</td>
-            <td>Correct position: {entry.black}<br/>Correct Elements: {entry.white}<div className="correction"></div></td>
+            <td><ScorePegs black={entry.black} white={entry.white}/></td>
             <td>
               Pool size: {entry.pool.length}
 			  { entry.pool.length <= 10 && (
               <div>
-                {entry.pool.join(', ')}
+                {/*entry.pool.join(', ')*/}
+                {entry.pool.map((item, ndx) => {
+                  return <div key={ndx}>{codeToPegs(item)}</div>;
+                })}
               </div>) }
             </td>
           </tr>)

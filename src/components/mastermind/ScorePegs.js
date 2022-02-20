@@ -5,26 +5,32 @@ const INIT_SCORE_PEGS = Array(CODE_LENGTH).fill('');
 
 // make array of mastermind score pegs.
 // type will be 'black' or 'white'.
-function makePegArray(type, quantity) {
-console.log('makePegArray of type', type, quantity);
+function makePegArray(black, white) {
+console.log(`makePegArray: ${black} black, ${white} white`);
 	var scorePegs = INIT_SCORE_PEGS.slice(0);
-	for (let q = 0; q < quantity; q++) {
-		scorePegs[q] = type;
+	for (let p = 0; p < CODE_LENGTH; p++) {
+		if (p < black) {
+			scorePegs[p] = 'black';
+		}
+		else if (p < black + white) {
+			scorePegs[p] = 'white';
+		}
 	}
+console.log('score pegs', scorePegs);
 	return scorePegs;
 }
 
 function ScorePegs(props) {
-	const [ type, setType ] = useState('');
-	const [ quantity, setQuantity ] = useState(0);
+	const [ black, setBlack ] = useState(0);
+	const [ white, setWhite ] = useState(0);
 
 	useEffect(() => {
-		setQuantity(props.quantity);
-		setType(props.type);
-	}, [props.quantity, props.type] );
+		setBlack(props.black);
+		setWhite(props.white);
+	}, [props.black, props.white] );
 
-	const pegs = makePegArray(type, quantity);
-console.log(quantity, type, 'pegs this round', pegs);
+	const pegs = makePegArray(black, white);
+console.log(black, 'black;', white, 'white; pegs this round', pegs);
 	return (
 	<div className="score-peg-wrapper">
 	{ pegs.map((peg, ndx) => {
