@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { permutations } from './perms.js';
 import { score_guess, filter_perms, update_perms  } from './filter_perms.js';
 import CodePicker from './CodePicker';
+import ScorePegs from './ScorePegs';
 import '../../css/mastermind-appsolves.scss';
 
 const ColorMap = {
@@ -14,7 +15,6 @@ const ColorMap = {
 };
 
 function codeToPegs(code) {
-console.log('code', code);
 	var symbols = code.split('');
 	var pegEls = [];
 	symbols.forEach((symbol, ndx) => {
@@ -29,6 +29,29 @@ console.log('code', code);
 	return colorCodeHTML;
 }
 
+function evaluateCurrentAttempt(userColors, attempt) {
+	var blackTally = 0, whiteTally = 0;
+	var letters = attempt.split('');
+	var attemptColors = letters.map(letter => ColorMap[letter]);
+	// Tally black;
+	attemptColors.forEach((color, ndx) => {
+		if (color !== '' && color === userColors[ndx]) {
+			blackTally += 1;
+			attemptColors[ndx] = '';
+			userColors[ndx] = '';
+		}
+	});
+	attemptColors.forEach((color, ndx) => {
+		if (color !== '' && userColors.indexOf(color) !== -1) {
+			let n = userColors.indexOf(color);
+			userColors[n] =  '';
+			attemptColors[ndx] = '';
+			whiteTally += 1;
+		}
+	});
+	return { blackTally, whiteTally };
+}
+
 /*
  * function AppSolves. Mastermind, but the app solves the code.
  */
@@ -36,6 +59,9 @@ function AppSolves(props) {
 
 	var perms = permutations.build(6, 4);
 	var code = permutations.choose(perms);
+	const [ userCodeColors, setUserCodeColors ] = useState([]);
+	const [ tallies, setTallies ] = useState({ blackTally: 0, whiteTally: 0 });
+	const [ codeSelected, setCodeSelected ] = useState(false);
 	const [ state, setState ] = useState({ black: 0, white: 0, code: 'xxxx' });
 	const [ flags, setFlags ] = useState({ notyet: false, solved: false, oops: false, entries: [], score: { black: 0, white: 0 }});
 	const [ mycode, setMyCode ] = useState('');
@@ -49,15 +75,25 @@ function AppSolves(props) {
 	}
 
 	const chosenCode = pegList => {
+// lots of code in here that's shared with handleAccept and needs to be moved to a function that would be called from both places.
+		setFlags({ ...flags, notyet: false, solved: false, entries: [] });
 console.log('chosenCode', pegList);
-		setState({ black: 0, white: 0, code: permutations.choose(perms) });
+		var colors = pegList.map(item => item.substr(4));
+		setUserCodeColors(colors);
+		var code = permutations.choose(perms);
+		setCodeSelected(true);
+		var _tallies = evaluateCurrentAttempt(colors.slice(0), code);
+		setState({ black: _tallies.blackTally, white: _tallies.whiteTally, code: code });
 	};
 
 	const handleAccept = () => {
+console.log('handleAccept; black', state.black, 'white', state.white);
 		perms = filter_perms(state.black || 0, state.white || 0, state.code);
 		flags.entries.push({ code: state.code, black: state.black, white: state.white, pool: perms });
 		update_perms(perms);
-		setState({ black: 0, white: 0, code: permutations.choose(perms) });
+		var code = permutations.choose(perms);
+		var _tallies = evaluateCurrentAttempt(userCodeColors.slice(0), code);
+		setState({ black: _tallies.blackTally, white: _tallies.whiteTally, code: code });
 
 		if (state.black === 4) {
 			perms = permutations.build(6, 4);
@@ -70,6 +106,7 @@ console.log('chosenCode', pegList);
 				solved: true,
 				score: { black: 0, white: 0 }
 			});
+			setCodeSelected(false);
 		} else if (perms.length === 0) {
 			setFlags({ ...flags, oops: true });
 		}
@@ -99,10 +136,10 @@ console.log('chosenCode', pegList);
 
   return (
 <div className="container">
-  <CodePicker chosenCode={chosenCode} />
+  <CodePicker chosenCode={chosenCode} codeSelected={codeSelected} />
   <div className="row">
     <div className="col-md-4">
-	  { flags.notyet && (<div>
+	  { false && flags.notyet && (<div>
         <p>The code will contain four letters in the range of A-F. A letter can be used any number of times, so that there are 1,296 possible codes. You will choose the code; the computer will guess, based on your feedback. Click Begin when you have chosen.</p>
         <p><button onClick={handleBegin} className="btn btn-info">Begin</button></p>
       </div> ) }
@@ -128,13 +165,33 @@ console.log('chosenCode', pegList);
             <tr>
               <td>{codeToPegs(state.code)}</td>
               <td>
-                <select onChange={handleBlack} value={state.black}>
-                  {[0,1,2,3,4].map(n => <option key={n}>{n}</option>)}
+                <ScorePegs type="black" quantity={state.black} />
+{/*
+                <select onChange={handleBlack} defaultValue={state.black}>
+                  {[0,1,2,3,4].map(n => { 
+					let option = <option key={n} value={n}>{n}</option>
+					if (n === tallies.blackTally) {
+						option = <option key={n} value={n}>{n}</option> 
+					}
+					return option;
+				  })}
                 </select>
+*/}
               </td>
-              <td><select onChange={handleWhite} value={state.white}>
-                  {[0,1,2,3,4].map(n => <option key={n}>{n}</option>)}
-              </select></td>
+              <td>
+                <ScorePegs type="white" quantity={state.white} />
+{/*
+                <select onChange={handleWhite} defaultValue={state.white}>
+                  {[0,1,2,3,4].map(n => { 
+					let option = <option key={n} value={n}>{n}</option>
+					if (n === tallies.whiteTally) {
+						option = <option key={n} value={n}>{n}</option> 
+					}
+					return option;
+				  })}
+              </select>
+*/}
+              </td>
               <td><button className="btn btn-info" onClick={handleAccept}>Accept</button></td>
             </tr>
             </tbody>

@@ -1,5 +1,9 @@
-$peg-diameter: 50px;
+$peg-diameter: 20px;
 $code-peg-diameter: 15px;
+$score-peg-wrapper-width: 25px;
+$score-peg-diameter: 10px;
+$score-peg-blank: #ccc;
+
 $peg-blank: #ccc;
 $peg-red: #ff0000;
 $peg-blue: #09f;
@@ -54,4 +58,27 @@ $peg-purple: #f0f;
 .code-picker {
 	width: 400px;
 
+}
+
+.score-peg-wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	width: $score-peg-wrapper-width;
+}
+
+.score-peg {
+	width: $score-peg-diameter;
+	height: $score-peg-diameter;
+	margin: 1px;
+	border-radius: 50%;
+	background-color: $score-peg-blank;
+	border: 1px solid gray;
+}
+
+.score-black {
+	background-color: black;
+}
+
+.score-white {
+	background-color: white;
 }

@@ -25,10 +25,15 @@ function updateCode(current, toAdd) {
 function CodePicker(props) {
 	const [codePegs, setCodePegs] = useState(INIT_CODE);
 	const [codeComplete, setCodeComplete] = useState(false);
+	const [codeSelected, setCodeSelected] = useState(false);
 	const codeRef = useRef();
 
 	useEffect(() => {
 	}, []);
+
+	useEffect(() => {
+		setCodeSelected(props.codeSelected);
+	}, [props.codeSelected]);
 
 	useEffect(() => {
 		let hasBlankCodes = containsBlanks(codePegs);
@@ -68,13 +73,17 @@ function CodePicker(props) {
 	  })
 	}
     </div>
+	{ !codeSelected && (
+    <div className="code-selection">
     { codeComplete && <div className="selection-complete">Code selected. <button onClick={handleCodeComplete}>Start</button></div> }
-    <div className="peg-wrapper">
+      <div className="peg-wrapper">
 	{ ['red', 'green', 'yellow', 'blue', 'purple', 'black'].map(color => {
     	return <div key={color} className={`peg peg-${color}`} onClick={handlePegSelect}></div>
 	  })
 	}
+      </div>
     </div>
+	) }
   </div>
 	);
 }
