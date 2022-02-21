@@ -6,7 +6,7 @@ const INIT_SCORE_PEGS = Array(CODE_LENGTH).fill('');
 // make array of mastermind score pegs.
 // type will be 'black' or 'white'.
 function makePegArray(black, white) {
-console.log(`makePegArray: ${black} black, ${white} white`);
+//console.log(`makePegArray: ${black} black, ${white} white`);
 	var scorePegs = INIT_SCORE_PEGS.slice(0);
 	for (let p = 0; p < CODE_LENGTH; p++) {
 		if (p < black) {
@@ -16,7 +16,7 @@ console.log(`makePegArray: ${black} black, ${white} white`);
 			scorePegs[p] = 'white';
 		}
 	}
-console.log('score pegs', scorePegs);
+//console.log('score pegs', scorePegs);
 	return scorePegs;
 }
 
@@ -30,7 +30,7 @@ function ScorePegs(props) {
 	}, [props.black, props.white] );
 
 	const pegs = makePegArray(black, white);
-console.log(black, 'black;', white, 'white; pegs this round', pegs);
+//console.log(black, 'black;', white, 'white; pegs this round', pegs);
 	return (
 	<div className="score-peg-wrapper">
 	{ pegs.map((peg, ndx) => {

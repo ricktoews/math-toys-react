@@ -12,9 +12,23 @@ $peg-yellow: #ff0;
 $peg-black: #000;
 $peg-purple: #f0f;
 
+.float-container {
+	clear: both;
+	display: flex;
+	justify-content: center;
+	background-color: #eee;
+}
+
 .peg-wrapper {
+	float:left;
 	display: flex;
 	flex-direction: row;
+}
+.code-selection {
+	border: 1px solid gray;
+}
+.selection-complete button {
+
 }
 
 .code-peg {

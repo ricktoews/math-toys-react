@@ -33,6 +33,9 @@ function CodePicker(props) {
 
 	useEffect(() => {
 		setCodeSelected(props.codeSelected);
+		if (!props.codeSelected) {
+			setCodePegs(INIT_CODE);
+		}
 	}, [props.codeSelected]);
 
 	useEffect(() => {
@@ -65,17 +68,20 @@ function CodePicker(props) {
   <div className="code-picker">
     We're assuming you're familiar with the game, so pick a code.
 
-    <div ref={codeRef} className="peg-wrapper">
+    <div className="float-container">
+      <div ref={codeRef} className="peg-wrapper code-selection">
 	{ [0, 1, 2, 3].map((ndx, key) => {
 		let pegClass = 'peg ' + codePegs[ndx] || 'peg';
 	
 		return <div key={key} data-ndx={ndx} className={pegClass} onClick={handleCodePegClick}></div>
 	  })
 	}
+      </div>
     </div>
+
 	{ !codeSelected && (
-    <div className="code-selection">
-    { codeComplete && <div className="selection-complete">Code selected. <button onClick={handleCodeComplete}>Start</button></div> }
+    <>
+    <div className="float-container">
       <div className="peg-wrapper">
 	{ ['red', 'green', 'yellow', 'blue', 'purple', 'black'].map(color => {
     	return <div key={color} className={`peg peg-${color}`} onClick={handlePegSelect}></div>
@@ -83,8 +89,11 @@ function CodePicker(props) {
 	}
       </div>
     </div>
+    { codeComplete && <div className="selection-complete"><button className="btn btn-info" onClick={handleCodeComplete}>Begin</button></div> }
+    </>
 	) }
   </div>
+
 	);
 }
 
