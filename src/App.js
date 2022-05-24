@@ -8,6 +8,7 @@ import SubMenuBar from './SubMenuBar';
 
 import { Switch, Route } from 'react-router-dom';
 import Home from './components/Home';
+import Phi from './components/phi/Phi';
 import Pythag from './components/pythag/Pythag-mobile';
 import PythagC from './components/pythag/Pythag-C';
 import Denom from './components/denom/Denom-mobile';
@@ -38,6 +39,7 @@ function App() {
       <GlobalStyles />
       <Switch>
         <Route exact path="/" component={withNav(Home, 'The Avocational Arithmophile')} />
+        <Route path="/phi" component={withNav(Phi, 'Phi')} />
         <Route path="/pythag" component={withNav(Pythag, 'Pythagorean Toy')} />
         <Route path="/pythag-c" component={withNav(PythagC, 'Pythagorean-related  Experiment')} />
         <Route path="/denom" component={withNav(Denom, 'Denominators')} />

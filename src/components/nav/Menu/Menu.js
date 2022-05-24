@@ -8,6 +8,9 @@ const Menu = ({ open }) => {
       <a href="/">
         Home
       </a>
+      <a href="/phi">
+        Phi Powers
+      </a>
       <a href="/pythag">
         Pythagorean Triples
       </a>
