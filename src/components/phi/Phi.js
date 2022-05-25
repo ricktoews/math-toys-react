@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { MathJax } from 'better-react-mathjax';
 import { Table, Modal, Button } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { getPhi } from '../../api/math-toys-api';
 import { getPascalRow, constructXYPower, constructPhiPower, reducedTerms, combineTerms, isolateFibonacciTerms } from './phi-utils';
@@ -27,7 +29,7 @@ function MyVerticallyCenteredModal(props) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Phi to the power of {power} = (({radicalSymbol5} + 1) / 2)<sup>{power}</sup>
+          Phi to the power of {power} = <MathJax inline>{`\\(\\left(\\frac{\\sqrt{5} + 1}{2}\\right)^${power}\\)`}</MathJax>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -89,10 +91,18 @@ function Phi(props) {
       setModalShow(true);
     }
 
-    return (<div>
-      <h1>Powers of Phi</h1>
-      <Table striped hover>
-        <thead>
+    return (
+    <>
+    <Container>
+      <Row>
+        <Col>
+          <h2 className="math-primary">Powers of Phi</h2>
+        </Col>
+      </Row>
+      <Row>
+        <Col style={{minWidth: "50%"}}>
+          <Table variant="math">
+          <thead>
           <tr>
             <th>Fraction of Phi<sup>n</sup></th>
             <th>Fibonacci n</th>
@@ -104,8 +114,11 @@ function Phi(props) {
         
         { phiData.map((item, key) => {
             let f_l = item['[F, F*SQRT_5, L, L/SQRT_5]'];
+            const Fibonacci = f_l[0];
+            const Lucas = f_l[2];
+            const fraction = `\\frac{(${Fibonacci}√5 + ${Lucas})}{2}`;
             return (<tr onClick={handleRowClick} key={key} data-power={key + 1}>
-              <td>{item.fraction}</td>
+              <td><MathJax>{`\\(\\frac{${Fibonacci}\\sqrt{5} + ${Lucas}}{2}\\)`}</MathJax></td>
               <td>{f_l[0]}</td>
               <td>{f_l[2]}</td>
               <td>{Number.parseFloat(f_l[1]).toFixed(2)}</td>
@@ -113,12 +126,16 @@ function Phi(props) {
         })}
         </tbody>
       </Table>
+        </Col>
+      </Row>
+    </Container>
+      
       <MyVerticallyCenteredModal
         show={modalShow}
         onHide={() => setModalShow(false)}
         data={phiDissect}
       />
-    </div>)
+    </>)
 }
 
 export default Phi
